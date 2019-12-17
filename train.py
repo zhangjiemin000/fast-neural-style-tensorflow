@@ -122,6 +122,7 @@ def main(FLAGS):
                     # print(step)
                     if step % 10 == 0:
                         tf.logging.info('step: %d,  total Loss %f, secs/step: %f' % (step, loss_t, elapsed_time))
+                        print('step: %d,  total Loss %f, secs/step: %f' % (step, loss_t, elapsed_time))
                     """summary"""
                     if step % 25 == 0:
                         tf.logging.info('adding summary...')
