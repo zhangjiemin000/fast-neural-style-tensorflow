@@ -40,18 +40,15 @@ def main(args):
             cropped_image = tf.slice(squeezed_image, [0, 0, 0], [height, width, 3])
             # stylized_image = tf.image.encode_jpeg(squeezed_image, name='output_image')
             stylized_image_data = tf.reshape(cropped_image, [-1], name='output_image')
-
             # Restore model variables.
             saver = tf.train.Saver(tf.global_variables(), write_version=tf.train.SaverDef.V1)
             sess.run([tf.global_variables_initializer(), tf.local_variables_initializer()])
             # Use absolute path.
             model_file = os.path.abspath(args.model_file)
             saver.restore(sess, model_file)
-
             if args.is_debug:
-                content_file = '/Users/Lex/Desktop/t.jpg'
-                generated_file = '/Users/Lex/Desktop/xwz-stylized.jpg'
-
+                content_file = './img/timg.jpg'
+                generated_file = './pb.jpg'
                 with open(generated_file, 'wb') as img:
                     image_bytes = tf.read_file(content_file)
                     input_array, decoded_image = sess.run([
@@ -64,13 +61,12 @@ def main(args):
                               height: decoded_image.shape[0],
                               width: decoded_image.shape[1]}))
                     end_time = time.time()
-
                     tf.logging.info('Elapsed time: %fs' % (end_time - start_time))
             else:
                 output_graph_def = tf.graph_util.convert_variables_to_constants(
                     sess, sess.graph_def, output_node_names=['output_image'])
 
-                with tf.gfile.FastGFile('/Users/Lex/Desktop/' + args.model_name + '.pb', mode='wb') as f:
+                with tf.gfile.FastGFile('./transfer' + args.model_name + '.pb', mode='wb') as f:
                     f.write(output_graph_def.SerializeToString())
 
                 # tf.train.write_graph(g.as_graph_def(), '/Users/Lex/Desktop',
