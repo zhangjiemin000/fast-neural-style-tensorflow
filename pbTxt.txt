@@ -4,15 +4,15 @@
 @output shapes:
 name = import/input_image:0 : <unknown>
 ---------------------------------------------------------------------------------------------------------------------------------------------
-1: op name = import/height, op type = ( Const ), inputs = , outputs = import/height:0
+1: op name = import/height, op type = ( Placeholder ), inputs = , outputs = import/height:0
 @input shapes:
 @output shapes:
-name = import/height:0 : ()
+name = import/height:0 : <unknown>
 ---------------------------------------------------------------------------------------------------------------------------------------------
-2: op name = import/width, op type = ( Const ), inputs = , outputs = import/width:0
+2: op name = import/width, op type = ( Placeholder ), inputs = , outputs = import/width:0
 @input shapes:
 @output shapes:
-name = import/width:0 : ()
+name = import/width:0 : <unknown>
 ---------------------------------------------------------------------------------------------------------------------------------------------
 3: op name = import/Reshape/shape/2, op type = ( Const ), inputs = , outputs = import/Reshape/shape/2:0
 @input shapes:
@@ -21,8 +21,8 @@ name = import/Reshape/shape/2:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 4: op name = import/Reshape/shape, op type = ( Pack ), inputs = import/height:0, import/width:0, import/Reshape/shape/2:0, outputs = import/Reshape/shape:0
 @input shapes:
-name = import/height:0 : ()
-name = import/width:0 : ()
+name = import/height:0 : <unknown>
+name = import/width:0 : <unknown>
 name = import/Reshape/shape/2:0 : ()
 @output shapes:
 name = import/Reshape/shape:0 : (3,)
@@ -32,13 +32,13 @@ name = import/Reshape/shape:0 : (3,)
 name = import/input_image:0 : <unknown>
 name = import/Reshape/shape:0 : (3,)
 @output shapes:
-name = import/Reshape:0 : (256, 256, 3)
+name = import/Reshape:0 : (?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 6: op name = import/ToFloat, op type = ( Cast ), inputs = import/Reshape:0, outputs = import/ToFloat:0
 @input shapes:
-name = import/Reshape:0 : (256, 256, 3)
+name = import/Reshape:0 : (?, ?, 3)
 @output shapes:
-name = import/ToFloat:0 : (256, 256, 3)
+name = import/ToFloat:0 : (?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 7: op name = import/split/split_dim, op type = ( Const ), inputs = , outputs = import/split/split_dim:0
 @input shapes:
@@ -48,11 +48,11 @@ name = import/split/split_dim:0 : ()
 8: op name = import/split, op type = ( Split ), inputs = import/split/split_dim:0, import/ToFloat:0, outputs = import/split:0, import/split:1, import/split:2
 @input shapes:
 name = import/split/split_dim:0 : ()
-name = import/ToFloat:0 : (256, 256, 3)
+name = import/ToFloat:0 : (?, ?, 3)
 @output shapes:
-name = import/split:0 : (256, 256, 1)
-name = import/split:1 : (256, 256, 1)
-name = import/split:2 : (256, 256, 1)
+name = import/split:0 : (?, ?, 1)
+name = import/split:1 : (?, ?, 1)
+name = import/split:2 : (?, ?, 1)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 9: op name = import/sub/y, op type = ( Const ), inputs = , outputs = import/sub/y:0
 @input shapes:
@@ -61,10 +61,10 @@ name = import/sub/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 10: op name = import/sub, op type = ( Sub ), inputs = import/split:0, import/sub/y:0, outputs = import/sub:0
 @input shapes:
-name = import/split:0 : (256, 256, 1)
+name = import/split:0 : (?, ?, 1)
 name = import/sub/y:0 : ()
 @output shapes:
-name = import/sub:0 : (256, 256, 1)
+name = import/sub:0 : (?, ?, 1)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 11: op name = import/sub_1/y, op type = ( Const ), inputs = , outputs = import/sub_1/y:0
 @input shapes:
@@ -73,10 +73,10 @@ name = import/sub_1/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 12: op name = import/sub_1, op type = ( Sub ), inputs = import/split:1, import/sub_1/y:0, outputs = import/sub_1:0
 @input shapes:
-name = import/split:1 : (256, 256, 1)
+name = import/split:1 : (?, ?, 1)
 name = import/sub_1/y:0 : ()
 @output shapes:
-name = import/sub_1:0 : (256, 256, 1)
+name = import/sub_1:0 : (?, ?, 1)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 13: op name = import/sub_2/y, op type = ( Const ), inputs = , outputs = import/sub_2/y:0
 @input shapes:
@@ -85,10 +85,10 @@ name = import/sub_2/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 14: op name = import/sub_2, op type = ( Sub ), inputs = import/split:2, import/sub_2/y:0, outputs = import/sub_2:0
 @input shapes:
-name = import/split:2 : (256, 256, 1)
+name = import/split:2 : (?, ?, 1)
 name = import/sub_2/y:0 : ()
 @output shapes:
-name = import/sub_2:0 : (256, 256, 1)
+name = import/sub_2:0 : (?, ?, 1)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 15: op name = import/concat/axis, op type = ( Const ), inputs = , outputs = import/concat/axis:0
 @input shapes:
@@ -97,12 +97,12 @@ name = import/concat/axis:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 16: op name = import/concat, op type = ( ConcatV2 ), inputs = import/sub:0, import/sub_1:0, import/sub_2:0, import/concat/axis:0, outputs = import/concat:0
 @input shapes:
-name = import/sub:0 : (256, 256, 1)
-name = import/sub_1:0 : (256, 256, 1)
-name = import/sub_2:0 : (256, 256, 1)
+name = import/sub:0 : (?, ?, 1)
+name = import/sub_1:0 : (?, ?, 1)
+name = import/sub_2:0 : (?, ?, 1)
 name = import/concat/axis:0 : ()
 @output shapes:
-name = import/concat:0 : (256, 256, 3)
+name = import/concat:0 : (?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 17: op name = import/ExpandDims/dim, op type = ( Const ), inputs = , outputs = import/ExpandDims/dim:0
 @input shapes:
@@ -111,10 +111,10 @@ name = import/ExpandDims/dim:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 18: op name = import/ExpandDims, op type = ( ExpandDims ), inputs = import/concat:0, import/ExpandDims/dim:0, outputs = import/ExpandDims:0
 @input shapes:
-name = import/concat:0 : (256, 256, 3)
+name = import/concat:0 : (?, ?, 3)
 name = import/ExpandDims/dim:0 : ()
 @output shapes:
-name = import/ExpandDims:0 : (1, 256, 256, 3)
+name = import/ExpandDims:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 19: op name = import/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/MirrorPad/paddings:0
 @input shapes:
@@ -123,10 +123,10 @@ name = import/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 20: op name = import/MirrorPad, op type = ( MirrorPad ), inputs = import/ExpandDims:0, import/MirrorPad/paddings:0, outputs = import/MirrorPad:0
 @input shapes:
-name = import/ExpandDims:0 : (1, 256, 256, 3)
+name = import/ExpandDims:0 : (1, ?, ?, 3)
 name = import/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/MirrorPad:0 : (1, 276, 276, 3)
+name = import/MirrorPad:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 21: op name = import/conv1/conv/weight, op type = ( Const ), inputs = , outputs = import/conv1/conv/weight:0
 @input shapes:
@@ -146,17 +146,17 @@ name = import/conv1/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 24: op name = import/conv1/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/MirrorPad:0, import/conv1/conv/MirrorPad/paddings:0, outputs = import/conv1/conv/MirrorPad:0
 @input shapes:
-name = import/MirrorPad:0 : (1, 276, 276, 3)
+name = import/MirrorPad:0 : (1, ?, ?, 3)
 name = import/conv1/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/conv1/conv/MirrorPad:0 : (1, 284, 284, 3)
+name = import/conv1/conv/MirrorPad:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 25: op name = import/conv1/conv/conv, op type = ( Conv2D ), inputs = import/conv1/conv/MirrorPad:0, import/conv1/conv/weight/read:0, outputs = import/conv1/conv/conv:0
 @input shapes:
-name = import/conv1/conv/MirrorPad:0 : (1, 284, 284, 3)
+name = import/conv1/conv/MirrorPad:0 : (1, ?, ?, 3)
 name = import/conv1/conv/weight/read:0 : (9, 9, 3, 32)
 @output shapes:
-name = import/conv1/conv/conv:0 : (1, 276, 276, 32)
+name = import/conv1/conv/conv:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 26: op name = import/conv1/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv1/moments/mean/reduction_indices:0
 @input shapes:
@@ -165,7 +165,7 @@ name = import/conv1/moments/mean/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 27: op name = import/conv1/moments/mean, op type = ( Mean ), inputs = import/conv1/conv/conv:0, import/conv1/moments/mean/reduction_indices:0, outputs = import/conv1/moments/mean:0
 @input shapes:
-name = import/conv1/conv/conv:0 : (1, 276, 276, 32)
+name = import/conv1/conv/conv:0 : (1, ?, ?, 32)
 name = import/conv1/moments/mean/reduction_indices:0 : (2,)
 @output shapes:
 name = import/conv1/moments/mean:0 : (1, 1, 1, 32)
@@ -178,10 +178,10 @@ name = import/conv1/moments/StopGradient:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 29: op name = import/conv1/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/conv1/conv/conv:0, import/conv1/moments/StopGradient:0, outputs = import/conv1/moments/SquaredDifference:0
 @input shapes:
-name = import/conv1/conv/conv:0 : (1, 276, 276, 32)
+name = import/conv1/conv/conv:0 : (1, ?, ?, 32)
 name = import/conv1/moments/StopGradient:0 : (1, 1, 1, 32)
 @output shapes:
-name = import/conv1/moments/SquaredDifference:0 : (1, 276, 276, 32)
+name = import/conv1/moments/SquaredDifference:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 30: op name = import/conv1/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv1/moments/variance/reduction_indices:0
 @input shapes:
@@ -190,17 +190,17 @@ name = import/conv1/moments/variance/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 31: op name = import/conv1/moments/variance, op type = ( Mean ), inputs = import/conv1/moments/SquaredDifference:0, import/conv1/moments/variance/reduction_indices:0, outputs = import/conv1/moments/variance:0
 @input shapes:
-name = import/conv1/moments/SquaredDifference:0 : (1, 276, 276, 32)
+name = import/conv1/moments/SquaredDifference:0 : (1, ?, ?, 32)
 name = import/conv1/moments/variance/reduction_indices:0 : (2,)
 @output shapes:
 name = import/conv1/moments/variance:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 32: op name = import/conv1/Sub, op type = ( Sub ), inputs = import/conv1/conv/conv:0, import/conv1/moments/mean:0, outputs = import/conv1/Sub:0
 @input shapes:
-name = import/conv1/conv/conv:0 : (1, 276, 276, 32)
+name = import/conv1/conv/conv:0 : (1, ?, ?, 32)
 name = import/conv1/moments/mean:0 : (1, 1, 1, 32)
 @output shapes:
-name = import/conv1/Sub:0 : (1, 276, 276, 32)
+name = import/conv1/Sub:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 33: op name = import/conv1/Add/y, op type = ( Const ), inputs = , outputs = import/conv1/Add/y:0
 @input shapes:
@@ -222,869 +222,782 @@ name = import/conv1/Sqrt:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 36: op name = import/conv1/div, op type = ( RealDiv ), inputs = import/conv1/Sub:0, import/conv1/Sqrt:0, outputs = import/conv1/div:0
 @input shapes:
-name = import/conv1/Sub:0 : (1, 276, 276, 32)
+name = import/conv1/Sub:0 : (1, ?, ?, 32)
 name = import/conv1/Sqrt:0 : (1, 1, 1, 32)
 @output shapes:
-name = import/conv1/div:0 : (1, 276, 276, 32)
+name = import/conv1/div:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 37: op name = import/conv1/Relu, op type = ( Relu ), inputs = import/conv1/div:0, outputs = import/conv1/Relu:0
 @input shapes:
-name = import/conv1/div:0 : (1, 276, 276, 32)
+name = import/conv1/div:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/conv1/Relu:0 : (1, 276, 276, 32)
+name = import/conv1/Relu:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 38: op name = import/conv1/Equal, op type = ( Equal ), inputs = import/conv1/Relu:0, import/conv1/Relu:0, outputs = import/conv1/Equal:0
 @input shapes:
-name = import/conv1/Relu:0 : (1, 276, 276, 32)
-name = import/conv1/Relu:0 : (1, 276, 276, 32)
+name = import/conv1/Relu:0 : (1, ?, ?, 32)
+name = import/conv1/Relu:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/conv1/Equal:0 : (1, 276, 276, 32)
+name = import/conv1/Equal:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-39: op name = import/conv1/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/conv1/zeros_like/shape_as_tensor:0
+39: op name = import/conv1/zeros_like, op type = ( ZerosLike ), inputs = import/conv1/Relu:0, outputs = import/conv1/zeros_like:0
 @input shapes:
+name = import/conv1/Relu:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/conv1/zeros_like/shape_as_tensor:0 : (4,)
+name = import/conv1/zeros_like:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-40: op name = import/conv1/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/conv1/zeros_like/Const:0
+40: op name = import/conv1/Select, op type = ( Select ), inputs = import/conv1/Equal:0, import/conv1/Relu:0, import/conv1/zeros_like:0, outputs = import/conv1/Select:0
 @input shapes:
+name = import/conv1/Equal:0 : (1, ?, ?, 32)
+name = import/conv1/Relu:0 : (1, ?, ?, 32)
+name = import/conv1/zeros_like:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/conv1/zeros_like/Const:0 : ()
+name = import/conv1/Select:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-41: op name = import/conv1/zeros_like, op type = ( Fill ), inputs = import/conv1/zeros_like/shape_as_tensor:0, import/conv1/zeros_like/Const:0, outputs = import/conv1/zeros_like:0
-@input shapes:
-name = import/conv1/zeros_like/shape_as_tensor:0 : (4,)
-name = import/conv1/zeros_like/Const:0 : ()
-@output shapes:
-name = import/conv1/zeros_like:0 : (1, 276, 276, 32)
----------------------------------------------------------------------------------------------------------------------------------------------
-42: op name = import/conv1/Select, op type = ( Select ), inputs = import/conv1/Equal:0, import/conv1/Relu:0, import/conv1/zeros_like:0, outputs = import/conv1/Select:0
-@input shapes:
-name = import/conv1/Equal:0 : (1, 276, 276, 32)
-name = import/conv1/Relu:0 : (1, 276, 276, 32)
-name = import/conv1/zeros_like:0 : (1, 276, 276, 32)
-@output shapes:
-name = import/conv1/Select:0 : (1, 276, 276, 32)
----------------------------------------------------------------------------------------------------------------------------------------------
-43: op name = import/conv2/conv/weight, op type = ( Const ), inputs = , outputs = import/conv2/conv/weight:0
+41: op name = import/conv2/conv/weight, op type = ( Const ), inputs = , outputs = import/conv2/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/conv2/conv/weight:0 : (3, 3, 32, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-44: op name = import/conv2/conv/weight/read, op type = ( Identity ), inputs = import/conv2/conv/weight:0, outputs = import/conv2/conv/weight/read:0
+42: op name = import/conv2/conv/weight/read, op type = ( Identity ), inputs = import/conv2/conv/weight:0, outputs = import/conv2/conv/weight/read:0
 @input shapes:
 name = import/conv2/conv/weight:0 : (3, 3, 32, 64)
 @output shapes:
 name = import/conv2/conv/weight/read:0 : (3, 3, 32, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-45: op name = import/conv2/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/conv2/conv/MirrorPad/paddings:0
+43: op name = import/conv2/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/conv2/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/conv2/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-46: op name = import/conv2/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/conv1/Select:0, import/conv2/conv/MirrorPad/paddings:0, outputs = import/conv2/conv/MirrorPad:0
+44: op name = import/conv2/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/conv1/Select:0, import/conv2/conv/MirrorPad/paddings:0, outputs = import/conv2/conv/MirrorPad:0
 @input shapes:
-name = import/conv1/Select:0 : (1, 276, 276, 32)
+name = import/conv1/Select:0 : (1, ?, ?, 32)
 name = import/conv2/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/conv2/conv/MirrorPad:0 : (1, 278, 278, 32)
+name = import/conv2/conv/MirrorPad:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-47: op name = import/conv2/conv/conv, op type = ( Conv2D ), inputs = import/conv2/conv/MirrorPad:0, import/conv2/conv/weight/read:0, outputs = import/conv2/conv/conv:0
+45: op name = import/conv2/conv/conv, op type = ( Conv2D ), inputs = import/conv2/conv/MirrorPad:0, import/conv2/conv/weight/read:0, outputs = import/conv2/conv/conv:0
 @input shapes:
-name = import/conv2/conv/MirrorPad:0 : (1, 278, 278, 32)
+name = import/conv2/conv/MirrorPad:0 : (1, ?, ?, 32)
 name = import/conv2/conv/weight/read:0 : (3, 3, 32, 64)
 @output shapes:
-name = import/conv2/conv/conv:0 : (1, 138, 138, 64)
+name = import/conv2/conv/conv:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-48: op name = import/conv2/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv2/moments/mean/reduction_indices:0
+46: op name = import/conv2/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv2/moments/mean/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/conv2/moments/mean/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-49: op name = import/conv2/moments/mean, op type = ( Mean ), inputs = import/conv2/conv/conv:0, import/conv2/moments/mean/reduction_indices:0, outputs = import/conv2/moments/mean:0
+47: op name = import/conv2/moments/mean, op type = ( Mean ), inputs = import/conv2/conv/conv:0, import/conv2/moments/mean/reduction_indices:0, outputs = import/conv2/moments/mean:0
 @input shapes:
-name = import/conv2/conv/conv:0 : (1, 138, 138, 64)
+name = import/conv2/conv/conv:0 : (1, ?, ?, 64)
 name = import/conv2/moments/mean/reduction_indices:0 : (2,)
 @output shapes:
 name = import/conv2/moments/mean:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-50: op name = import/conv2/moments/StopGradient, op type = ( StopGradient ), inputs = import/conv2/moments/mean:0, outputs = import/conv2/moments/StopGradient:0
+48: op name = import/conv2/moments/StopGradient, op type = ( StopGradient ), inputs = import/conv2/moments/mean:0, outputs = import/conv2/moments/StopGradient:0
 @input shapes:
 name = import/conv2/moments/mean:0 : (1, 1, 1, 64)
 @output shapes:
 name = import/conv2/moments/StopGradient:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-51: op name = import/conv2/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/conv2/conv/conv:0, import/conv2/moments/StopGradient:0, outputs = import/conv2/moments/SquaredDifference:0
+49: op name = import/conv2/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/conv2/conv/conv:0, import/conv2/moments/StopGradient:0, outputs = import/conv2/moments/SquaredDifference:0
 @input shapes:
-name = import/conv2/conv/conv:0 : (1, 138, 138, 64)
+name = import/conv2/conv/conv:0 : (1, ?, ?, 64)
 name = import/conv2/moments/StopGradient:0 : (1, 1, 1, 64)
 @output shapes:
-name = import/conv2/moments/SquaredDifference:0 : (1, 138, 138, 64)
+name = import/conv2/moments/SquaredDifference:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-52: op name = import/conv2/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv2/moments/variance/reduction_indices:0
+50: op name = import/conv2/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv2/moments/variance/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/conv2/moments/variance/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-53: op name = import/conv2/moments/variance, op type = ( Mean ), inputs = import/conv2/moments/SquaredDifference:0, import/conv2/moments/variance/reduction_indices:0, outputs = import/conv2/moments/variance:0
+51: op name = import/conv2/moments/variance, op type = ( Mean ), inputs = import/conv2/moments/SquaredDifference:0, import/conv2/moments/variance/reduction_indices:0, outputs = import/conv2/moments/variance:0
 @input shapes:
-name = import/conv2/moments/SquaredDifference:0 : (1, 138, 138, 64)
+name = import/conv2/moments/SquaredDifference:0 : (1, ?, ?, 64)
 name = import/conv2/moments/variance/reduction_indices:0 : (2,)
 @output shapes:
 name = import/conv2/moments/variance:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-54: op name = import/conv2/Sub, op type = ( Sub ), inputs = import/conv2/conv/conv:0, import/conv2/moments/mean:0, outputs = import/conv2/Sub:0
+52: op name = import/conv2/Sub, op type = ( Sub ), inputs = import/conv2/conv/conv:0, import/conv2/moments/mean:0, outputs = import/conv2/Sub:0
 @input shapes:
-name = import/conv2/conv/conv:0 : (1, 138, 138, 64)
+name = import/conv2/conv/conv:0 : (1, ?, ?, 64)
 name = import/conv2/moments/mean:0 : (1, 1, 1, 64)
 @output shapes:
-name = import/conv2/Sub:0 : (1, 138, 138, 64)
+name = import/conv2/Sub:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-55: op name = import/conv2/Add/y, op type = ( Const ), inputs = , outputs = import/conv2/Add/y:0
+53: op name = import/conv2/Add/y, op type = ( Const ), inputs = , outputs = import/conv2/Add/y:0
 @input shapes:
 @output shapes:
 name = import/conv2/Add/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-56: op name = import/conv2/Add, op type = ( Add ), inputs = import/conv2/moments/variance:0, import/conv2/Add/y:0, outputs = import/conv2/Add:0
+54: op name = import/conv2/Add, op type = ( Add ), inputs = import/conv2/moments/variance:0, import/conv2/Add/y:0, outputs = import/conv2/Add:0
 @input shapes:
 name = import/conv2/moments/variance:0 : (1, 1, 1, 64)
 name = import/conv2/Add/y:0 : ()
 @output shapes:
 name = import/conv2/Add:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-57: op name = import/conv2/Sqrt, op type = ( Sqrt ), inputs = import/conv2/Add:0, outputs = import/conv2/Sqrt:0
+55: op name = import/conv2/Sqrt, op type = ( Sqrt ), inputs = import/conv2/Add:0, outputs = import/conv2/Sqrt:0
 @input shapes:
 name = import/conv2/Add:0 : (1, 1, 1, 64)
 @output shapes:
 name = import/conv2/Sqrt:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-58: op name = import/conv2/div, op type = ( RealDiv ), inputs = import/conv2/Sub:0, import/conv2/Sqrt:0, outputs = import/conv2/div:0
+56: op name = import/conv2/div, op type = ( RealDiv ), inputs = import/conv2/Sub:0, import/conv2/Sqrt:0, outputs = import/conv2/div:0
 @input shapes:
-name = import/conv2/Sub:0 : (1, 138, 138, 64)
+name = import/conv2/Sub:0 : (1, ?, ?, 64)
 name = import/conv2/Sqrt:0 : (1, 1, 1, 64)
 @output shapes:
-name = import/conv2/div:0 : (1, 138, 138, 64)
+name = import/conv2/div:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-59: op name = import/conv2/Relu, op type = ( Relu ), inputs = import/conv2/div:0, outputs = import/conv2/Relu:0
+57: op name = import/conv2/Relu, op type = ( Relu ), inputs = import/conv2/div:0, outputs = import/conv2/Relu:0
 @input shapes:
-name = import/conv2/div:0 : (1, 138, 138, 64)
+name = import/conv2/div:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/conv2/Relu:0 : (1, 138, 138, 64)
+name = import/conv2/Relu:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-60: op name = import/conv2/Equal, op type = ( Equal ), inputs = import/conv2/Relu:0, import/conv2/Relu:0, outputs = import/conv2/Equal:0
+58: op name = import/conv2/Equal, op type = ( Equal ), inputs = import/conv2/Relu:0, import/conv2/Relu:0, outputs = import/conv2/Equal:0
 @input shapes:
-name = import/conv2/Relu:0 : (1, 138, 138, 64)
-name = import/conv2/Relu:0 : (1, 138, 138, 64)
+name = import/conv2/Relu:0 : (1, ?, ?, 64)
+name = import/conv2/Relu:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/conv2/Equal:0 : (1, 138, 138, 64)
+name = import/conv2/Equal:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-61: op name = import/conv2/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/conv2/zeros_like/shape_as_tensor:0
+59: op name = import/conv2/zeros_like, op type = ( ZerosLike ), inputs = import/conv2/Relu:0, outputs = import/conv2/zeros_like:0
 @input shapes:
+name = import/conv2/Relu:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/conv2/zeros_like/shape_as_tensor:0 : (4,)
+name = import/conv2/zeros_like:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-62: op name = import/conv2/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/conv2/zeros_like/Const:0
+60: op name = import/conv2/Select, op type = ( Select ), inputs = import/conv2/Equal:0, import/conv2/Relu:0, import/conv2/zeros_like:0, outputs = import/conv2/Select:0
 @input shapes:
+name = import/conv2/Equal:0 : (1, ?, ?, 64)
+name = import/conv2/Relu:0 : (1, ?, ?, 64)
+name = import/conv2/zeros_like:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/conv2/zeros_like/Const:0 : ()
+name = import/conv2/Select:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-63: op name = import/conv2/zeros_like, op type = ( Fill ), inputs = import/conv2/zeros_like/shape_as_tensor:0, import/conv2/zeros_like/Const:0, outputs = import/conv2/zeros_like:0
-@input shapes:
-name = import/conv2/zeros_like/shape_as_tensor:0 : (4,)
-name = import/conv2/zeros_like/Const:0 : ()
-@output shapes:
-name = import/conv2/zeros_like:0 : (1, 138, 138, 64)
----------------------------------------------------------------------------------------------------------------------------------------------
-64: op name = import/conv2/Select, op type = ( Select ), inputs = import/conv2/Equal:0, import/conv2/Relu:0, import/conv2/zeros_like:0, outputs = import/conv2/Select:0
-@input shapes:
-name = import/conv2/Equal:0 : (1, 138, 138, 64)
-name = import/conv2/Relu:0 : (1, 138, 138, 64)
-name = import/conv2/zeros_like:0 : (1, 138, 138, 64)
-@output shapes:
-name = import/conv2/Select:0 : (1, 138, 138, 64)
----------------------------------------------------------------------------------------------------------------------------------------------
-65: op name = import/conv3/conv/weight, op type = ( Const ), inputs = , outputs = import/conv3/conv/weight:0
+61: op name = import/conv3/conv/weight, op type = ( Const ), inputs = , outputs = import/conv3/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/conv3/conv/weight:0 : (3, 3, 64, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-66: op name = import/conv3/conv/weight/read, op type = ( Identity ), inputs = import/conv3/conv/weight:0, outputs = import/conv3/conv/weight/read:0
+62: op name = import/conv3/conv/weight/read, op type = ( Identity ), inputs = import/conv3/conv/weight:0, outputs = import/conv3/conv/weight/read:0
 @input shapes:
 name = import/conv3/conv/weight:0 : (3, 3, 64, 128)
 @output shapes:
 name = import/conv3/conv/weight/read:0 : (3, 3, 64, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-67: op name = import/conv3/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/conv3/conv/MirrorPad/paddings:0
+63: op name = import/conv3/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/conv3/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/conv3/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-68: op name = import/conv3/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/conv2/Select:0, import/conv3/conv/MirrorPad/paddings:0, outputs = import/conv3/conv/MirrorPad:0
+64: op name = import/conv3/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/conv2/Select:0, import/conv3/conv/MirrorPad/paddings:0, outputs = import/conv3/conv/MirrorPad:0
 @input shapes:
-name = import/conv2/Select:0 : (1, 138, 138, 64)
+name = import/conv2/Select:0 : (1, ?, ?, 64)
 name = import/conv3/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/conv3/conv/MirrorPad:0 : (1, 140, 140, 64)
+name = import/conv3/conv/MirrorPad:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-69: op name = import/conv3/conv/conv, op type = ( Conv2D ), inputs = import/conv3/conv/MirrorPad:0, import/conv3/conv/weight/read:0, outputs = import/conv3/conv/conv:0
+65: op name = import/conv3/conv/conv, op type = ( Conv2D ), inputs = import/conv3/conv/MirrorPad:0, import/conv3/conv/weight/read:0, outputs = import/conv3/conv/conv:0
 @input shapes:
-name = import/conv3/conv/MirrorPad:0 : (1, 140, 140, 64)
+name = import/conv3/conv/MirrorPad:0 : (1, ?, ?, 64)
 name = import/conv3/conv/weight/read:0 : (3, 3, 64, 128)
 @output shapes:
-name = import/conv3/conv/conv:0 : (1, 69, 69, 128)
+name = import/conv3/conv/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-70: op name = import/conv3/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv3/moments/mean/reduction_indices:0
+66: op name = import/conv3/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv3/moments/mean/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/conv3/moments/mean/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-71: op name = import/conv3/moments/mean, op type = ( Mean ), inputs = import/conv3/conv/conv:0, import/conv3/moments/mean/reduction_indices:0, outputs = import/conv3/moments/mean:0
+67: op name = import/conv3/moments/mean, op type = ( Mean ), inputs = import/conv3/conv/conv:0, import/conv3/moments/mean/reduction_indices:0, outputs = import/conv3/moments/mean:0
 @input shapes:
-name = import/conv3/conv/conv:0 : (1, 69, 69, 128)
+name = import/conv3/conv/conv:0 : (1, ?, ?, 128)
 name = import/conv3/moments/mean/reduction_indices:0 : (2,)
 @output shapes:
 name = import/conv3/moments/mean:0 : (1, 1, 1, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-72: op name = import/conv3/moments/StopGradient, op type = ( StopGradient ), inputs = import/conv3/moments/mean:0, outputs = import/conv3/moments/StopGradient:0
+68: op name = import/conv3/moments/StopGradient, op type = ( StopGradient ), inputs = import/conv3/moments/mean:0, outputs = import/conv3/moments/StopGradient:0
 @input shapes:
 name = import/conv3/moments/mean:0 : (1, 1, 1, 128)
 @output shapes:
 name = import/conv3/moments/StopGradient:0 : (1, 1, 1, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-73: op name = import/conv3/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/conv3/conv/conv:0, import/conv3/moments/StopGradient:0, outputs = import/conv3/moments/SquaredDifference:0
+69: op name = import/conv3/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/conv3/conv/conv:0, import/conv3/moments/StopGradient:0, outputs = import/conv3/moments/SquaredDifference:0
 @input shapes:
-name = import/conv3/conv/conv:0 : (1, 69, 69, 128)
+name = import/conv3/conv/conv:0 : (1, ?, ?, 128)
 name = import/conv3/moments/StopGradient:0 : (1, 1, 1, 128)
 @output shapes:
-name = import/conv3/moments/SquaredDifference:0 : (1, 69, 69, 128)
+name = import/conv3/moments/SquaredDifference:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-74: op name = import/conv3/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv3/moments/variance/reduction_indices:0
+70: op name = import/conv3/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/conv3/moments/variance/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/conv3/moments/variance/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-75: op name = import/conv3/moments/variance, op type = ( Mean ), inputs = import/conv3/moments/SquaredDifference:0, import/conv3/moments/variance/reduction_indices:0, outputs = import/conv3/moments/variance:0
+71: op name = import/conv3/moments/variance, op type = ( Mean ), inputs = import/conv3/moments/SquaredDifference:0, import/conv3/moments/variance/reduction_indices:0, outputs = import/conv3/moments/variance:0
 @input shapes:
-name = import/conv3/moments/SquaredDifference:0 : (1, 69, 69, 128)
+name = import/conv3/moments/SquaredDifference:0 : (1, ?, ?, 128)
 name = import/conv3/moments/variance/reduction_indices:0 : (2,)
 @output shapes:
 name = import/conv3/moments/variance:0 : (1, 1, 1, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-76: op name = import/conv3/Sub, op type = ( Sub ), inputs = import/conv3/conv/conv:0, import/conv3/moments/mean:0, outputs = import/conv3/Sub:0
+72: op name = import/conv3/Sub, op type = ( Sub ), inputs = import/conv3/conv/conv:0, import/conv3/moments/mean:0, outputs = import/conv3/Sub:0
 @input shapes:
-name = import/conv3/conv/conv:0 : (1, 69, 69, 128)
+name = import/conv3/conv/conv:0 : (1, ?, ?, 128)
 name = import/conv3/moments/mean:0 : (1, 1, 1, 128)
 @output shapes:
-name = import/conv3/Sub:0 : (1, 69, 69, 128)
+name = import/conv3/Sub:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-77: op name = import/conv3/Add/y, op type = ( Const ), inputs = , outputs = import/conv3/Add/y:0
+73: op name = import/conv3/Add/y, op type = ( Const ), inputs = , outputs = import/conv3/Add/y:0
 @input shapes:
 @output shapes:
 name = import/conv3/Add/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-78: op name = import/conv3/Add, op type = ( Add ), inputs = import/conv3/moments/variance:0, import/conv3/Add/y:0, outputs = import/conv3/Add:0
+74: op name = import/conv3/Add, op type = ( Add ), inputs = import/conv3/moments/variance:0, import/conv3/Add/y:0, outputs = import/conv3/Add:0
 @input shapes:
 name = import/conv3/moments/variance:0 : (1, 1, 1, 128)
 name = import/conv3/Add/y:0 : ()
 @output shapes:
 name = import/conv3/Add:0 : (1, 1, 1, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-79: op name = import/conv3/Sqrt, op type = ( Sqrt ), inputs = import/conv3/Add:0, outputs = import/conv3/Sqrt:0
+75: op name = import/conv3/Sqrt, op type = ( Sqrt ), inputs = import/conv3/Add:0, outputs = import/conv3/Sqrt:0
 @input shapes:
 name = import/conv3/Add:0 : (1, 1, 1, 128)
 @output shapes:
 name = import/conv3/Sqrt:0 : (1, 1, 1, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-80: op name = import/conv3/div, op type = ( RealDiv ), inputs = import/conv3/Sub:0, import/conv3/Sqrt:0, outputs = import/conv3/div:0
+76: op name = import/conv3/div, op type = ( RealDiv ), inputs = import/conv3/Sub:0, import/conv3/Sqrt:0, outputs = import/conv3/div:0
 @input shapes:
-name = import/conv3/Sub:0 : (1, 69, 69, 128)
+name = import/conv3/Sub:0 : (1, ?, ?, 128)
 name = import/conv3/Sqrt:0 : (1, 1, 1, 128)
 @output shapes:
-name = import/conv3/div:0 : (1, 69, 69, 128)
+name = import/conv3/div:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-81: op name = import/conv3/Relu, op type = ( Relu ), inputs = import/conv3/div:0, outputs = import/conv3/Relu:0
+77: op name = import/conv3/Relu, op type = ( Relu ), inputs = import/conv3/div:0, outputs = import/conv3/Relu:0
 @input shapes:
-name = import/conv3/div:0 : (1, 69, 69, 128)
+name = import/conv3/div:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/conv3/Relu:0 : (1, 69, 69, 128)
+name = import/conv3/Relu:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-82: op name = import/conv3/Equal, op type = ( Equal ), inputs = import/conv3/Relu:0, import/conv3/Relu:0, outputs = import/conv3/Equal:0
+78: op name = import/conv3/Equal, op type = ( Equal ), inputs = import/conv3/Relu:0, import/conv3/Relu:0, outputs = import/conv3/Equal:0
 @input shapes:
-name = import/conv3/Relu:0 : (1, 69, 69, 128)
-name = import/conv3/Relu:0 : (1, 69, 69, 128)
+name = import/conv3/Relu:0 : (1, ?, ?, 128)
+name = import/conv3/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/conv3/Equal:0 : (1, 69, 69, 128)
+name = import/conv3/Equal:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-83: op name = import/conv3/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/conv3/zeros_like/shape_as_tensor:0
+79: op name = import/conv3/zeros_like, op type = ( ZerosLike ), inputs = import/conv3/Relu:0, outputs = import/conv3/zeros_like:0
 @input shapes:
+name = import/conv3/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/conv3/zeros_like/shape_as_tensor:0 : (4,)
+name = import/conv3/zeros_like:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-84: op name = import/conv3/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/conv3/zeros_like/Const:0
+80: op name = import/conv3/Select, op type = ( Select ), inputs = import/conv3/Equal:0, import/conv3/Relu:0, import/conv3/zeros_like:0, outputs = import/conv3/Select:0
 @input shapes:
+name = import/conv3/Equal:0 : (1, ?, ?, 128)
+name = import/conv3/Relu:0 : (1, ?, ?, 128)
+name = import/conv3/zeros_like:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/conv3/zeros_like/Const:0 : ()
+name = import/conv3/Select:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-85: op name = import/conv3/zeros_like, op type = ( Fill ), inputs = import/conv3/zeros_like/shape_as_tensor:0, import/conv3/zeros_like/Const:0, outputs = import/conv3/zeros_like:0
-@input shapes:
-name = import/conv3/zeros_like/shape_as_tensor:0 : (4,)
-name = import/conv3/zeros_like/Const:0 : ()
-@output shapes:
-name = import/conv3/zeros_like:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-86: op name = import/conv3/Select, op type = ( Select ), inputs = import/conv3/Equal:0, import/conv3/Relu:0, import/conv3/zeros_like:0, outputs = import/conv3/Select:0
-@input shapes:
-name = import/conv3/Equal:0 : (1, 69, 69, 128)
-name = import/conv3/Relu:0 : (1, 69, 69, 128)
-name = import/conv3/zeros_like:0 : (1, 69, 69, 128)
-@output shapes:
-name = import/conv3/Select:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-87: op name = import/res1/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res1/residual/conv/weight:0
+81: op name = import/res1/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res1/residual/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/res1/residual/conv/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-88: op name = import/res1/residual/conv/weight/read, op type = ( Identity ), inputs = import/res1/residual/conv/weight:0, outputs = import/res1/residual/conv/weight/read:0
+82: op name = import/res1/residual/conv/weight/read, op type = ( Identity ), inputs = import/res1/residual/conv/weight:0, outputs = import/res1/residual/conv/weight/read:0
 @input shapes:
 name = import/res1/residual/conv/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res1/residual/conv/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-89: op name = import/res1/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res1/residual/conv/MirrorPad/paddings:0
+83: op name = import/res1/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res1/residual/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res1/residual/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-90: op name = import/res1/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/conv3/Select:0, import/res1/residual/conv/MirrorPad/paddings:0, outputs = import/res1/residual/conv/MirrorPad:0
+84: op name = import/res1/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/conv3/Select:0, import/res1/residual/conv/MirrorPad/paddings:0, outputs = import/res1/residual/conv/MirrorPad:0
 @input shapes:
-name = import/conv3/Select:0 : (1, 69, 69, 128)
+name = import/conv3/Select:0 : (1, ?, ?, 128)
 name = import/res1/residual/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res1/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res1/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-91: op name = import/res1/residual/conv/conv, op type = ( Conv2D ), inputs = import/res1/residual/conv/MirrorPad:0, import/res1/residual/conv/weight/read:0, outputs = import/res1/residual/conv/conv:0
+85: op name = import/res1/residual/conv/conv, op type = ( Conv2D ), inputs = import/res1/residual/conv/MirrorPad:0, import/res1/residual/conv/weight/read:0, outputs = import/res1/residual/conv/conv:0
 @input shapes:
-name = import/res1/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res1/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res1/residual/conv/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res1/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res1/residual/conv/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-92: op name = import/res1/residual/Relu, op type = ( Relu ), inputs = import/res1/residual/conv/conv:0, outputs = import/res1/residual/Relu:0
+86: op name = import/res1/residual/Relu, op type = ( Relu ), inputs = import/res1/residual/conv/conv:0, outputs = import/res1/residual/Relu:0
 @input shapes:
-name = import/res1/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res1/residual/conv/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res1/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res1/residual/Relu:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-93: op name = import/res1/residual/Equal, op type = ( Equal ), inputs = import/res1/residual/Relu:0, import/res1/residual/Relu:0, outputs = import/res1/residual/Equal:0
+87: op name = import/res1/residual/Equal, op type = ( Equal ), inputs = import/res1/residual/Relu:0, import/res1/residual/Relu:0, outputs = import/res1/residual/Equal:0
 @input shapes:
-name = import/res1/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res1/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res1/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res1/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res1/residual/Equal:0 : (1, 69, 69, 128)
+name = import/res1/residual/Equal:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-94: op name = import/res1/residual/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/res1/residual/zeros_like/shape_as_tensor:0
+88: op name = import/res1/residual/zeros_like, op type = ( ZerosLike ), inputs = import/res1/residual/Relu:0, outputs = import/res1/residual/zeros_like:0
 @input shapes:
+name = import/res1/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res1/residual/zeros_like/shape_as_tensor:0 : (4,)
+name = import/res1/residual/zeros_like:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-95: op name = import/res1/residual/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/res1/residual/zeros_like/Const:0
+89: op name = import/res1/residual/Select, op type = ( Select ), inputs = import/res1/residual/Equal:0, import/res1/residual/Relu:0, import/res1/residual/zeros_like:0, outputs = import/res1/residual/Select:0
 @input shapes:
+name = import/res1/residual/Equal:0 : (1, ?, ?, 128)
+name = import/res1/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res1/residual/zeros_like:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res1/residual/zeros_like/Const:0 : ()
+name = import/res1/residual/Select:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-96: op name = import/res1/residual/zeros_like, op type = ( Fill ), inputs = import/res1/residual/zeros_like/shape_as_tensor:0, import/res1/residual/zeros_like/Const:0, outputs = import/res1/residual/zeros_like:0
-@input shapes:
-name = import/res1/residual/zeros_like/shape_as_tensor:0 : (4,)
-name = import/res1/residual/zeros_like/Const:0 : ()
-@output shapes:
-name = import/res1/residual/zeros_like:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-97: op name = import/res1/residual/Select, op type = ( Select ), inputs = import/res1/residual/Equal:0, import/res1/residual/Relu:0, import/res1/residual/zeros_like:0, outputs = import/res1/residual/Select:0
-@input shapes:
-name = import/res1/residual/Equal:0 : (1, 69, 69, 128)
-name = import/res1/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res1/residual/zeros_like:0 : (1, 69, 69, 128)
-@output shapes:
-name = import/res1/residual/Select:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-98: op name = import/res1/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res1/residual/conv_1/weight:0
+90: op name = import/res1/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res1/residual/conv_1/weight:0
 @input shapes:
 @output shapes:
 name = import/res1/residual/conv_1/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-99: op name = import/res1/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res1/residual/conv_1/weight:0, outputs = import/res1/residual/conv_1/weight/read:0
+91: op name = import/res1/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res1/residual/conv_1/weight:0, outputs = import/res1/residual/conv_1/weight/read:0
 @input shapes:
 name = import/res1/residual/conv_1/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res1/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-100: op name = import/res1/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res1/residual/conv_1/MirrorPad/paddings:0
+92: op name = import/res1/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res1/residual/conv_1/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res1/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-101: op name = import/res1/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res1/residual/Select:0, import/res1/residual/conv_1/MirrorPad/paddings:0, outputs = import/res1/residual/conv_1/MirrorPad:0
+93: op name = import/res1/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res1/residual/Select:0, import/res1/residual/conv_1/MirrorPad/paddings:0, outputs = import/res1/residual/conv_1/MirrorPad:0
 @input shapes:
-name = import/res1/residual/Select:0 : (1, 69, 69, 128)
+name = import/res1/residual/Select:0 : (1, ?, ?, 128)
 name = import/res1/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res1/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res1/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-102: op name = import/res1/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res1/residual/conv_1/MirrorPad:0, import/res1/residual/conv_1/weight/read:0, outputs = import/res1/residual/conv_1/conv:0
+94: op name = import/res1/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res1/residual/conv_1/MirrorPad:0, import/res1/residual/conv_1/weight/read:0, outputs = import/res1/residual/conv_1/conv:0
 @input shapes:
-name = import/res1/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res1/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res1/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res1/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res1/residual/conv_1/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-103: op name = import/res1/residual/add, op type = ( Add ), inputs = import/conv3/Select:0, import/res1/residual/conv_1/conv:0, outputs = import/res1/residual/add:0
+95: op name = import/res1/residual/add, op type = ( Add ), inputs = import/conv3/Select:0, import/res1/residual/conv_1/conv:0, outputs = import/res1/residual/add:0
 @input shapes:
-name = import/conv3/Select:0 : (1, 69, 69, 128)
-name = import/res1/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/conv3/Select:0 : (1, ?, ?, 128)
+name = import/res1/residual/conv_1/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res1/residual/add:0 : (1, 69, 69, 128)
+name = import/res1/residual/add:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-104: op name = import/res2/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res2/residual/conv/weight:0
+96: op name = import/res2/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res2/residual/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/res2/residual/conv/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-105: op name = import/res2/residual/conv/weight/read, op type = ( Identity ), inputs = import/res2/residual/conv/weight:0, outputs = import/res2/residual/conv/weight/read:0
+97: op name = import/res2/residual/conv/weight/read, op type = ( Identity ), inputs = import/res2/residual/conv/weight:0, outputs = import/res2/residual/conv/weight/read:0
 @input shapes:
 name = import/res2/residual/conv/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res2/residual/conv/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-106: op name = import/res2/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res2/residual/conv/MirrorPad/paddings:0
+98: op name = import/res2/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res2/residual/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res2/residual/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-107: op name = import/res2/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res1/residual/add:0, import/res2/residual/conv/MirrorPad/paddings:0, outputs = import/res2/residual/conv/MirrorPad:0
+99: op name = import/res2/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res1/residual/add:0, import/res2/residual/conv/MirrorPad/paddings:0, outputs = import/res2/residual/conv/MirrorPad:0
 @input shapes:
-name = import/res1/residual/add:0 : (1, 69, 69, 128)
+name = import/res1/residual/add:0 : (1, ?, ?, 128)
 name = import/res2/residual/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res2/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res2/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-108: op name = import/res2/residual/conv/conv, op type = ( Conv2D ), inputs = import/res2/residual/conv/MirrorPad:0, import/res2/residual/conv/weight/read:0, outputs = import/res2/residual/conv/conv:0
+100: op name = import/res2/residual/conv/conv, op type = ( Conv2D ), inputs = import/res2/residual/conv/MirrorPad:0, import/res2/residual/conv/weight/read:0, outputs = import/res2/residual/conv/conv:0
 @input shapes:
-name = import/res2/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res2/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res2/residual/conv/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res2/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res2/residual/conv/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-109: op name = import/res2/residual/Relu, op type = ( Relu ), inputs = import/res2/residual/conv/conv:0, outputs = import/res2/residual/Relu:0
+101: op name = import/res2/residual/Relu, op type = ( Relu ), inputs = import/res2/residual/conv/conv:0, outputs = import/res2/residual/Relu:0
 @input shapes:
-name = import/res2/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res2/residual/conv/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res2/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res2/residual/Relu:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-110: op name = import/res2/residual/Equal, op type = ( Equal ), inputs = import/res2/residual/Relu:0, import/res2/residual/Relu:0, outputs = import/res2/residual/Equal:0
+102: op name = import/res2/residual/Equal, op type = ( Equal ), inputs = import/res2/residual/Relu:0, import/res2/residual/Relu:0, outputs = import/res2/residual/Equal:0
 @input shapes:
-name = import/res2/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res2/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res2/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res2/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res2/residual/Equal:0 : (1, 69, 69, 128)
+name = import/res2/residual/Equal:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-111: op name = import/res2/residual/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/res2/residual/zeros_like/shape_as_tensor:0
+103: op name = import/res2/residual/zeros_like, op type = ( ZerosLike ), inputs = import/res2/residual/Relu:0, outputs = import/res2/residual/zeros_like:0
 @input shapes:
+name = import/res2/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res2/residual/zeros_like/shape_as_tensor:0 : (4,)
+name = import/res2/residual/zeros_like:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-112: op name = import/res2/residual/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/res2/residual/zeros_like/Const:0
+104: op name = import/res2/residual/Select, op type = ( Select ), inputs = import/res2/residual/Equal:0, import/res2/residual/Relu:0, import/res2/residual/zeros_like:0, outputs = import/res2/residual/Select:0
 @input shapes:
+name = import/res2/residual/Equal:0 : (1, ?, ?, 128)
+name = import/res2/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res2/residual/zeros_like:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res2/residual/zeros_like/Const:0 : ()
+name = import/res2/residual/Select:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-113: op name = import/res2/residual/zeros_like, op type = ( Fill ), inputs = import/res2/residual/zeros_like/shape_as_tensor:0, import/res2/residual/zeros_like/Const:0, outputs = import/res2/residual/zeros_like:0
-@input shapes:
-name = import/res2/residual/zeros_like/shape_as_tensor:0 : (4,)
-name = import/res2/residual/zeros_like/Const:0 : ()
-@output shapes:
-name = import/res2/residual/zeros_like:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-114: op name = import/res2/residual/Select, op type = ( Select ), inputs = import/res2/residual/Equal:0, import/res2/residual/Relu:0, import/res2/residual/zeros_like:0, outputs = import/res2/residual/Select:0
-@input shapes:
-name = import/res2/residual/Equal:0 : (1, 69, 69, 128)
-name = import/res2/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res2/residual/zeros_like:0 : (1, 69, 69, 128)
-@output shapes:
-name = import/res2/residual/Select:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-115: op name = import/res2/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res2/residual/conv_1/weight:0
+105: op name = import/res2/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res2/residual/conv_1/weight:0
 @input shapes:
 @output shapes:
 name = import/res2/residual/conv_1/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-116: op name = import/res2/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res2/residual/conv_1/weight:0, outputs = import/res2/residual/conv_1/weight/read:0
+106: op name = import/res2/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res2/residual/conv_1/weight:0, outputs = import/res2/residual/conv_1/weight/read:0
 @input shapes:
 name = import/res2/residual/conv_1/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res2/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-117: op name = import/res2/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res2/residual/conv_1/MirrorPad/paddings:0
+107: op name = import/res2/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res2/residual/conv_1/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res2/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-118: op name = import/res2/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res2/residual/Select:0, import/res2/residual/conv_1/MirrorPad/paddings:0, outputs = import/res2/residual/conv_1/MirrorPad:0
+108: op name = import/res2/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res2/residual/Select:0, import/res2/residual/conv_1/MirrorPad/paddings:0, outputs = import/res2/residual/conv_1/MirrorPad:0
 @input shapes:
-name = import/res2/residual/Select:0 : (1, 69, 69, 128)
+name = import/res2/residual/Select:0 : (1, ?, ?, 128)
 name = import/res2/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res2/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res2/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-119: op name = import/res2/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res2/residual/conv_1/MirrorPad:0, import/res2/residual/conv_1/weight/read:0, outputs = import/res2/residual/conv_1/conv:0
+109: op name = import/res2/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res2/residual/conv_1/MirrorPad:0, import/res2/residual/conv_1/weight/read:0, outputs = import/res2/residual/conv_1/conv:0
 @input shapes:
-name = import/res2/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res2/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res2/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res2/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res2/residual/conv_1/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-120: op name = import/res2/residual/add, op type = ( Add ), inputs = import/res1/residual/add:0, import/res2/residual/conv_1/conv:0, outputs = import/res2/residual/add:0
+110: op name = import/res2/residual/add, op type = ( Add ), inputs = import/res1/residual/add:0, import/res2/residual/conv_1/conv:0, outputs = import/res2/residual/add:0
 @input shapes:
-name = import/res1/residual/add:0 : (1, 69, 69, 128)
-name = import/res2/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res1/residual/add:0 : (1, ?, ?, 128)
+name = import/res2/residual/conv_1/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res2/residual/add:0 : (1, 69, 69, 128)
+name = import/res2/residual/add:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-121: op name = import/res3/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res3/residual/conv/weight:0
+111: op name = import/res3/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res3/residual/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/res3/residual/conv/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-122: op name = import/res3/residual/conv/weight/read, op type = ( Identity ), inputs = import/res3/residual/conv/weight:0, outputs = import/res3/residual/conv/weight/read:0
+112: op name = import/res3/residual/conv/weight/read, op type = ( Identity ), inputs = import/res3/residual/conv/weight:0, outputs = import/res3/residual/conv/weight/read:0
 @input shapes:
 name = import/res3/residual/conv/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res3/residual/conv/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-123: op name = import/res3/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res3/residual/conv/MirrorPad/paddings:0
+113: op name = import/res3/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res3/residual/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res3/residual/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-124: op name = import/res3/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res2/residual/add:0, import/res3/residual/conv/MirrorPad/paddings:0, outputs = import/res3/residual/conv/MirrorPad:0
+114: op name = import/res3/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res2/residual/add:0, import/res3/residual/conv/MirrorPad/paddings:0, outputs = import/res3/residual/conv/MirrorPad:0
 @input shapes:
-name = import/res2/residual/add:0 : (1, 69, 69, 128)
+name = import/res2/residual/add:0 : (1, ?, ?, 128)
 name = import/res3/residual/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res3/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res3/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-125: op name = import/res3/residual/conv/conv, op type = ( Conv2D ), inputs = import/res3/residual/conv/MirrorPad:0, import/res3/residual/conv/weight/read:0, outputs = import/res3/residual/conv/conv:0
+115: op name = import/res3/residual/conv/conv, op type = ( Conv2D ), inputs = import/res3/residual/conv/MirrorPad:0, import/res3/residual/conv/weight/read:0, outputs = import/res3/residual/conv/conv:0
 @input shapes:
-name = import/res3/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res3/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res3/residual/conv/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res3/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res3/residual/conv/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-126: op name = import/res3/residual/Relu, op type = ( Relu ), inputs = import/res3/residual/conv/conv:0, outputs = import/res3/residual/Relu:0
+116: op name = import/res3/residual/Relu, op type = ( Relu ), inputs = import/res3/residual/conv/conv:0, outputs = import/res3/residual/Relu:0
 @input shapes:
-name = import/res3/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res3/residual/conv/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res3/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res3/residual/Relu:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-127: op name = import/res3/residual/Equal, op type = ( Equal ), inputs = import/res3/residual/Relu:0, import/res3/residual/Relu:0, outputs = import/res3/residual/Equal:0
+117: op name = import/res3/residual/Equal, op type = ( Equal ), inputs = import/res3/residual/Relu:0, import/res3/residual/Relu:0, outputs = import/res3/residual/Equal:0
 @input shapes:
-name = import/res3/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res3/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res3/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res3/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res3/residual/Equal:0 : (1, 69, 69, 128)
+name = import/res3/residual/Equal:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-128: op name = import/res3/residual/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/res3/residual/zeros_like/shape_as_tensor:0
+118: op name = import/res3/residual/zeros_like, op type = ( ZerosLike ), inputs = import/res3/residual/Relu:0, outputs = import/res3/residual/zeros_like:0
 @input shapes:
+name = import/res3/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res3/residual/zeros_like/shape_as_tensor:0 : (4,)
+name = import/res3/residual/zeros_like:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-129: op name = import/res3/residual/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/res3/residual/zeros_like/Const:0
+119: op name = import/res3/residual/Select, op type = ( Select ), inputs = import/res3/residual/Equal:0, import/res3/residual/Relu:0, import/res3/residual/zeros_like:0, outputs = import/res3/residual/Select:0
 @input shapes:
+name = import/res3/residual/Equal:0 : (1, ?, ?, 128)
+name = import/res3/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res3/residual/zeros_like:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res3/residual/zeros_like/Const:0 : ()
+name = import/res3/residual/Select:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-130: op name = import/res3/residual/zeros_like, op type = ( Fill ), inputs = import/res3/residual/zeros_like/shape_as_tensor:0, import/res3/residual/zeros_like/Const:0, outputs = import/res3/residual/zeros_like:0
-@input shapes:
-name = import/res3/residual/zeros_like/shape_as_tensor:0 : (4,)
-name = import/res3/residual/zeros_like/Const:0 : ()
-@output shapes:
-name = import/res3/residual/zeros_like:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-131: op name = import/res3/residual/Select, op type = ( Select ), inputs = import/res3/residual/Equal:0, import/res3/residual/Relu:0, import/res3/residual/zeros_like:0, outputs = import/res3/residual/Select:0
-@input shapes:
-name = import/res3/residual/Equal:0 : (1, 69, 69, 128)
-name = import/res3/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res3/residual/zeros_like:0 : (1, 69, 69, 128)
-@output shapes:
-name = import/res3/residual/Select:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-132: op name = import/res3/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res3/residual/conv_1/weight:0
+120: op name = import/res3/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res3/residual/conv_1/weight:0
 @input shapes:
 @output shapes:
 name = import/res3/residual/conv_1/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-133: op name = import/res3/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res3/residual/conv_1/weight:0, outputs = import/res3/residual/conv_1/weight/read:0
+121: op name = import/res3/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res3/residual/conv_1/weight:0, outputs = import/res3/residual/conv_1/weight/read:0
 @input shapes:
 name = import/res3/residual/conv_1/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res3/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-134: op name = import/res3/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res3/residual/conv_1/MirrorPad/paddings:0
+122: op name = import/res3/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res3/residual/conv_1/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res3/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-135: op name = import/res3/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res3/residual/Select:0, import/res3/residual/conv_1/MirrorPad/paddings:0, outputs = import/res3/residual/conv_1/MirrorPad:0
+123: op name = import/res3/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res3/residual/Select:0, import/res3/residual/conv_1/MirrorPad/paddings:0, outputs = import/res3/residual/conv_1/MirrorPad:0
 @input shapes:
-name = import/res3/residual/Select:0 : (1, 69, 69, 128)
+name = import/res3/residual/Select:0 : (1, ?, ?, 128)
 name = import/res3/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res3/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res3/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-136: op name = import/res3/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res3/residual/conv_1/MirrorPad:0, import/res3/residual/conv_1/weight/read:0, outputs = import/res3/residual/conv_1/conv:0
+124: op name = import/res3/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res3/residual/conv_1/MirrorPad:0, import/res3/residual/conv_1/weight/read:0, outputs = import/res3/residual/conv_1/conv:0
 @input shapes:
-name = import/res3/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res3/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res3/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res3/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res3/residual/conv_1/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-137: op name = import/res3/residual/add, op type = ( Add ), inputs = import/res2/residual/add:0, import/res3/residual/conv_1/conv:0, outputs = import/res3/residual/add:0
+125: op name = import/res3/residual/add, op type = ( Add ), inputs = import/res2/residual/add:0, import/res3/residual/conv_1/conv:0, outputs = import/res3/residual/add:0
 @input shapes:
-name = import/res2/residual/add:0 : (1, 69, 69, 128)
-name = import/res3/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res2/residual/add:0 : (1, ?, ?, 128)
+name = import/res3/residual/conv_1/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res3/residual/add:0 : (1, 69, 69, 128)
+name = import/res3/residual/add:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-138: op name = import/res4/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res4/residual/conv/weight:0
+126: op name = import/res4/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res4/residual/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/res4/residual/conv/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-139: op name = import/res4/residual/conv/weight/read, op type = ( Identity ), inputs = import/res4/residual/conv/weight:0, outputs = import/res4/residual/conv/weight/read:0
+127: op name = import/res4/residual/conv/weight/read, op type = ( Identity ), inputs = import/res4/residual/conv/weight:0, outputs = import/res4/residual/conv/weight/read:0
 @input shapes:
 name = import/res4/residual/conv/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res4/residual/conv/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-140: op name = import/res4/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res4/residual/conv/MirrorPad/paddings:0
+128: op name = import/res4/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res4/residual/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res4/residual/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-141: op name = import/res4/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res3/residual/add:0, import/res4/residual/conv/MirrorPad/paddings:0, outputs = import/res4/residual/conv/MirrorPad:0
+129: op name = import/res4/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res3/residual/add:0, import/res4/residual/conv/MirrorPad/paddings:0, outputs = import/res4/residual/conv/MirrorPad:0
 @input shapes:
-name = import/res3/residual/add:0 : (1, 69, 69, 128)
+name = import/res3/residual/add:0 : (1, ?, ?, 128)
 name = import/res4/residual/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res4/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res4/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-142: op name = import/res4/residual/conv/conv, op type = ( Conv2D ), inputs = import/res4/residual/conv/MirrorPad:0, import/res4/residual/conv/weight/read:0, outputs = import/res4/residual/conv/conv:0
+130: op name = import/res4/residual/conv/conv, op type = ( Conv2D ), inputs = import/res4/residual/conv/MirrorPad:0, import/res4/residual/conv/weight/read:0, outputs = import/res4/residual/conv/conv:0
 @input shapes:
-name = import/res4/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res4/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res4/residual/conv/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res4/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res4/residual/conv/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-143: op name = import/res4/residual/Relu, op type = ( Relu ), inputs = import/res4/residual/conv/conv:0, outputs = import/res4/residual/Relu:0
+131: op name = import/res4/residual/Relu, op type = ( Relu ), inputs = import/res4/residual/conv/conv:0, outputs = import/res4/residual/Relu:0
 @input shapes:
-name = import/res4/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res4/residual/conv/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res4/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res4/residual/Relu:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-144: op name = import/res4/residual/Equal, op type = ( Equal ), inputs = import/res4/residual/Relu:0, import/res4/residual/Relu:0, outputs = import/res4/residual/Equal:0
+132: op name = import/res4/residual/Equal, op type = ( Equal ), inputs = import/res4/residual/Relu:0, import/res4/residual/Relu:0, outputs = import/res4/residual/Equal:0
 @input shapes:
-name = import/res4/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res4/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res4/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res4/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res4/residual/Equal:0 : (1, 69, 69, 128)
+name = import/res4/residual/Equal:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-145: op name = import/res4/residual/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/res4/residual/zeros_like/shape_as_tensor:0
+133: op name = import/res4/residual/zeros_like, op type = ( ZerosLike ), inputs = import/res4/residual/Relu:0, outputs = import/res4/residual/zeros_like:0
 @input shapes:
+name = import/res4/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res4/residual/zeros_like/shape_as_tensor:0 : (4,)
+name = import/res4/residual/zeros_like:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-146: op name = import/res4/residual/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/res4/residual/zeros_like/Const:0
+134: op name = import/res4/residual/Select, op type = ( Select ), inputs = import/res4/residual/Equal:0, import/res4/residual/Relu:0, import/res4/residual/zeros_like:0, outputs = import/res4/residual/Select:0
 @input shapes:
+name = import/res4/residual/Equal:0 : (1, ?, ?, 128)
+name = import/res4/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res4/residual/zeros_like:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res4/residual/zeros_like/Const:0 : ()
+name = import/res4/residual/Select:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-147: op name = import/res4/residual/zeros_like, op type = ( Fill ), inputs = import/res4/residual/zeros_like/shape_as_tensor:0, import/res4/residual/zeros_like/Const:0, outputs = import/res4/residual/zeros_like:0
-@input shapes:
-name = import/res4/residual/zeros_like/shape_as_tensor:0 : (4,)
-name = import/res4/residual/zeros_like/Const:0 : ()
-@output shapes:
-name = import/res4/residual/zeros_like:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-148: op name = import/res4/residual/Select, op type = ( Select ), inputs = import/res4/residual/Equal:0, import/res4/residual/Relu:0, import/res4/residual/zeros_like:0, outputs = import/res4/residual/Select:0
-@input shapes:
-name = import/res4/residual/Equal:0 : (1, 69, 69, 128)
-name = import/res4/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res4/residual/zeros_like:0 : (1, 69, 69, 128)
-@output shapes:
-name = import/res4/residual/Select:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-149: op name = import/res4/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res4/residual/conv_1/weight:0
+135: op name = import/res4/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res4/residual/conv_1/weight:0
 @input shapes:
 @output shapes:
 name = import/res4/residual/conv_1/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-150: op name = import/res4/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res4/residual/conv_1/weight:0, outputs = import/res4/residual/conv_1/weight/read:0
+136: op name = import/res4/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res4/residual/conv_1/weight:0, outputs = import/res4/residual/conv_1/weight/read:0
 @input shapes:
 name = import/res4/residual/conv_1/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res4/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-151: op name = import/res4/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res4/residual/conv_1/MirrorPad/paddings:0
+137: op name = import/res4/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res4/residual/conv_1/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res4/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-152: op name = import/res4/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res4/residual/Select:0, import/res4/residual/conv_1/MirrorPad/paddings:0, outputs = import/res4/residual/conv_1/MirrorPad:0
+138: op name = import/res4/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res4/residual/Select:0, import/res4/residual/conv_1/MirrorPad/paddings:0, outputs = import/res4/residual/conv_1/MirrorPad:0
 @input shapes:
-name = import/res4/residual/Select:0 : (1, 69, 69, 128)
+name = import/res4/residual/Select:0 : (1, ?, ?, 128)
 name = import/res4/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res4/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res4/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-153: op name = import/res4/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res4/residual/conv_1/MirrorPad:0, import/res4/residual/conv_1/weight/read:0, outputs = import/res4/residual/conv_1/conv:0
+139: op name = import/res4/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res4/residual/conv_1/MirrorPad:0, import/res4/residual/conv_1/weight/read:0, outputs = import/res4/residual/conv_1/conv:0
 @input shapes:
-name = import/res4/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res4/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res4/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res4/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res4/residual/conv_1/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-154: op name = import/res4/residual/add, op type = ( Add ), inputs = import/res3/residual/add:0, import/res4/residual/conv_1/conv:0, outputs = import/res4/residual/add:0
+140: op name = import/res4/residual/add, op type = ( Add ), inputs = import/res3/residual/add:0, import/res4/residual/conv_1/conv:0, outputs = import/res4/residual/add:0
 @input shapes:
-name = import/res3/residual/add:0 : (1, 69, 69, 128)
-name = import/res4/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res3/residual/add:0 : (1, ?, ?, 128)
+name = import/res4/residual/conv_1/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res4/residual/add:0 : (1, 69, 69, 128)
+name = import/res4/residual/add:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-155: op name = import/res5/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res5/residual/conv/weight:0
+141: op name = import/res5/residual/conv/weight, op type = ( Const ), inputs = , outputs = import/res5/residual/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/res5/residual/conv/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-156: op name = import/res5/residual/conv/weight/read, op type = ( Identity ), inputs = import/res5/residual/conv/weight:0, outputs = import/res5/residual/conv/weight/read:0
+142: op name = import/res5/residual/conv/weight/read, op type = ( Identity ), inputs = import/res5/residual/conv/weight:0, outputs = import/res5/residual/conv/weight/read:0
 @input shapes:
 name = import/res5/residual/conv/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res5/residual/conv/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-157: op name = import/res5/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res5/residual/conv/MirrorPad/paddings:0
+143: op name = import/res5/residual/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res5/residual/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res5/residual/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-158: op name = import/res5/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res4/residual/add:0, import/res5/residual/conv/MirrorPad/paddings:0, outputs = import/res5/residual/conv/MirrorPad:0
+144: op name = import/res5/residual/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/res4/residual/add:0, import/res5/residual/conv/MirrorPad/paddings:0, outputs = import/res5/residual/conv/MirrorPad:0
 @input shapes:
-name = import/res4/residual/add:0 : (1, 69, 69, 128)
+name = import/res4/residual/add:0 : (1, ?, ?, 128)
 name = import/res5/residual/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res5/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res5/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-159: op name = import/res5/residual/conv/conv, op type = ( Conv2D ), inputs = import/res5/residual/conv/MirrorPad:0, import/res5/residual/conv/weight/read:0, outputs = import/res5/residual/conv/conv:0
+145: op name = import/res5/residual/conv/conv, op type = ( Conv2D ), inputs = import/res5/residual/conv/MirrorPad:0, import/res5/residual/conv/weight/read:0, outputs = import/res5/residual/conv/conv:0
 @input shapes:
-name = import/res5/residual/conv/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res5/residual/conv/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res5/residual/conv/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res5/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res5/residual/conv/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-160: op name = import/res5/residual/Relu, op type = ( Relu ), inputs = import/res5/residual/conv/conv:0, outputs = import/res5/residual/Relu:0
+146: op name = import/res5/residual/Relu, op type = ( Relu ), inputs = import/res5/residual/conv/conv:0, outputs = import/res5/residual/Relu:0
 @input shapes:
-name = import/res5/residual/conv/conv:0 : (1, 69, 69, 128)
+name = import/res5/residual/conv/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res5/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res5/residual/Relu:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-161: op name = import/res5/residual/Equal, op type = ( Equal ), inputs = import/res5/residual/Relu:0, import/res5/residual/Relu:0, outputs = import/res5/residual/Equal:0
+147: op name = import/res5/residual/Equal, op type = ( Equal ), inputs = import/res5/residual/Relu:0, import/res5/residual/Relu:0, outputs = import/res5/residual/Equal:0
 @input shapes:
-name = import/res5/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res5/residual/Relu:0 : (1, 69, 69, 128)
+name = import/res5/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res5/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res5/residual/Equal:0 : (1, 69, 69, 128)
+name = import/res5/residual/Equal:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-162: op name = import/res5/residual/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/res5/residual/zeros_like/shape_as_tensor:0
+148: op name = import/res5/residual/zeros_like, op type = ( ZerosLike ), inputs = import/res5/residual/Relu:0, outputs = import/res5/residual/zeros_like:0
 @input shapes:
+name = import/res5/residual/Relu:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res5/residual/zeros_like/shape_as_tensor:0 : (4,)
+name = import/res5/residual/zeros_like:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-163: op name = import/res5/residual/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/res5/residual/zeros_like/Const:0
+149: op name = import/res5/residual/Select, op type = ( Select ), inputs = import/res5/residual/Equal:0, import/res5/residual/Relu:0, import/res5/residual/zeros_like:0, outputs = import/res5/residual/Select:0
 @input shapes:
+name = import/res5/residual/Equal:0 : (1, ?, ?, 128)
+name = import/res5/residual/Relu:0 : (1, ?, ?, 128)
+name = import/res5/residual/zeros_like:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res5/residual/zeros_like/Const:0 : ()
+name = import/res5/residual/Select:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-164: op name = import/res5/residual/zeros_like, op type = ( Fill ), inputs = import/res5/residual/zeros_like/shape_as_tensor:0, import/res5/residual/zeros_like/Const:0, outputs = import/res5/residual/zeros_like:0
-@input shapes:
-name = import/res5/residual/zeros_like/shape_as_tensor:0 : (4,)
-name = import/res5/residual/zeros_like/Const:0 : ()
-@output shapes:
-name = import/res5/residual/zeros_like:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-165: op name = import/res5/residual/Select, op type = ( Select ), inputs = import/res5/residual/Equal:0, import/res5/residual/Relu:0, import/res5/residual/zeros_like:0, outputs = import/res5/residual/Select:0
-@input shapes:
-name = import/res5/residual/Equal:0 : (1, 69, 69, 128)
-name = import/res5/residual/Relu:0 : (1, 69, 69, 128)
-name = import/res5/residual/zeros_like:0 : (1, 69, 69, 128)
-@output shapes:
-name = import/res5/residual/Select:0 : (1, 69, 69, 128)
----------------------------------------------------------------------------------------------------------------------------------------------
-166: op name = import/res5/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res5/residual/conv_1/weight:0
+150: op name = import/res5/residual/conv_1/weight, op type = ( Const ), inputs = , outputs = import/res5/residual/conv_1/weight:0
 @input shapes:
 @output shapes:
 name = import/res5/residual/conv_1/weight:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-167: op name = import/res5/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res5/residual/conv_1/weight:0, outputs = import/res5/residual/conv_1/weight/read:0
+151: op name = import/res5/residual/conv_1/weight/read, op type = ( Identity ), inputs = import/res5/residual/conv_1/weight:0, outputs = import/res5/residual/conv_1/weight/read:0
 @input shapes:
 name = import/res5/residual/conv_1/weight:0 : (3, 3, 128, 128)
 @output shapes:
 name = import/res5/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-168: op name = import/res5/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res5/residual/conv_1/MirrorPad/paddings:0
+152: op name = import/res5/residual/conv_1/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/res5/residual/conv_1/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/res5/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-169: op name = import/res5/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res5/residual/Select:0, import/res5/residual/conv_1/MirrorPad/paddings:0, outputs = import/res5/residual/conv_1/MirrorPad:0
+153: op name = import/res5/residual/conv_1/MirrorPad, op type = ( MirrorPad ), inputs = import/res5/residual/Select:0, import/res5/residual/conv_1/MirrorPad/paddings:0, outputs = import/res5/residual/conv_1/MirrorPad:0
 @input shapes:
-name = import/res5/residual/Select:0 : (1, 69, 69, 128)
+name = import/res5/residual/Select:0 : (1, ?, ?, 128)
 name = import/res5/residual/conv_1/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/res5/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res5/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-170: op name = import/res5/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res5/residual/conv_1/MirrorPad:0, import/res5/residual/conv_1/weight/read:0, outputs = import/res5/residual/conv_1/conv:0
+154: op name = import/res5/residual/conv_1/conv, op type = ( Conv2D ), inputs = import/res5/residual/conv_1/MirrorPad:0, import/res5/residual/conv_1/weight/read:0, outputs = import/res5/residual/conv_1/conv:0
 @input shapes:
-name = import/res5/residual/conv_1/MirrorPad:0 : (1, 71, 71, 128)
+name = import/res5/residual/conv_1/MirrorPad:0 : (1, ?, ?, 128)
 name = import/res5/residual/conv_1/weight/read:0 : (3, 3, 128, 128)
 @output shapes:
-name = import/res5/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res5/residual/conv_1/conv:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-171: op name = import/res5/residual/add, op type = ( Add ), inputs = import/res4/residual/add:0, import/res5/residual/conv_1/conv:0, outputs = import/res5/residual/add:0
+155: op name = import/res5/residual/add, op type = ( Add ), inputs = import/res4/residual/add:0, import/res5/residual/conv_1/conv:0, outputs = import/res5/residual/add:0
 @input shapes:
-name = import/res4/residual/add:0 : (1, 69, 69, 128)
-name = import/res5/residual/conv_1/conv:0 : (1, 69, 69, 128)
+name = import/res4/residual/add:0 : (1, ?, ?, 128)
+name = import/res5/residual/conv_1/conv:0 : (1, ?, ?, 128)
 @output shapes:
-name = import/res5/residual/add:0 : (1, 69, 69, 128)
+name = import/res5/residual/add:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-172: op name = import/deconv1/conv_transpose/Shape, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/Shape:0
+156: op name = import/deconv1/conv_transpose/Shape, op type = ( Shape ), inputs = import/res5/residual/add:0, outputs = import/deconv1/conv_transpose/Shape:0
 @input shapes:
+name = import/res5/residual/add:0 : (1, ?, ?, 128)
 @output shapes:
 name = import/deconv1/conv_transpose/Shape:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-173: op name = import/deconv1/conv_transpose/strided_slice/stack, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice/stack:0
+157: op name = import/deconv1/conv_transpose/strided_slice/stack, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice/stack:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice/stack:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-174: op name = import/deconv1/conv_transpose/strided_slice/stack_1, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice/stack_1:0
+158: op name = import/deconv1/conv_transpose/strided_slice/stack_1, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice/stack_1:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice/stack_1:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-175: op name = import/deconv1/conv_transpose/strided_slice/stack_2, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice/stack_2:0
+159: op name = import/deconv1/conv_transpose/strided_slice/stack_2, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice/stack_2:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice/stack_2:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-176: op name = import/deconv1/conv_transpose/strided_slice, op type = ( StridedSlice ), inputs = import/deconv1/conv_transpose/Shape:0, import/deconv1/conv_transpose/strided_slice/stack:0, import/deconv1/conv_transpose/strided_slice/stack_1:0, import/deconv1/conv_transpose/strided_slice/stack_2:0, outputs = import/deconv1/conv_transpose/strided_slice:0
+160: op name = import/deconv1/conv_transpose/strided_slice, op type = ( StridedSlice ), inputs = import/deconv1/conv_transpose/Shape:0, import/deconv1/conv_transpose/strided_slice/stack:0, import/deconv1/conv_transpose/strided_slice/stack_1:0, import/deconv1/conv_transpose/strided_slice/stack_2:0, outputs = import/deconv1/conv_transpose/strided_slice:0
 @input shapes:
 name = import/deconv1/conv_transpose/Shape:0 : (4,)
 name = import/deconv1/conv_transpose/strided_slice/stack:0 : (1,)
@@ -1093,27 +1006,28 @@ name = import/deconv1/conv_transpose/strided_slice/stack_2:0 : (1,)
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-177: op name = import/deconv1/conv_transpose/Shape_1, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/Shape_1:0
+161: op name = import/deconv1/conv_transpose/Shape_1, op type = ( Shape ), inputs = import/res5/residual/add:0, outputs = import/deconv1/conv_transpose/Shape_1:0
 @input shapes:
+name = import/res5/residual/add:0 : (1, ?, ?, 128)
 @output shapes:
 name = import/deconv1/conv_transpose/Shape_1:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-178: op name = import/deconv1/conv_transpose/strided_slice_1/stack, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice_1/stack:0
+162: op name = import/deconv1/conv_transpose/strided_slice_1/stack, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice_1/stack:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice_1/stack:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-179: op name = import/deconv1/conv_transpose/strided_slice_1/stack_1, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice_1/stack_1:0
+163: op name = import/deconv1/conv_transpose/strided_slice_1/stack_1, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice_1/stack_1:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice_1/stack_1:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-180: op name = import/deconv1/conv_transpose/strided_slice_1/stack_2, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice_1/stack_2:0
+164: op name = import/deconv1/conv_transpose/strided_slice_1/stack_2, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/strided_slice_1/stack_2:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice_1/stack_2:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-181: op name = import/deconv1/conv_transpose/strided_slice_1, op type = ( StridedSlice ), inputs = import/deconv1/conv_transpose/Shape_1:0, import/deconv1/conv_transpose/strided_slice_1/stack:0, import/deconv1/conv_transpose/strided_slice_1/stack_1:0, import/deconv1/conv_transpose/strided_slice_1/stack_2:0, outputs = import/deconv1/conv_transpose/strided_slice_1:0
+165: op name = import/deconv1/conv_transpose/strided_slice_1, op type = ( StridedSlice ), inputs = import/deconv1/conv_transpose/Shape_1:0, import/deconv1/conv_transpose/strided_slice_1/stack:0, import/deconv1/conv_transpose/strided_slice_1/stack_1:0, import/deconv1/conv_transpose/strided_slice_1/stack_2:0, outputs = import/deconv1/conv_transpose/strided_slice_1:0
 @input shapes:
 name = import/deconv1/conv_transpose/Shape_1:0 : (4,)
 name = import/deconv1/conv_transpose/strided_slice_1/stack:0 : (1,)
@@ -1122,226 +1036,216 @@ name = import/deconv1/conv_transpose/strided_slice_1/stack_2:0 : (1,)
 @output shapes:
 name = import/deconv1/conv_transpose/strided_slice_1:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-182: op name = import/deconv1/conv_transpose/mul/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul/y:0
+166: op name = import/deconv1/conv_transpose/mul/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul/y:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/mul/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-183: op name = import/deconv1/conv_transpose/mul, op type = ( Mul ), inputs = import/deconv1/conv_transpose/strided_slice:0, import/deconv1/conv_transpose/mul/y:0, outputs = import/deconv1/conv_transpose/mul:0
+167: op name = import/deconv1/conv_transpose/mul, op type = ( Mul ), inputs = import/deconv1/conv_transpose/strided_slice:0, import/deconv1/conv_transpose/mul/y:0, outputs = import/deconv1/conv_transpose/mul:0
 @input shapes:
 name = import/deconv1/conv_transpose/strided_slice:0 : ()
 name = import/deconv1/conv_transpose/mul/y:0 : ()
 @output shapes:
 name = import/deconv1/conv_transpose/mul:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-184: op name = import/deconv1/conv_transpose/mul_1/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul_1/y:0
+168: op name = import/deconv1/conv_transpose/mul_1/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul_1/y:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/mul_1/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-185: op name = import/deconv1/conv_transpose/mul_1, op type = ( Mul ), inputs = import/deconv1/conv_transpose/mul:0, import/deconv1/conv_transpose/mul_1/y:0, outputs = import/deconv1/conv_transpose/mul_1:0
+169: op name = import/deconv1/conv_transpose/mul_1, op type = ( Mul ), inputs = import/deconv1/conv_transpose/mul:0, import/deconv1/conv_transpose/mul_1/y:0, outputs = import/deconv1/conv_transpose/mul_1:0
 @input shapes:
 name = import/deconv1/conv_transpose/mul:0 : ()
 name = import/deconv1/conv_transpose/mul_1/y:0 : ()
 @output shapes:
 name = import/deconv1/conv_transpose/mul_1:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-186: op name = import/deconv1/conv_transpose/mul_2/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul_2/y:0
+170: op name = import/deconv1/conv_transpose/mul_2/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul_2/y:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/mul_2/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-187: op name = import/deconv1/conv_transpose/mul_2, op type = ( Mul ), inputs = import/deconv1/conv_transpose/strided_slice_1:0, import/deconv1/conv_transpose/mul_2/y:0, outputs = import/deconv1/conv_transpose/mul_2:0
+171: op name = import/deconv1/conv_transpose/mul_2, op type = ( Mul ), inputs = import/deconv1/conv_transpose/strided_slice_1:0, import/deconv1/conv_transpose/mul_2/y:0, outputs = import/deconv1/conv_transpose/mul_2:0
 @input shapes:
 name = import/deconv1/conv_transpose/strided_slice_1:0 : ()
 name = import/deconv1/conv_transpose/mul_2/y:0 : ()
 @output shapes:
 name = import/deconv1/conv_transpose/mul_2:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-188: op name = import/deconv1/conv_transpose/mul_3/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul_3/y:0
+172: op name = import/deconv1/conv_transpose/mul_3/y, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/mul_3/y:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/mul_3/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-189: op name = import/deconv1/conv_transpose/mul_3, op type = ( Mul ), inputs = import/deconv1/conv_transpose/mul_2:0, import/deconv1/conv_transpose/mul_3/y:0, outputs = import/deconv1/conv_transpose/mul_3:0
+173: op name = import/deconv1/conv_transpose/mul_3, op type = ( Mul ), inputs = import/deconv1/conv_transpose/mul_2:0, import/deconv1/conv_transpose/mul_3/y:0, outputs = import/deconv1/conv_transpose/mul_3:0
 @input shapes:
 name = import/deconv1/conv_transpose/mul_2:0 : ()
 name = import/deconv1/conv_transpose/mul_3/y:0 : ()
 @output shapes:
 name = import/deconv1/conv_transpose/mul_3:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-190: op name = import/deconv1/conv_transpose/resize/size, op type = ( Pack ), inputs = import/deconv1/conv_transpose/mul_1:0, import/deconv1/conv_transpose/mul_3:0, outputs = import/deconv1/conv_transpose/resize/size:0
+174: op name = import/deconv1/conv_transpose/resize/size, op type = ( Pack ), inputs = import/deconv1/conv_transpose/mul_1:0, import/deconv1/conv_transpose/mul_3:0, outputs = import/deconv1/conv_transpose/resize/size:0
 @input shapes:
 name = import/deconv1/conv_transpose/mul_1:0 : ()
 name = import/deconv1/conv_transpose/mul_3:0 : ()
 @output shapes:
 name = import/deconv1/conv_transpose/resize/size:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-191: op name = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor, op type = ( ResizeNearestNeighbor ), inputs = import/res5/residual/add:0, import/deconv1/conv_transpose/resize/size:0, outputs = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0
+175: op name = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor, op type = ( ResizeNearestNeighbor ), inputs = import/res5/residual/add:0, import/deconv1/conv_transpose/resize/size:0, outputs = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0
 @input shapes:
-name = import/res5/residual/add:0 : (1, 69, 69, 128)
+name = import/res5/residual/add:0 : (1, ?, ?, 128)
 name = import/deconv1/conv_transpose/resize/size:0 : (2,)
 @output shapes:
-name = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, 276, 276, 128)
+name = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-192: op name = import/deconv1/conv_transpose/conv/weight, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/conv/weight:0
+176: op name = import/deconv1/conv_transpose/conv/weight, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/conv/weight:0 : (3, 3, 128, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-193: op name = import/deconv1/conv_transpose/conv/weight/read, op type = ( Identity ), inputs = import/deconv1/conv_transpose/conv/weight:0, outputs = import/deconv1/conv_transpose/conv/weight/read:0
+177: op name = import/deconv1/conv_transpose/conv/weight/read, op type = ( Identity ), inputs = import/deconv1/conv_transpose/conv/weight:0, outputs = import/deconv1/conv_transpose/conv/weight/read:0
 @input shapes:
 name = import/deconv1/conv_transpose/conv/weight:0 : (3, 3, 128, 64)
 @output shapes:
 name = import/deconv1/conv_transpose/conv/weight/read:0 : (3, 3, 128, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-194: op name = import/deconv1/conv_transpose/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/conv/MirrorPad/paddings:0
+178: op name = import/deconv1/conv_transpose/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/deconv1/conv_transpose/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/deconv1/conv_transpose/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-195: op name = import/deconv1/conv_transpose/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0, import/deconv1/conv_transpose/conv/MirrorPad/paddings:0, outputs = import/deconv1/conv_transpose/conv/MirrorPad:0
+179: op name = import/deconv1/conv_transpose/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0, import/deconv1/conv_transpose/conv/MirrorPad/paddings:0, outputs = import/deconv1/conv_transpose/conv/MirrorPad:0
 @input shapes:
-name = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, 276, 276, 128)
+name = import/deconv1/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, ?, ?, 128)
 name = import/deconv1/conv_transpose/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/deconv1/conv_transpose/conv/MirrorPad:0 : (1, 278, 278, 128)
+name = import/deconv1/conv_transpose/conv/MirrorPad:0 : (1, ?, ?, 128)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-196: op name = import/deconv1/conv_transpose/conv/conv, op type = ( Conv2D ), inputs = import/deconv1/conv_transpose/conv/MirrorPad:0, import/deconv1/conv_transpose/conv/weight/read:0, outputs = import/deconv1/conv_transpose/conv/conv:0
+180: op name = import/deconv1/conv_transpose/conv/conv, op type = ( Conv2D ), inputs = import/deconv1/conv_transpose/conv/MirrorPad:0, import/deconv1/conv_transpose/conv/weight/read:0, outputs = import/deconv1/conv_transpose/conv/conv:0
 @input shapes:
-name = import/deconv1/conv_transpose/conv/MirrorPad:0 : (1, 278, 278, 128)
+name = import/deconv1/conv_transpose/conv/MirrorPad:0 : (1, ?, ?, 128)
 name = import/deconv1/conv_transpose/conv/weight/read:0 : (3, 3, 128, 64)
 @output shapes:
-name = import/deconv1/conv_transpose/conv/conv:0 : (1, 138, 138, 64)
+name = import/deconv1/conv_transpose/conv/conv:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-197: op name = import/deconv1/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv1/moments/mean/reduction_indices:0
+181: op name = import/deconv1/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv1/moments/mean/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/deconv1/moments/mean/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-198: op name = import/deconv1/moments/mean, op type = ( Mean ), inputs = import/deconv1/conv_transpose/conv/conv:0, import/deconv1/moments/mean/reduction_indices:0, outputs = import/deconv1/moments/mean:0
+182: op name = import/deconv1/moments/mean, op type = ( Mean ), inputs = import/deconv1/conv_transpose/conv/conv:0, import/deconv1/moments/mean/reduction_indices:0, outputs = import/deconv1/moments/mean:0
 @input shapes:
-name = import/deconv1/conv_transpose/conv/conv:0 : (1, 138, 138, 64)
+name = import/deconv1/conv_transpose/conv/conv:0 : (1, ?, ?, 64)
 name = import/deconv1/moments/mean/reduction_indices:0 : (2,)
 @output shapes:
 name = import/deconv1/moments/mean:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-199: op name = import/deconv1/moments/StopGradient, op type = ( StopGradient ), inputs = import/deconv1/moments/mean:0, outputs = import/deconv1/moments/StopGradient:0
+183: op name = import/deconv1/moments/StopGradient, op type = ( StopGradient ), inputs = import/deconv1/moments/mean:0, outputs = import/deconv1/moments/StopGradient:0
 @input shapes:
 name = import/deconv1/moments/mean:0 : (1, 1, 1, 64)
 @output shapes:
 name = import/deconv1/moments/StopGradient:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-200: op name = import/deconv1/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/deconv1/conv_transpose/conv/conv:0, import/deconv1/moments/StopGradient:0, outputs = import/deconv1/moments/SquaredDifference:0
+184: op name = import/deconv1/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/deconv1/conv_transpose/conv/conv:0, import/deconv1/moments/StopGradient:0, outputs = import/deconv1/moments/SquaredDifference:0
 @input shapes:
-name = import/deconv1/conv_transpose/conv/conv:0 : (1, 138, 138, 64)
+name = import/deconv1/conv_transpose/conv/conv:0 : (1, ?, ?, 64)
 name = import/deconv1/moments/StopGradient:0 : (1, 1, 1, 64)
 @output shapes:
-name = import/deconv1/moments/SquaredDifference:0 : (1, 138, 138, 64)
+name = import/deconv1/moments/SquaredDifference:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-201: op name = import/deconv1/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv1/moments/variance/reduction_indices:0
+185: op name = import/deconv1/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv1/moments/variance/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/deconv1/moments/variance/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-202: op name = import/deconv1/moments/variance, op type = ( Mean ), inputs = import/deconv1/moments/SquaredDifference:0, import/deconv1/moments/variance/reduction_indices:0, outputs = import/deconv1/moments/variance:0
+186: op name = import/deconv1/moments/variance, op type = ( Mean ), inputs = import/deconv1/moments/SquaredDifference:0, import/deconv1/moments/variance/reduction_indices:0, outputs = import/deconv1/moments/variance:0
 @input shapes:
-name = import/deconv1/moments/SquaredDifference:0 : (1, 138, 138, 64)
+name = import/deconv1/moments/SquaredDifference:0 : (1, ?, ?, 64)
 name = import/deconv1/moments/variance/reduction_indices:0 : (2,)
 @output shapes:
 name = import/deconv1/moments/variance:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-203: op name = import/deconv1/Sub, op type = ( Sub ), inputs = import/deconv1/conv_transpose/conv/conv:0, import/deconv1/moments/mean:0, outputs = import/deconv1/Sub:0
+187: op name = import/deconv1/Sub, op type = ( Sub ), inputs = import/deconv1/conv_transpose/conv/conv:0, import/deconv1/moments/mean:0, outputs = import/deconv1/Sub:0
 @input shapes:
-name = import/deconv1/conv_transpose/conv/conv:0 : (1, 138, 138, 64)
+name = import/deconv1/conv_transpose/conv/conv:0 : (1, ?, ?, 64)
 name = import/deconv1/moments/mean:0 : (1, 1, 1, 64)
 @output shapes:
-name = import/deconv1/Sub:0 : (1, 138, 138, 64)
+name = import/deconv1/Sub:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-204: op name = import/deconv1/Add/y, op type = ( Const ), inputs = , outputs = import/deconv1/Add/y:0
+188: op name = import/deconv1/Add/y, op type = ( Const ), inputs = , outputs = import/deconv1/Add/y:0
 @input shapes:
 @output shapes:
 name = import/deconv1/Add/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-205: op name = import/deconv1/Add, op type = ( Add ), inputs = import/deconv1/moments/variance:0, import/deconv1/Add/y:0, outputs = import/deconv1/Add:0
+189: op name = import/deconv1/Add, op type = ( Add ), inputs = import/deconv1/moments/variance:0, import/deconv1/Add/y:0, outputs = import/deconv1/Add:0
 @input shapes:
 name = import/deconv1/moments/variance:0 : (1, 1, 1, 64)
 name = import/deconv1/Add/y:0 : ()
 @output shapes:
 name = import/deconv1/Add:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-206: op name = import/deconv1/Sqrt, op type = ( Sqrt ), inputs = import/deconv1/Add:0, outputs = import/deconv1/Sqrt:0
+190: op name = import/deconv1/Sqrt, op type = ( Sqrt ), inputs = import/deconv1/Add:0, outputs = import/deconv1/Sqrt:0
 @input shapes:
 name = import/deconv1/Add:0 : (1, 1, 1, 64)
 @output shapes:
 name = import/deconv1/Sqrt:0 : (1, 1, 1, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-207: op name = import/deconv1/div, op type = ( RealDiv ), inputs = import/deconv1/Sub:0, import/deconv1/Sqrt:0, outputs = import/deconv1/div:0
+191: op name = import/deconv1/div, op type = ( RealDiv ), inputs = import/deconv1/Sub:0, import/deconv1/Sqrt:0, outputs = import/deconv1/div:0
 @input shapes:
-name = import/deconv1/Sub:0 : (1, 138, 138, 64)
+name = import/deconv1/Sub:0 : (1, ?, ?, 64)
 name = import/deconv1/Sqrt:0 : (1, 1, 1, 64)
 @output shapes:
-name = import/deconv1/div:0 : (1, 138, 138, 64)
+name = import/deconv1/div:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-208: op name = import/deconv1/Relu, op type = ( Relu ), inputs = import/deconv1/div:0, outputs = import/deconv1/Relu:0
+192: op name = import/deconv1/Relu, op type = ( Relu ), inputs = import/deconv1/div:0, outputs = import/deconv1/Relu:0
 @input shapes:
-name = import/deconv1/div:0 : (1, 138, 138, 64)
+name = import/deconv1/div:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/deconv1/Relu:0 : (1, 138, 138, 64)
+name = import/deconv1/Relu:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-209: op name = import/deconv1/Equal, op type = ( Equal ), inputs = import/deconv1/Relu:0, import/deconv1/Relu:0, outputs = import/deconv1/Equal:0
+193: op name = import/deconv1/Equal, op type = ( Equal ), inputs = import/deconv1/Relu:0, import/deconv1/Relu:0, outputs = import/deconv1/Equal:0
 @input shapes:
-name = import/deconv1/Relu:0 : (1, 138, 138, 64)
-name = import/deconv1/Relu:0 : (1, 138, 138, 64)
+name = import/deconv1/Relu:0 : (1, ?, ?, 64)
+name = import/deconv1/Relu:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/deconv1/Equal:0 : (1, 138, 138, 64)
+name = import/deconv1/Equal:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-210: op name = import/deconv1/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/deconv1/zeros_like/shape_as_tensor:0
+194: op name = import/deconv1/zeros_like, op type = ( ZerosLike ), inputs = import/deconv1/Relu:0, outputs = import/deconv1/zeros_like:0
 @input shapes:
+name = import/deconv1/Relu:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/deconv1/zeros_like/shape_as_tensor:0 : (4,)
+name = import/deconv1/zeros_like:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-211: op name = import/deconv1/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/deconv1/zeros_like/Const:0
+195: op name = import/deconv1/Select, op type = ( Select ), inputs = import/deconv1/Equal:0, import/deconv1/Relu:0, import/deconv1/zeros_like:0, outputs = import/deconv1/Select:0
 @input shapes:
+name = import/deconv1/Equal:0 : (1, ?, ?, 64)
+name = import/deconv1/Relu:0 : (1, ?, ?, 64)
+name = import/deconv1/zeros_like:0 : (1, ?, ?, 64)
 @output shapes:
-name = import/deconv1/zeros_like/Const:0 : ()
+name = import/deconv1/Select:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-212: op name = import/deconv1/zeros_like, op type = ( Fill ), inputs = import/deconv1/zeros_like/shape_as_tensor:0, import/deconv1/zeros_like/Const:0, outputs = import/deconv1/zeros_like:0
+196: op name = import/deconv2/conv_transpose/Shape, op type = ( Shape ), inputs = import/deconv1/Select:0, outputs = import/deconv2/conv_transpose/Shape:0
 @input shapes:
-name = import/deconv1/zeros_like/shape_as_tensor:0 : (4,)
-name = import/deconv1/zeros_like/Const:0 : ()
-@output shapes:
-name = import/deconv1/zeros_like:0 : (1, 138, 138, 64)
----------------------------------------------------------------------------------------------------------------------------------------------
-213: op name = import/deconv1/Select, op type = ( Select ), inputs = import/deconv1/Equal:0, import/deconv1/Relu:0, import/deconv1/zeros_like:0, outputs = import/deconv1/Select:0
-@input shapes:
-name = import/deconv1/Equal:0 : (1, 138, 138, 64)
-name = import/deconv1/Relu:0 : (1, 138, 138, 64)
-name = import/deconv1/zeros_like:0 : (1, 138, 138, 64)
-@output shapes:
-name = import/deconv1/Select:0 : (1, 138, 138, 64)
----------------------------------------------------------------------------------------------------------------------------------------------
-214: op name = import/deconv2/conv_transpose/Shape, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/Shape:0
-@input shapes:
+name = import/deconv1/Select:0 : (1, ?, ?, 64)
 @output shapes:
 name = import/deconv2/conv_transpose/Shape:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-215: op name = import/deconv2/conv_transpose/strided_slice/stack, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice/stack:0
+197: op name = import/deconv2/conv_transpose/strided_slice/stack, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice/stack:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice/stack:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-216: op name = import/deconv2/conv_transpose/strided_slice/stack_1, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice/stack_1:0
+198: op name = import/deconv2/conv_transpose/strided_slice/stack_1, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice/stack_1:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice/stack_1:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-217: op name = import/deconv2/conv_transpose/strided_slice/stack_2, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice/stack_2:0
+199: op name = import/deconv2/conv_transpose/strided_slice/stack_2, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice/stack_2:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice/stack_2:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-218: op name = import/deconv2/conv_transpose/strided_slice, op type = ( StridedSlice ), inputs = import/deconv2/conv_transpose/Shape:0, import/deconv2/conv_transpose/strided_slice/stack:0, import/deconv2/conv_transpose/strided_slice/stack_1:0, import/deconv2/conv_transpose/strided_slice/stack_2:0, outputs = import/deconv2/conv_transpose/strided_slice:0
+200: op name = import/deconv2/conv_transpose/strided_slice, op type = ( StridedSlice ), inputs = import/deconv2/conv_transpose/Shape:0, import/deconv2/conv_transpose/strided_slice/stack:0, import/deconv2/conv_transpose/strided_slice/stack_1:0, import/deconv2/conv_transpose/strided_slice/stack_2:0, outputs = import/deconv2/conv_transpose/strided_slice:0
 @input shapes:
 name = import/deconv2/conv_transpose/Shape:0 : (4,)
 name = import/deconv2/conv_transpose/strided_slice/stack:0 : (1,)
@@ -1350,27 +1254,28 @@ name = import/deconv2/conv_transpose/strided_slice/stack_2:0 : (1,)
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-219: op name = import/deconv2/conv_transpose/Shape_1, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/Shape_1:0
+201: op name = import/deconv2/conv_transpose/Shape_1, op type = ( Shape ), inputs = import/deconv1/Select:0, outputs = import/deconv2/conv_transpose/Shape_1:0
 @input shapes:
+name = import/deconv1/Select:0 : (1, ?, ?, 64)
 @output shapes:
 name = import/deconv2/conv_transpose/Shape_1:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-220: op name = import/deconv2/conv_transpose/strided_slice_1/stack, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice_1/stack:0
+202: op name = import/deconv2/conv_transpose/strided_slice_1/stack, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice_1/stack:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice_1/stack:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-221: op name = import/deconv2/conv_transpose/strided_slice_1/stack_1, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice_1/stack_1:0
+203: op name = import/deconv2/conv_transpose/strided_slice_1/stack_1, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice_1/stack_1:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice_1/stack_1:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-222: op name = import/deconv2/conv_transpose/strided_slice_1/stack_2, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice_1/stack_2:0
+204: op name = import/deconv2/conv_transpose/strided_slice_1/stack_2, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/strided_slice_1/stack_2:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice_1/stack_2:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-223: op name = import/deconv2/conv_transpose/strided_slice_1, op type = ( StridedSlice ), inputs = import/deconv2/conv_transpose/Shape_1:0, import/deconv2/conv_transpose/strided_slice_1/stack:0, import/deconv2/conv_transpose/strided_slice_1/stack_1:0, import/deconv2/conv_transpose/strided_slice_1/stack_2:0, outputs = import/deconv2/conv_transpose/strided_slice_1:0
+205: op name = import/deconv2/conv_transpose/strided_slice_1, op type = ( StridedSlice ), inputs = import/deconv2/conv_transpose/Shape_1:0, import/deconv2/conv_transpose/strided_slice_1/stack:0, import/deconv2/conv_transpose/strided_slice_1/stack_1:0, import/deconv2/conv_transpose/strided_slice_1/stack_2:0, outputs = import/deconv2/conv_transpose/strided_slice_1:0
 @input shapes:
 name = import/deconv2/conv_transpose/Shape_1:0 : (4,)
 name = import/deconv2/conv_transpose/strided_slice_1/stack:0 : (1,)
@@ -1379,355 +1284,345 @@ name = import/deconv2/conv_transpose/strided_slice_1/stack_2:0 : (1,)
 @output shapes:
 name = import/deconv2/conv_transpose/strided_slice_1:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-224: op name = import/deconv2/conv_transpose/mul/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul/y:0
+206: op name = import/deconv2/conv_transpose/mul/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul/y:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/mul/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-225: op name = import/deconv2/conv_transpose/mul, op type = ( Mul ), inputs = import/deconv2/conv_transpose/strided_slice:0, import/deconv2/conv_transpose/mul/y:0, outputs = import/deconv2/conv_transpose/mul:0
+207: op name = import/deconv2/conv_transpose/mul, op type = ( Mul ), inputs = import/deconv2/conv_transpose/strided_slice:0, import/deconv2/conv_transpose/mul/y:0, outputs = import/deconv2/conv_transpose/mul:0
 @input shapes:
 name = import/deconv2/conv_transpose/strided_slice:0 : ()
 name = import/deconv2/conv_transpose/mul/y:0 : ()
 @output shapes:
 name = import/deconv2/conv_transpose/mul:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-226: op name = import/deconv2/conv_transpose/mul_1/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul_1/y:0
+208: op name = import/deconv2/conv_transpose/mul_1/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul_1/y:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/mul_1/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-227: op name = import/deconv2/conv_transpose/mul_1, op type = ( Mul ), inputs = import/deconv2/conv_transpose/mul:0, import/deconv2/conv_transpose/mul_1/y:0, outputs = import/deconv2/conv_transpose/mul_1:0
+209: op name = import/deconv2/conv_transpose/mul_1, op type = ( Mul ), inputs = import/deconv2/conv_transpose/mul:0, import/deconv2/conv_transpose/mul_1/y:0, outputs = import/deconv2/conv_transpose/mul_1:0
 @input shapes:
 name = import/deconv2/conv_transpose/mul:0 : ()
 name = import/deconv2/conv_transpose/mul_1/y:0 : ()
 @output shapes:
 name = import/deconv2/conv_transpose/mul_1:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-228: op name = import/deconv2/conv_transpose/mul_2/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul_2/y:0
+210: op name = import/deconv2/conv_transpose/mul_2/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul_2/y:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/mul_2/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-229: op name = import/deconv2/conv_transpose/mul_2, op type = ( Mul ), inputs = import/deconv2/conv_transpose/strided_slice_1:0, import/deconv2/conv_transpose/mul_2/y:0, outputs = import/deconv2/conv_transpose/mul_2:0
+211: op name = import/deconv2/conv_transpose/mul_2, op type = ( Mul ), inputs = import/deconv2/conv_transpose/strided_slice_1:0, import/deconv2/conv_transpose/mul_2/y:0, outputs = import/deconv2/conv_transpose/mul_2:0
 @input shapes:
 name = import/deconv2/conv_transpose/strided_slice_1:0 : ()
 name = import/deconv2/conv_transpose/mul_2/y:0 : ()
 @output shapes:
 name = import/deconv2/conv_transpose/mul_2:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-230: op name = import/deconv2/conv_transpose/mul_3/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul_3/y:0
+212: op name = import/deconv2/conv_transpose/mul_3/y, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/mul_3/y:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/mul_3/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-231: op name = import/deconv2/conv_transpose/mul_3, op type = ( Mul ), inputs = import/deconv2/conv_transpose/mul_2:0, import/deconv2/conv_transpose/mul_3/y:0, outputs = import/deconv2/conv_transpose/mul_3:0
+213: op name = import/deconv2/conv_transpose/mul_3, op type = ( Mul ), inputs = import/deconv2/conv_transpose/mul_2:0, import/deconv2/conv_transpose/mul_3/y:0, outputs = import/deconv2/conv_transpose/mul_3:0
 @input shapes:
 name = import/deconv2/conv_transpose/mul_2:0 : ()
 name = import/deconv2/conv_transpose/mul_3/y:0 : ()
 @output shapes:
 name = import/deconv2/conv_transpose/mul_3:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-232: op name = import/deconv2/conv_transpose/resize/size, op type = ( Pack ), inputs = import/deconv2/conv_transpose/mul_1:0, import/deconv2/conv_transpose/mul_3:0, outputs = import/deconv2/conv_transpose/resize/size:0
+214: op name = import/deconv2/conv_transpose/resize/size, op type = ( Pack ), inputs = import/deconv2/conv_transpose/mul_1:0, import/deconv2/conv_transpose/mul_3:0, outputs = import/deconv2/conv_transpose/resize/size:0
 @input shapes:
 name = import/deconv2/conv_transpose/mul_1:0 : ()
 name = import/deconv2/conv_transpose/mul_3:0 : ()
 @output shapes:
 name = import/deconv2/conv_transpose/resize/size:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-233: op name = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor, op type = ( ResizeNearestNeighbor ), inputs = import/deconv1/Select:0, import/deconv2/conv_transpose/resize/size:0, outputs = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0
+215: op name = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor, op type = ( ResizeNearestNeighbor ), inputs = import/deconv1/Select:0, import/deconv2/conv_transpose/resize/size:0, outputs = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0
 @input shapes:
-name = import/deconv1/Select:0 : (1, 138, 138, 64)
+name = import/deconv1/Select:0 : (1, ?, ?, 64)
 name = import/deconv2/conv_transpose/resize/size:0 : (2,)
 @output shapes:
-name = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, 552, 552, 64)
+name = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-234: op name = import/deconv2/conv_transpose/conv/weight, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/conv/weight:0
+216: op name = import/deconv2/conv_transpose/conv/weight, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/conv/weight:0 : (3, 3, 64, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-235: op name = import/deconv2/conv_transpose/conv/weight/read, op type = ( Identity ), inputs = import/deconv2/conv_transpose/conv/weight:0, outputs = import/deconv2/conv_transpose/conv/weight/read:0
+217: op name = import/deconv2/conv_transpose/conv/weight/read, op type = ( Identity ), inputs = import/deconv2/conv_transpose/conv/weight:0, outputs = import/deconv2/conv_transpose/conv/weight/read:0
 @input shapes:
 name = import/deconv2/conv_transpose/conv/weight:0 : (3, 3, 64, 32)
 @output shapes:
 name = import/deconv2/conv_transpose/conv/weight/read:0 : (3, 3, 64, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-236: op name = import/deconv2/conv_transpose/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/conv/MirrorPad/paddings:0
+218: op name = import/deconv2/conv_transpose/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/deconv2/conv_transpose/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/deconv2/conv_transpose/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-237: op name = import/deconv2/conv_transpose/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0, import/deconv2/conv_transpose/conv/MirrorPad/paddings:0, outputs = import/deconv2/conv_transpose/conv/MirrorPad:0
+219: op name = import/deconv2/conv_transpose/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0, import/deconv2/conv_transpose/conv/MirrorPad/paddings:0, outputs = import/deconv2/conv_transpose/conv/MirrorPad:0
 @input shapes:
-name = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, 552, 552, 64)
+name = import/deconv2/conv_transpose/resize/ResizeNearestNeighbor:0 : (1, ?, ?, 64)
 name = import/deconv2/conv_transpose/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/deconv2/conv_transpose/conv/MirrorPad:0 : (1, 554, 554, 64)
+name = import/deconv2/conv_transpose/conv/MirrorPad:0 : (1, ?, ?, 64)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-238: op name = import/deconv2/conv_transpose/conv/conv, op type = ( Conv2D ), inputs = import/deconv2/conv_transpose/conv/MirrorPad:0, import/deconv2/conv_transpose/conv/weight/read:0, outputs = import/deconv2/conv_transpose/conv/conv:0
+220: op name = import/deconv2/conv_transpose/conv/conv, op type = ( Conv2D ), inputs = import/deconv2/conv_transpose/conv/MirrorPad:0, import/deconv2/conv_transpose/conv/weight/read:0, outputs = import/deconv2/conv_transpose/conv/conv:0
 @input shapes:
-name = import/deconv2/conv_transpose/conv/MirrorPad:0 : (1, 554, 554, 64)
+name = import/deconv2/conv_transpose/conv/MirrorPad:0 : (1, ?, ?, 64)
 name = import/deconv2/conv_transpose/conv/weight/read:0 : (3, 3, 64, 32)
 @output shapes:
-name = import/deconv2/conv_transpose/conv/conv:0 : (1, 276, 276, 32)
+name = import/deconv2/conv_transpose/conv/conv:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-239: op name = import/deconv2/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv2/moments/mean/reduction_indices:0
+221: op name = import/deconv2/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv2/moments/mean/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/deconv2/moments/mean/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-240: op name = import/deconv2/moments/mean, op type = ( Mean ), inputs = import/deconv2/conv_transpose/conv/conv:0, import/deconv2/moments/mean/reduction_indices:0, outputs = import/deconv2/moments/mean:0
+222: op name = import/deconv2/moments/mean, op type = ( Mean ), inputs = import/deconv2/conv_transpose/conv/conv:0, import/deconv2/moments/mean/reduction_indices:0, outputs = import/deconv2/moments/mean:0
 @input shapes:
-name = import/deconv2/conv_transpose/conv/conv:0 : (1, 276, 276, 32)
+name = import/deconv2/conv_transpose/conv/conv:0 : (1, ?, ?, 32)
 name = import/deconv2/moments/mean/reduction_indices:0 : (2,)
 @output shapes:
 name = import/deconv2/moments/mean:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-241: op name = import/deconv2/moments/StopGradient, op type = ( StopGradient ), inputs = import/deconv2/moments/mean:0, outputs = import/deconv2/moments/StopGradient:0
+223: op name = import/deconv2/moments/StopGradient, op type = ( StopGradient ), inputs = import/deconv2/moments/mean:0, outputs = import/deconv2/moments/StopGradient:0
 @input shapes:
 name = import/deconv2/moments/mean:0 : (1, 1, 1, 32)
 @output shapes:
 name = import/deconv2/moments/StopGradient:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-242: op name = import/deconv2/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/deconv2/conv_transpose/conv/conv:0, import/deconv2/moments/StopGradient:0, outputs = import/deconv2/moments/SquaredDifference:0
+224: op name = import/deconv2/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/deconv2/conv_transpose/conv/conv:0, import/deconv2/moments/StopGradient:0, outputs = import/deconv2/moments/SquaredDifference:0
 @input shapes:
-name = import/deconv2/conv_transpose/conv/conv:0 : (1, 276, 276, 32)
+name = import/deconv2/conv_transpose/conv/conv:0 : (1, ?, ?, 32)
 name = import/deconv2/moments/StopGradient:0 : (1, 1, 1, 32)
 @output shapes:
-name = import/deconv2/moments/SquaredDifference:0 : (1, 276, 276, 32)
+name = import/deconv2/moments/SquaredDifference:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-243: op name = import/deconv2/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv2/moments/variance/reduction_indices:0
+225: op name = import/deconv2/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv2/moments/variance/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/deconv2/moments/variance/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-244: op name = import/deconv2/moments/variance, op type = ( Mean ), inputs = import/deconv2/moments/SquaredDifference:0, import/deconv2/moments/variance/reduction_indices:0, outputs = import/deconv2/moments/variance:0
+226: op name = import/deconv2/moments/variance, op type = ( Mean ), inputs = import/deconv2/moments/SquaredDifference:0, import/deconv2/moments/variance/reduction_indices:0, outputs = import/deconv2/moments/variance:0
 @input shapes:
-name = import/deconv2/moments/SquaredDifference:0 : (1, 276, 276, 32)
+name = import/deconv2/moments/SquaredDifference:0 : (1, ?, ?, 32)
 name = import/deconv2/moments/variance/reduction_indices:0 : (2,)
 @output shapes:
 name = import/deconv2/moments/variance:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-245: op name = import/deconv2/Sub, op type = ( Sub ), inputs = import/deconv2/conv_transpose/conv/conv:0, import/deconv2/moments/mean:0, outputs = import/deconv2/Sub:0
+227: op name = import/deconv2/Sub, op type = ( Sub ), inputs = import/deconv2/conv_transpose/conv/conv:0, import/deconv2/moments/mean:0, outputs = import/deconv2/Sub:0
 @input shapes:
-name = import/deconv2/conv_transpose/conv/conv:0 : (1, 276, 276, 32)
+name = import/deconv2/conv_transpose/conv/conv:0 : (1, ?, ?, 32)
 name = import/deconv2/moments/mean:0 : (1, 1, 1, 32)
 @output shapes:
-name = import/deconv2/Sub:0 : (1, 276, 276, 32)
+name = import/deconv2/Sub:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-246: op name = import/deconv2/Add/y, op type = ( Const ), inputs = , outputs = import/deconv2/Add/y:0
+228: op name = import/deconv2/Add/y, op type = ( Const ), inputs = , outputs = import/deconv2/Add/y:0
 @input shapes:
 @output shapes:
 name = import/deconv2/Add/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-247: op name = import/deconv2/Add, op type = ( Add ), inputs = import/deconv2/moments/variance:0, import/deconv2/Add/y:0, outputs = import/deconv2/Add:0
+229: op name = import/deconv2/Add, op type = ( Add ), inputs = import/deconv2/moments/variance:0, import/deconv2/Add/y:0, outputs = import/deconv2/Add:0
 @input shapes:
 name = import/deconv2/moments/variance:0 : (1, 1, 1, 32)
 name = import/deconv2/Add/y:0 : ()
 @output shapes:
 name = import/deconv2/Add:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-248: op name = import/deconv2/Sqrt, op type = ( Sqrt ), inputs = import/deconv2/Add:0, outputs = import/deconv2/Sqrt:0
+230: op name = import/deconv2/Sqrt, op type = ( Sqrt ), inputs = import/deconv2/Add:0, outputs = import/deconv2/Sqrt:0
 @input shapes:
 name = import/deconv2/Add:0 : (1, 1, 1, 32)
 @output shapes:
 name = import/deconv2/Sqrt:0 : (1, 1, 1, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-249: op name = import/deconv2/div, op type = ( RealDiv ), inputs = import/deconv2/Sub:0, import/deconv2/Sqrt:0, outputs = import/deconv2/div:0
+231: op name = import/deconv2/div, op type = ( RealDiv ), inputs = import/deconv2/Sub:0, import/deconv2/Sqrt:0, outputs = import/deconv2/div:0
 @input shapes:
-name = import/deconv2/Sub:0 : (1, 276, 276, 32)
+name = import/deconv2/Sub:0 : (1, ?, ?, 32)
 name = import/deconv2/Sqrt:0 : (1, 1, 1, 32)
 @output shapes:
-name = import/deconv2/div:0 : (1, 276, 276, 32)
+name = import/deconv2/div:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-250: op name = import/deconv2/Relu, op type = ( Relu ), inputs = import/deconv2/div:0, outputs = import/deconv2/Relu:0
+232: op name = import/deconv2/Relu, op type = ( Relu ), inputs = import/deconv2/div:0, outputs = import/deconv2/Relu:0
 @input shapes:
-name = import/deconv2/div:0 : (1, 276, 276, 32)
+name = import/deconv2/div:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/deconv2/Relu:0 : (1, 276, 276, 32)
+name = import/deconv2/Relu:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-251: op name = import/deconv2/Equal, op type = ( Equal ), inputs = import/deconv2/Relu:0, import/deconv2/Relu:0, outputs = import/deconv2/Equal:0
+233: op name = import/deconv2/Equal, op type = ( Equal ), inputs = import/deconv2/Relu:0, import/deconv2/Relu:0, outputs = import/deconv2/Equal:0
 @input shapes:
-name = import/deconv2/Relu:0 : (1, 276, 276, 32)
-name = import/deconv2/Relu:0 : (1, 276, 276, 32)
+name = import/deconv2/Relu:0 : (1, ?, ?, 32)
+name = import/deconv2/Relu:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/deconv2/Equal:0 : (1, 276, 276, 32)
+name = import/deconv2/Equal:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-252: op name = import/deconv2/zeros_like/shape_as_tensor, op type = ( Const ), inputs = , outputs = import/deconv2/zeros_like/shape_as_tensor:0
+234: op name = import/deconv2/zeros_like, op type = ( ZerosLike ), inputs = import/deconv2/Relu:0, outputs = import/deconv2/zeros_like:0
 @input shapes:
+name = import/deconv2/Relu:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/deconv2/zeros_like/shape_as_tensor:0 : (4,)
+name = import/deconv2/zeros_like:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-253: op name = import/deconv2/zeros_like/Const, op type = ( Const ), inputs = , outputs = import/deconv2/zeros_like/Const:0
+235: op name = import/deconv2/Select, op type = ( Select ), inputs = import/deconv2/Equal:0, import/deconv2/Relu:0, import/deconv2/zeros_like:0, outputs = import/deconv2/Select:0
 @input shapes:
+name = import/deconv2/Equal:0 : (1, ?, ?, 32)
+name = import/deconv2/Relu:0 : (1, ?, ?, 32)
+name = import/deconv2/zeros_like:0 : (1, ?, ?, 32)
 @output shapes:
-name = import/deconv2/zeros_like/Const:0 : ()
+name = import/deconv2/Select:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-254: op name = import/deconv2/zeros_like, op type = ( Fill ), inputs = import/deconv2/zeros_like/shape_as_tensor:0, import/deconv2/zeros_like/Const:0, outputs = import/deconv2/zeros_like:0
-@input shapes:
-name = import/deconv2/zeros_like/shape_as_tensor:0 : (4,)
-name = import/deconv2/zeros_like/Const:0 : ()
-@output shapes:
-name = import/deconv2/zeros_like:0 : (1, 276, 276, 32)
----------------------------------------------------------------------------------------------------------------------------------------------
-255: op name = import/deconv2/Select, op type = ( Select ), inputs = import/deconv2/Equal:0, import/deconv2/Relu:0, import/deconv2/zeros_like:0, outputs = import/deconv2/Select:0
-@input shapes:
-name = import/deconv2/Equal:0 : (1, 276, 276, 32)
-name = import/deconv2/Relu:0 : (1, 276, 276, 32)
-name = import/deconv2/zeros_like:0 : (1, 276, 276, 32)
-@output shapes:
-name = import/deconv2/Select:0 : (1, 276, 276, 32)
----------------------------------------------------------------------------------------------------------------------------------------------
-256: op name = import/deconv3/conv/weight, op type = ( Const ), inputs = , outputs = import/deconv3/conv/weight:0
+236: op name = import/deconv3/conv/weight, op type = ( Const ), inputs = , outputs = import/deconv3/conv/weight:0
 @input shapes:
 @output shapes:
 name = import/deconv3/conv/weight:0 : (9, 9, 32, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-257: op name = import/deconv3/conv/weight/read, op type = ( Identity ), inputs = import/deconv3/conv/weight:0, outputs = import/deconv3/conv/weight/read:0
+237: op name = import/deconv3/conv/weight/read, op type = ( Identity ), inputs = import/deconv3/conv/weight:0, outputs = import/deconv3/conv/weight/read:0
 @input shapes:
 name = import/deconv3/conv/weight:0 : (9, 9, 32, 3)
 @output shapes:
 name = import/deconv3/conv/weight/read:0 : (9, 9, 32, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-258: op name = import/deconv3/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/deconv3/conv/MirrorPad/paddings:0
+238: op name = import/deconv3/conv/MirrorPad/paddings, op type = ( Const ), inputs = , outputs = import/deconv3/conv/MirrorPad/paddings:0
 @input shapes:
 @output shapes:
 name = import/deconv3/conv/MirrorPad/paddings:0 : (4, 2)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-259: op name = import/deconv3/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/deconv2/Select:0, import/deconv3/conv/MirrorPad/paddings:0, outputs = import/deconv3/conv/MirrorPad:0
+239: op name = import/deconv3/conv/MirrorPad, op type = ( MirrorPad ), inputs = import/deconv2/Select:0, import/deconv3/conv/MirrorPad/paddings:0, outputs = import/deconv3/conv/MirrorPad:0
 @input shapes:
-name = import/deconv2/Select:0 : (1, 276, 276, 32)
+name = import/deconv2/Select:0 : (1, ?, ?, 32)
 name = import/deconv3/conv/MirrorPad/paddings:0 : (4, 2)
 @output shapes:
-name = import/deconv3/conv/MirrorPad:0 : (1, 284, 284, 32)
+name = import/deconv3/conv/MirrorPad:0 : (1, ?, ?, 32)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-260: op name = import/deconv3/conv/conv, op type = ( Conv2D ), inputs = import/deconv3/conv/MirrorPad:0, import/deconv3/conv/weight/read:0, outputs = import/deconv3/conv/conv:0
+240: op name = import/deconv3/conv/conv, op type = ( Conv2D ), inputs = import/deconv3/conv/MirrorPad:0, import/deconv3/conv/weight/read:0, outputs = import/deconv3/conv/conv:0
 @input shapes:
-name = import/deconv3/conv/MirrorPad:0 : (1, 284, 284, 32)
+name = import/deconv3/conv/MirrorPad:0 : (1, ?, ?, 32)
 name = import/deconv3/conv/weight/read:0 : (9, 9, 32, 3)
 @output shapes:
-name = import/deconv3/conv/conv:0 : (1, 276, 276, 3)
+name = import/deconv3/conv/conv:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-261: op name = import/deconv3/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv3/moments/mean/reduction_indices:0
+241: op name = import/deconv3/moments/mean/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv3/moments/mean/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/deconv3/moments/mean/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-262: op name = import/deconv3/moments/mean, op type = ( Mean ), inputs = import/deconv3/conv/conv:0, import/deconv3/moments/mean/reduction_indices:0, outputs = import/deconv3/moments/mean:0
+242: op name = import/deconv3/moments/mean, op type = ( Mean ), inputs = import/deconv3/conv/conv:0, import/deconv3/moments/mean/reduction_indices:0, outputs = import/deconv3/moments/mean:0
 @input shapes:
-name = import/deconv3/conv/conv:0 : (1, 276, 276, 3)
+name = import/deconv3/conv/conv:0 : (1, ?, ?, 3)
 name = import/deconv3/moments/mean/reduction_indices:0 : (2,)
 @output shapes:
 name = import/deconv3/moments/mean:0 : (1, 1, 1, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-263: op name = import/deconv3/moments/StopGradient, op type = ( StopGradient ), inputs = import/deconv3/moments/mean:0, outputs = import/deconv3/moments/StopGradient:0
+243: op name = import/deconv3/moments/StopGradient, op type = ( StopGradient ), inputs = import/deconv3/moments/mean:0, outputs = import/deconv3/moments/StopGradient:0
 @input shapes:
 name = import/deconv3/moments/mean:0 : (1, 1, 1, 3)
 @output shapes:
 name = import/deconv3/moments/StopGradient:0 : (1, 1, 1, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-264: op name = import/deconv3/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/deconv3/conv/conv:0, import/deconv3/moments/StopGradient:0, outputs = import/deconv3/moments/SquaredDifference:0
+244: op name = import/deconv3/moments/SquaredDifference, op type = ( SquaredDifference ), inputs = import/deconv3/conv/conv:0, import/deconv3/moments/StopGradient:0, outputs = import/deconv3/moments/SquaredDifference:0
 @input shapes:
-name = import/deconv3/conv/conv:0 : (1, 276, 276, 3)
+name = import/deconv3/conv/conv:0 : (1, ?, ?, 3)
 name = import/deconv3/moments/StopGradient:0 : (1, 1, 1, 3)
 @output shapes:
-name = import/deconv3/moments/SquaredDifference:0 : (1, 276, 276, 3)
+name = import/deconv3/moments/SquaredDifference:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-265: op name = import/deconv3/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv3/moments/variance/reduction_indices:0
+245: op name = import/deconv3/moments/variance/reduction_indices, op type = ( Const ), inputs = , outputs = import/deconv3/moments/variance/reduction_indices:0
 @input shapes:
 @output shapes:
 name = import/deconv3/moments/variance/reduction_indices:0 : (2,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-266: op name = import/deconv3/moments/variance, op type = ( Mean ), inputs = import/deconv3/moments/SquaredDifference:0, import/deconv3/moments/variance/reduction_indices:0, outputs = import/deconv3/moments/variance:0
+246: op name = import/deconv3/moments/variance, op type = ( Mean ), inputs = import/deconv3/moments/SquaredDifference:0, import/deconv3/moments/variance/reduction_indices:0, outputs = import/deconv3/moments/variance:0
 @input shapes:
-name = import/deconv3/moments/SquaredDifference:0 : (1, 276, 276, 3)
+name = import/deconv3/moments/SquaredDifference:0 : (1, ?, ?, 3)
 name = import/deconv3/moments/variance/reduction_indices:0 : (2,)
 @output shapes:
 name = import/deconv3/moments/variance:0 : (1, 1, 1, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-267: op name = import/deconv3/Sub, op type = ( Sub ), inputs = import/deconv3/conv/conv:0, import/deconv3/moments/mean:0, outputs = import/deconv3/Sub:0
+247: op name = import/deconv3/Sub, op type = ( Sub ), inputs = import/deconv3/conv/conv:0, import/deconv3/moments/mean:0, outputs = import/deconv3/Sub:0
 @input shapes:
-name = import/deconv3/conv/conv:0 : (1, 276, 276, 3)
+name = import/deconv3/conv/conv:0 : (1, ?, ?, 3)
 name = import/deconv3/moments/mean:0 : (1, 1, 1, 3)
 @output shapes:
-name = import/deconv3/Sub:0 : (1, 276, 276, 3)
+name = import/deconv3/Sub:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-268: op name = import/deconv3/Add/y, op type = ( Const ), inputs = , outputs = import/deconv3/Add/y:0
+248: op name = import/deconv3/Add/y, op type = ( Const ), inputs = , outputs = import/deconv3/Add/y:0
 @input shapes:
 @output shapes:
 name = import/deconv3/Add/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-269: op name = import/deconv3/Add, op type = ( Add ), inputs = import/deconv3/moments/variance:0, import/deconv3/Add/y:0, outputs = import/deconv3/Add:0
+249: op name = import/deconv3/Add, op type = ( Add ), inputs = import/deconv3/moments/variance:0, import/deconv3/Add/y:0, outputs = import/deconv3/Add:0
 @input shapes:
 name = import/deconv3/moments/variance:0 : (1, 1, 1, 3)
 name = import/deconv3/Add/y:0 : ()
 @output shapes:
 name = import/deconv3/Add:0 : (1, 1, 1, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-270: op name = import/deconv3/Sqrt, op type = ( Sqrt ), inputs = import/deconv3/Add:0, outputs = import/deconv3/Sqrt:0
+250: op name = import/deconv3/Sqrt, op type = ( Sqrt ), inputs = import/deconv3/Add:0, outputs = import/deconv3/Sqrt:0
 @input shapes:
 name = import/deconv3/Add:0 : (1, 1, 1, 3)
 @output shapes:
 name = import/deconv3/Sqrt:0 : (1, 1, 1, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-271: op name = import/deconv3/div, op type = ( RealDiv ), inputs = import/deconv3/Sub:0, import/deconv3/Sqrt:0, outputs = import/deconv3/div:0
+251: op name = import/deconv3/div, op type = ( RealDiv ), inputs = import/deconv3/Sub:0, import/deconv3/Sqrt:0, outputs = import/deconv3/div:0
 @input shapes:
-name = import/deconv3/Sub:0 : (1, 276, 276, 3)
+name = import/deconv3/Sub:0 : (1, ?, ?, 3)
 name = import/deconv3/Sqrt:0 : (1, 1, 1, 3)
 @output shapes:
-name = import/deconv3/div:0 : (1, 276, 276, 3)
+name = import/deconv3/div:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-272: op name = import/deconv3/Tanh, op type = ( Tanh ), inputs = import/deconv3/div:0, outputs = import/deconv3/Tanh:0
+252: op name = import/deconv3/Tanh, op type = ( Tanh ), inputs = import/deconv3/div:0, outputs = import/deconv3/Tanh:0
 @input shapes:
-name = import/deconv3/div:0 : (1, 276, 276, 3)
+name = import/deconv3/div:0 : (1, ?, ?, 3)
 @output shapes:
-name = import/deconv3/Tanh:0 : (1, 276, 276, 3)
+name = import/deconv3/Tanh:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-273: op name = import/add/y, op type = ( Const ), inputs = , outputs = import/add/y:0
+253: op name = import/add/y, op type = ( Const ), inputs = , outputs = import/add/y:0
 @input shapes:
 @output shapes:
 name = import/add/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-274: op name = import/add, op type = ( Add ), inputs = import/deconv3/Tanh:0, import/add/y:0, outputs = import/add:0
+254: op name = import/add, op type = ( Add ), inputs = import/deconv3/Tanh:0, import/add/y:0, outputs = import/add:0
 @input shapes:
-name = import/deconv3/Tanh:0 : (1, 276, 276, 3)
+name = import/deconv3/Tanh:0 : (1, ?, ?, 3)
 name = import/add/y:0 : ()
 @output shapes:
-name = import/add:0 : (1, 276, 276, 3)
+name = import/add:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-275: op name = import/mul/y, op type = ( Const ), inputs = , outputs = import/mul/y:0
+255: op name = import/mul/y, op type = ( Const ), inputs = , outputs = import/mul/y:0
 @input shapes:
 @output shapes:
 name = import/mul/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-276: op name = import/mul, op type = ( Mul ), inputs = import/add:0, import/mul/y:0, outputs = import/mul:0
+256: op name = import/mul, op type = ( Mul ), inputs = import/add:0, import/mul/y:0, outputs = import/mul:0
 @input shapes:
-name = import/add:0 : (1, 276, 276, 3)
+name = import/add:0 : (1, ?, ?, 3)
 name = import/mul/y:0 : ()
 @output shapes:
-name = import/mul:0 : (1, 276, 276, 3)
+name = import/mul:0 : (1, ?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-277: op name = import/Shape, op type = ( Const ), inputs = , outputs = import/Shape:0
+257: op name = import/Shape, op type = ( Shape ), inputs = import/mul:0, outputs = import/Shape:0
 @input shapes:
+name = import/mul:0 : (1, ?, ?, 3)
 @output shapes:
 name = import/Shape:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-278: op name = import/strided_slice/stack, op type = ( Const ), inputs = , outputs = import/strided_slice/stack:0
+258: op name = import/strided_slice/stack, op type = ( Const ), inputs = , outputs = import/strided_slice/stack:0
 @input shapes:
 @output shapes:
 name = import/strided_slice/stack:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-279: op name = import/strided_slice/stack_1, op type = ( Const ), inputs = , outputs = import/strided_slice/stack_1:0
+259: op name = import/strided_slice/stack_1, op type = ( Const ), inputs = , outputs = import/strided_slice/stack_1:0
 @input shapes:
 @output shapes:
 name = import/strided_slice/stack_1:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-280: op name = import/strided_slice/stack_2, op type = ( Const ), inputs = , outputs = import/strided_slice/stack_2:0
+260: op name = import/strided_slice/stack_2, op type = ( Const ), inputs = , outputs = import/strided_slice/stack_2:0
 @input shapes:
 @output shapes:
 name = import/strided_slice/stack_2:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-281: op name = import/strided_slice, op type = ( StridedSlice ), inputs = import/Shape:0, import/strided_slice/stack:0, import/strided_slice/stack_1:0, import/strided_slice/stack_2:0, outputs = import/strided_slice:0
+261: op name = import/strided_slice, op type = ( StridedSlice ), inputs = import/Shape:0, import/strided_slice/stack:0, import/strided_slice/stack_1:0, import/strided_slice/stack_2:0, outputs = import/strided_slice:0
 @input shapes:
 name = import/Shape:0 : (4,)
 name = import/strided_slice/stack:0 : (1,)
@@ -1736,27 +1631,28 @@ name = import/strided_slice/stack_2:0 : (1,)
 @output shapes:
 name = import/strided_slice:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-282: op name = import/Shape_1, op type = ( Const ), inputs = , outputs = import/Shape_1:0
+262: op name = import/Shape_1, op type = ( Shape ), inputs = import/mul:0, outputs = import/Shape_1:0
 @input shapes:
+name = import/mul:0 : (1, ?, ?, 3)
 @output shapes:
 name = import/Shape_1:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-283: op name = import/strided_slice_1/stack, op type = ( Const ), inputs = , outputs = import/strided_slice_1/stack:0
+263: op name = import/strided_slice_1/stack, op type = ( Const ), inputs = , outputs = import/strided_slice_1/stack:0
 @input shapes:
 @output shapes:
 name = import/strided_slice_1/stack:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-284: op name = import/strided_slice_1/stack_1, op type = ( Const ), inputs = , outputs = import/strided_slice_1/stack_1:0
+264: op name = import/strided_slice_1/stack_1, op type = ( Const ), inputs = , outputs = import/strided_slice_1/stack_1:0
 @input shapes:
 @output shapes:
 name = import/strided_slice_1/stack_1:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-285: op name = import/strided_slice_1/stack_2, op type = ( Const ), inputs = , outputs = import/strided_slice_1/stack_2:0
+265: op name = import/strided_slice_1/stack_2, op type = ( Const ), inputs = , outputs = import/strided_slice_1/stack_2:0
 @input shapes:
 @output shapes:
 name = import/strided_slice_1/stack_2:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-286: op name = import/strided_slice_1, op type = ( StridedSlice ), inputs = import/Shape_1:0, import/strided_slice_1/stack:0, import/strided_slice_1/stack_1:0, import/strided_slice_1/stack_2:0, outputs = import/strided_slice_1:0
+266: op name = import/strided_slice_1, op type = ( StridedSlice ), inputs = import/Shape_1:0, import/strided_slice_1/stack:0, import/strided_slice_1/stack_1:0, import/strided_slice_1/stack_2:0, outputs = import/strided_slice_1:0
 @input shapes:
 name = import/Shape_1:0 : (4,)
 name = import/strided_slice_1/stack:0 : (1,)
@@ -1765,41 +1661,41 @@ name = import/strided_slice_1/stack_2:0 : (1,)
 @output shapes:
 name = import/strided_slice_1:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-287: op name = import/sub_3/y, op type = ( Const ), inputs = , outputs = import/sub_3/y:0
+267: op name = import/sub_3/y, op type = ( Const ), inputs = , outputs = import/sub_3/y:0
 @input shapes:
 @output shapes:
 name = import/sub_3/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-288: op name = import/sub_3, op type = ( Sub ), inputs = import/strided_slice:0, import/sub_3/y:0, outputs = import/sub_3:0
+268: op name = import/sub_3, op type = ( Sub ), inputs = import/strided_slice:0, import/sub_3/y:0, outputs = import/sub_3:0
 @input shapes:
 name = import/strided_slice:0 : ()
 name = import/sub_3/y:0 : ()
 @output shapes:
 name = import/sub_3:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-289: op name = import/sub_4/y, op type = ( Const ), inputs = , outputs = import/sub_4/y:0
+269: op name = import/sub_4/y, op type = ( Const ), inputs = , outputs = import/sub_4/y:0
 @input shapes:
 @output shapes:
 name = import/sub_4/y:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-290: op name = import/sub_4, op type = ( Sub ), inputs = import/strided_slice_1:0, import/sub_4/y:0, outputs = import/sub_4:0
+270: op name = import/sub_4, op type = ( Sub ), inputs = import/strided_slice_1:0, import/sub_4/y:0, outputs = import/sub_4:0
 @input shapes:
 name = import/strided_slice_1:0 : ()
 name = import/sub_4/y:0 : ()
 @output shapes:
 name = import/sub_4:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-291: op name = import/stack/0, op type = ( Const ), inputs = , outputs = import/stack/0:0
+271: op name = import/stack/0, op type = ( Const ), inputs = , outputs = import/stack/0:0
 @input shapes:
 @output shapes:
 name = import/stack/0:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-292: op name = import/stack/3, op type = ( Const ), inputs = , outputs = import/stack/3:0
+272: op name = import/stack/3, op type = ( Const ), inputs = , outputs = import/stack/3:0
 @input shapes:
 @output shapes:
 name = import/stack/3:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-293: op name = import/stack, op type = ( Pack ), inputs = import/stack/0:0, import/sub_3:0, import/sub_4:0, import/stack/3:0, outputs = import/stack:0
+273: op name = import/stack, op type = ( Pack ), inputs = import/stack/0:0, import/sub_3:0, import/sub_4:0, import/stack/3:0, outputs = import/stack:0
 @input shapes:
 name = import/stack/0:0 : ()
 name = import/sub_3:0 : ()
@@ -1808,71 +1704,70 @@ name = import/stack/3:0 : ()
 @output shapes:
 name = import/stack:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-294: op name = import/Slice/begin, op type = ( Const ), inputs = , outputs = import/Slice/begin:0
+274: op name = import/Slice/begin, op type = ( Const ), inputs = , outputs = import/Slice/begin:0
 @input shapes:
 @output shapes:
 name = import/Slice/begin:0 : (4,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-295: op name = import/Slice, op type = ( Slice ), inputs = import/mul:0, import/Slice/begin:0, import/stack:0, outputs = import/Slice:0
+275: op name = import/Slice, op type = ( Slice ), inputs = import/mul:0, import/Slice/begin:0, import/stack:0, outputs = import/Slice:0
 @input shapes:
-name = import/mul:0 : (1, 276, 276, 3)
+name = import/mul:0 : (1, ?, ?, 3)
 name = import/Slice/begin:0 : (4,)
 name = import/stack:0 : (4,)
 @output shapes:
-name = import/Slice:0 : (1, 256, 256, 3)
+name = import/Slice:0 : (?, ?, ?, ?)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-296: op name = import/Cast, op type = ( Cast ), inputs = import/Slice:0, outputs = import/Cast:0
+276: op name = import/Cast, op type = ( Cast ), inputs = import/Slice:0, outputs = import/Cast:0
 @input shapes:
-name = import/Slice:0 : (1, 256, 256, 3)
+name = import/Slice:0 : (?, ?, ?, ?)
 @output shapes:
-name = import/Cast:0 : (1, 256, 256, 3)
+name = import/Cast:0 : (?, ?, ?, ?)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-297: op name = import/Squeeze, op type = ( Squeeze ), inputs = import/Cast:0, outputs = import/Squeeze:0
+277: op name = import/Squeeze, op type = ( Squeeze ), inputs = import/Cast:0, outputs = import/Squeeze:0
 @input shapes:
-name = import/Cast:0 : (1, 256, 256, 3)
+name = import/Cast:0 : (?, ?, ?, ?)
 @output shapes:
-name = import/Squeeze:0 : (256, 256, 3)
+name = import/Squeeze:0 : (?, ?, ?)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-298: op name = import/Slice_1/begin, op type = ( Const ), inputs = , outputs = import/Slice_1/begin:0
+278: op name = import/Slice_1/begin, op type = ( Const ), inputs = , outputs = import/Slice_1/begin:0
 @input shapes:
 @output shapes:
 name = import/Slice_1/begin:0 : (3,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-299: op name = import/Slice_1/size/2, op type = ( Const ), inputs = , outputs = import/Slice_1/size/2:0
+279: op name = import/Slice_1/size/2, op type = ( Const ), inputs = , outputs = import/Slice_1/size/2:0
 @input shapes:
 @output shapes:
 name = import/Slice_1/size/2:0 : ()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-300: op name = import/Slice_1/size, op type = ( Pack ), inputs = import/height:0, import/width:0, import/Slice_1/size/2:0, outputs = import/Slice_1/size:0
+280: op name = import/Slice_1/size, op type = ( Pack ), inputs = import/height:0, import/width:0, import/Slice_1/size/2:0, outputs = import/Slice_1/size:0
 @input shapes:
-name = import/height:0 : ()
-name = import/width:0 : ()
+name = import/height:0 : <unknown>
+name = import/width:0 : <unknown>
 name = import/Slice_1/size/2:0 : ()
 @output shapes:
 name = import/Slice_1/size:0 : (3,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-301: op name = import/Slice_1, op type = ( Slice ), inputs = import/Squeeze:0, import/Slice_1/begin:0, import/Slice_1/size:0, outputs = import/Slice_1:0
+281: op name = import/Slice_1, op type = ( Slice ), inputs = import/Squeeze:0, import/Slice_1/begin:0, import/Slice_1/size:0, outputs = import/Slice_1:0
 @input shapes:
-name = import/Squeeze:0 : (256, 256, 3)
+name = import/Squeeze:0 : (?, ?, ?)
 name = import/Slice_1/begin:0 : (3,)
 name = import/Slice_1/size:0 : (3,)
 @output shapes:
-name = import/Slice_1:0 : (256, 256, 3)
+name = import/Slice_1:0 : (?, ?, 3)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-302: op name = import/output_image/shape, op type = ( Const ), inputs = , outputs = import/output_image/shape:0
+282: op name = import/output_image/shape, op type = ( Const ), inputs = , outputs = import/output_image/shape:0
 @input shapes:
 @output shapes:
 name = import/output_image/shape:0 : (1,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-303: op name = import/output_image, op type = ( Reshape ), inputs = import/Slice_1:0, import/output_image/shape:0, outputs = import/output_image:0
+283: op name = import/output_image, op type = ( Reshape ), inputs = import/Slice_1:0, import/output_image/shape:0, outputs = import/output_image:0
 @input shapes:
-name = import/Slice_1:0 : (256, 256, 3)
+name = import/Slice_1:0 : (?, ?, 3)
 name = import/output_image/shape:0 : (1,)
 @output shapes:
-name = import/output_image:0 : (196608,)
+name = import/output_image:0 : (?,)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 OPS counts:
-Placeholder : 1
 Split : 1
 ConcatV2 : 1
 ExpandDims : 1
@@ -1882,16 +1777,18 @@ Reshape : 2
 Cast : 2
 ResizeNearestNeighbor : 2
 Slice : 2
+Placeholder : 3
 Pack : 5
 StopGradient : 6
 SquaredDifference : 6
 Sqrt : 6
 RealDiv : 6
+Shape : 6
 StridedSlice : 6
 Mul : 9
 Relu : 10
 Equal : 10
-Fill : 10
+ZerosLike : 10
 Select : 10
 Sub : 11
 Mean : 12
@@ -1899,4 +1796,4 @@ Add : 12
 Identity : 16
 Conv2D : 16
 MirrorPad : 17
-Const : 122
+Const : 94
