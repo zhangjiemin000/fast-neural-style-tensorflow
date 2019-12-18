@@ -64,6 +64,7 @@ def main(_):
             # Generate and write image data to file.
             with open(generated_file, 'wb') as img:
                 start_time = time.time()
+                sss = tf.image.encode_jpeg(generated)
                 img.write(sess.run(tf.image.encode_jpeg(generated)))
                 end_time = time.time()
                 tf.logging.info('Elapsed time: %fs' % (end_time - start_time))

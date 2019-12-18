@@ -2,6 +2,7 @@
 import argparse
 
 import tensorflow as tf
+from coremltools.models.neural_network import flexible_shape_utils
 from tensorflow.core.framework import graph_pb2
 import time
 import operator
@@ -10,7 +11,8 @@ import os
 import tfcoreml
 
 frozen_model_file = os.path.abspath("./transfer.pb")
-input_tensor_shapes = {"height:0", "width:0", "Reshape/shape/2:0"}
+input_tensor_shapes = {"input_image:0": [0], "height:0": [0], "width:0": [0], "Reshape/shape/2:0": [0]}
+img_input_names = ["input_image:0", "height:0", "width:0", "Reshape/shape/2:0"]
 # Output CoreML model path
 coreml_model_file = './model.mlmodel'
 output_tensor_names = ['output_image:0']
@@ -30,12 +32,17 @@ def convert():
         graph_def.ParseFromString(f.read())
         # Then, we import the graph_def into a new Graph
     tf.import_graph_def(graph_def, name="")
+
     # Convert
     tfcoreml.convert(
         tf_model_path=frozen_model_file,
         mlmodel_path=coreml_model_file,
+        image_input_names=img_input_names,
         input_name_shape_dict=input_tensor_shapes,
         output_feature_names=output_tensor_names)
+
+
+
 
 
 def inspect(model_pb, output_txt_file):
