@@ -10,8 +10,8 @@ import sys
 import os
 import tfcoreml
 
-frozen_model_file = os.path.abspath("./transfer.pb")
-input_tensor_shapes = {"input_image:0": [0], "height:0": [0], "width:0": [0], "Reshape/shape/2:0": [0]}
+frozen_model_file = os.path.abspath("./transfertransfer.pb")
+input_tensor_shapes = {"input_image:0": [3]}
 img_input_names = ["input_image:0", "height:0", "width:0", "Reshape/shape/2:0"]
 # Output CoreML model path
 coreml_model_file = './model.mlmodel'
@@ -37,7 +37,7 @@ def convert():
     tfcoreml.convert(
         tf_model_path=frozen_model_file,
         mlmodel_path=coreml_model_file,
-        image_input_names=img_input_names,
+        # image_input_names=img_input_names,
         input_name_shape_dict=input_tensor_shapes,
         output_feature_names=output_tensor_names)
 
