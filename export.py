@@ -23,12 +23,12 @@ def main(args):
     with g.as_default():
         with tf.Session() as sess:
             # Building graph.
-            # image_data = tf.placeholder(tf.int32, name='input_image')
-            # height = tf.placeholder(tf.int32, name='height')
-            # width = tf.placeholder(tf.int32, name='width')
             image_data = tf.placeholder(tf.int32, name='input_image')
-            height = tf.constant(256, tf.int32, name="height")
-            width = tf.constant(256, tf.int32, name='width')
+            height = tf.placeholder(tf.int32, name='height')
+            width = tf.placeholder(tf.int32, name='width')
+            # image_data = tf.placeholder(tf.int32, name='input_image')
+            # height = tf.constant(256, tf.int32, name="height")
+            # width = tf.constant(256, tf.int32, name='width')
 
             # Reshape data
             image = tf.reshape(image_data, [height, width, 3])
