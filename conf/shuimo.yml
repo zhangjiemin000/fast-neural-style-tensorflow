@@ -1,6 +1,6 @@
 ## Basic configuration
-style_image: img/snow.jpg # targeted style image
-naming: "snow" # the name of this model. Determine the path to save checkpoint and events file.
+style_image: img/shuimo.jpg # targeted style image
+naming: "shuimo" # the name of this model. Determine the path to save checkpoint and events file.
 model_path: models  # root path to save checkpoint and events file. The final path would be <model_path>/<naming>
 
 ## Weight of the loss
