@@ -18,16 +18,26 @@ slim = tf.contrib.slim
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--conf', default='conf/mosaic.yml', help='the path to the conf file')
+    parser.add_argument('-lc','--list_config',default=None,help='the path of the conf file list')
     return parser.parse_args()
 
 
 def main(FLAGS):
+
+    #done training path exists
+    training_done_path = os.path.join('TrainingDone/{0}'.format(FLAGS.model_path), FLAGS.naming)
+    if not (os.path.exists(training_done_path)):
+        os.makedirs(training_done_path)
+
     style_features_t = losses.get_style_features(FLAGS)
 
     # Make sure the training path exists.
     training_path = os.path.join(FLAGS.model_path, FLAGS.naming)
-    if not(os.path.exists(training_path)):
+
+    if not (os.path.exists(training_path)):
         os.makedirs(training_path)
+
+
 
     with tf.Graph().as_default():
         with tf.Session() as sess:
@@ -133,7 +143,7 @@ def main(FLAGS):
                     if step % 1000 == 0:
                         saver.save(sess, os.path.join(training_path, 'fast-style-model.ckpt'), global_step=step)
             except tf.errors.OutOfRangeError:
-                saver.save(sess, os.path.join(training_path, 'fast-style-model.ckpt-done'))
+                saver.save(sess, os.path.join(training_done_path, 'fast-style-model.ckpt-done'))
                 tf.logging.info('Done training -- epoch limit reached')
             finally:
                 coord.request_stop()
@@ -143,5 +153,15 @@ def main(FLAGS):
 if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
     args = parse_args()
-    FLAGS = utils.read_conf_file(args.conf)
-    main(FLAGS)
+
+    if args.list_config is not None:
+        config_list = utils.read_conf_file(args.list_config)
+        for config_file in config_list.trainning_list:
+            FLAGS = utils.read_conf_file(config_file)
+            main(FLAGS)
+    else:   # trainnig single file
+        FLAGS = utils.read_conf_file(args.conf)
+        main(FLAGS)
+
+
+
