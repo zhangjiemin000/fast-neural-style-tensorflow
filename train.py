@@ -131,7 +131,8 @@ def main(FLAGS):
                     """logging"""
                     # print(step)
                     if step % 10 == 0:
-                        tf.logging.info('step: %d,  total Loss %f, secs/step: %f' % (step, loss_t, elapsed_time))
+                        tf.logging.info('config file:%s, step: %d,  total Loss %f, secs/step: %f' %
+                                        (FLAGS.naming,step, loss_t, elapsed_time))
                         print('config file:%s,step: %d,  total Loss %f, secs/step: %f' % (
                         FLAGS.naming, step, loss_t, elapsed_time))
                     """summary"""
