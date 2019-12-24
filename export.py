@@ -4,9 +4,10 @@ import tensorflow as tf
 import argparse
 import time
 import os
-
+import skimage
 from tensorflow.python.platform import gfile
-
+import numpy as np
+from skimage import io
 import model
 import utils
 
@@ -103,7 +104,10 @@ def testPB():
                 input_width: decoded_image.shape[1],
                 input_height: decoded_image.shape[0],
                 input_image: input_array})
-            img = open(output_file,'wb')
+            # img = open(output_file,'wb')
+            img = np.reshape(ret,[900,1440,3])
+            img = np.clip(img, 0, 255).astype(np.uint8)
+            io.imsave(output_file, img)
             # img.write()
 
 
