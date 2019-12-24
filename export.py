@@ -5,6 +5,8 @@ import argparse
 import time
 import os
 
+from tensorflow.python.platform import gfile
+
 import model
 import utils
 
@@ -19,7 +21,7 @@ def parse_args():
 
 
 def main(args):
-    g = tf.Graph()      # A new graph
+    g = tf.Graph()  # A new graph
     with g.as_default():
         with tf.Session() as sess:
             # Building graph.
@@ -34,8 +36,8 @@ def main(args):
             image = tf.reshape(image_data, [height, width, 3])
 
             processed_image = utils.mean_image_subtraction(
-                image, [123.68, 116.779, 103.939])                    # Preprocessing image
-            batched_image = tf.expand_dims(processed_image, 0)        # Add batch dimension
+                image, [123.68, 116.779, 103.939])  # Preprocessing image
+            batched_image = tf.expand_dims(processed_image, 0)  # Add batch dimension
             generated_image = model.net(batched_image, training=False)
             casted_image = tf.cast(generated_image, tf.int32)
             # Remove batch dimension
@@ -60,9 +62,9 @@ def main(args):
 
                     start_time = time.time()
                     img.write(sess.run(tf.image.encode_jpeg(tf.cast(cropped_image, tf.uint8)), feed_dict={
-                              image_data: input_array,
-                              height: decoded_image.shape[0],
-                              width: decoded_image.shape[1]}))
+                        image_data: input_array,
+                        height: decoded_image.shape[0],
+                        width: decoded_image.shape[1]}))
                     end_time = time.time()
                     tf.logging.info('Elapsed time: %fs' % (end_time - start_time))
             else:
@@ -76,8 +78,38 @@ def main(args):
                 #                      args.model_name + '.pb', as_text=False)
 
 
+def testPB():
+    content_file = './img/timg.jpg'
+    model_path = './transfertransfer.pb'
+    output_file = './pbImg.jpg'
+    with tf.Session() as sess:
+        with gfile.FastGFile(model_path, 'rb') as f:
+            graph_def = tf.GraphDef()
+            graph_def.ParseFromString(f.read())
+            sess.graph.as_default()
+            tf.import_graph_def(graph_def, name='')
+        image_bytes = tf.read_file(content_file)
+        input_array, decoded_image = sess.run([
+            tf.reshape(tf.image.decode_jpeg(image_bytes, channels=3), [-1]),
+            tf.image.decode_jpeg(image_bytes, channels=3)])
+
+        sess.run(tf.global_variables_initializer())
+        input_width = sess.graph.get_tensor_by_name('width:0')
+        input_height = sess.graph.get_tensor_by_name('height:0')
+        input_image = sess.graph.get_tensor_by_name('input_image:0')
+        out = sess.graph.get_tensor_by_name('output_image:0')
+        ret = sess.run(out, feed_dict={
+            input_width:decoded_image.shape[1],
+            input_height:decoded_image.shape[0],
+            input_image:input_array})
+        img = open(output_file,'wb')
+        img.write(ret)
+
+
+
 if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
     args = parse_args()
     print(args)
-    main(args)
+    testPB()
+    # main(args)
