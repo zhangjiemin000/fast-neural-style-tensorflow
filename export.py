@@ -88,22 +88,23 @@ def testPB():
             graph_def.ParseFromString(f.read())
             sess.graph.as_default()
             tf.import_graph_def(graph_def, name='')
-        image_bytes = tf.read_file(content_file)
-        input_array, decoded_image = sess.run([
-            tf.reshape(tf.image.decode_jpeg(image_bytes, channels=3), [-1]),
-            tf.image.decode_jpeg(image_bytes, channels=3)])
 
-        sess.run(tf.global_variables_initializer())
-        input_width = sess.graph.get_tensor_by_name('width:0')
-        input_height = sess.graph.get_tensor_by_name('height:0')
-        input_image = sess.graph.get_tensor_by_name('input_image:0')
-        out = sess.graph.get_tensor_by_name('output_image:0')
-        ret = sess.run(out, feed_dict={
-            input_width:decoded_image.shape[1],
-            input_height:decoded_image.shape[0],
-            input_image:input_array})
-        img = open(output_file,'wb')
-        img.write(ret)
+            image_bytes = tf.read_file(content_file)
+            input_array, decoded_image = sess.run([
+                tf.reshape(tf.image.decode_jpeg(image_bytes, channels=3), [-1]),
+                tf.image.decode_jpeg(image_bytes, channels=3)])
+
+            sess.run(tf.global_variables_initializer())
+            input_width = sess.graph.get_tensor_by_name('width:0')
+            input_height = sess.graph.get_tensor_by_name('height:0')
+            input_image = sess.graph.get_tensor_by_name('input_image:0')
+            out = sess.graph.get_tensor_by_name('output_image:0')
+            ret = sess.run(out, feed_dict={
+                input_width: decoded_image.shape[1],
+                input_height: decoded_image.shape[0],
+                input_image: input_array})
+            img = open(output_file,'wb')
+            # img.write()
 
 
 
