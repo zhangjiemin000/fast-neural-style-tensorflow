@@ -1,9 +1,6 @@
 #training List
 trainning_list:
-  - "./conf/Claude31_50.yml"
-  - "./conf/Claude31_150.yml"
-  - "./conf/Claude31_200.yml"
-  - "./conf/Claude31_220.yml"
-  - "./conf/Claude31_250.yml"
-  - "./conf/Claude31_300.yml"
-  - "./conf/Claude31_320.yml"
+  - "./conf/Claude31_400.yml"
+  - "./conf/Claude31_450.yml"
+  - "./conf/Claude31_500.yml"
+  - "./conf/Claude31_1000.yml"

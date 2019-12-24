@@ -224,14 +224,14 @@ def _mean_image_subtraction(image, means):
     """
     if image.get_shape().ndims != 3:
         raise ValueError('Input must be of size [height, width, C>0]')
-    num_channels = image.get_shape().as_list()[-1]
+    num_channels = image.get_shape().as_list()[-1]   # -1 表示倒数第一维的数据，也就是最后的那个通道
     if len(means) != num_channels:
         raise ValueError('len(means) must match the number of channels')
 
-    channels = tf.split(image, num_channels, 2)
+    channels = tf.split(image, num_channels, 2)  # 应该是将image 按照通道轴 分裂成 一个Tensor数组，分别为RGB维度
     for i in range(num_channels):
         channels[i] -= means[i]
-    return tf.concat(channels, 2)
+    return tf.concat(channels, 2)  # 第二个维度拼接
 
 
 def _mean_image_add(image, means):
