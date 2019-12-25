@@ -26,12 +26,12 @@ def main(args):
     with g.as_default():
         with tf.Session() as sess:
             # Building graph.
-            image_data = tf.placeholder(tf.int32, name='input_image')
-            height = tf.placeholder(tf.int32, name='height')
-            width = tf.placeholder(tf.int32, name='width')
             # image_data = tf.placeholder(tf.int32, name='input_image')
-            # height = tf.constant(256, tf.int32, name="height")
-            # width = tf.constant(256, tf.int32, name='width')
+            # height = tf.placeholder(tf.int32, name='height')
+            # width = tf.placeholder(tf.int32, name='width')
+            image_data = tf.placeholder(tf.int32, name='input_image')
+            height = tf.constant(256, tf.int32, name="height")
+            width = tf.constant(256, tf.int32, name='width')
 
             # Reshape data
             image = tf.reshape(image_data, [height, width, 3])
@@ -105,7 +105,7 @@ def testPB():
                 input_height: decoded_image.shape[0],
                 input_image: input_array})
             # img = open(output_file,'wb')
-            img = np.reshape(ret,[900,1440,3])
+            img = np.reshape(ret,[decoded_image.shape[1],decoded_image.shape[0],3])
             img = np.clip(img, 0, 255).astype(np.uint8)
             io.imsave(output_file, img)
             # img.write()
@@ -116,5 +116,5 @@ if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
     args = parse_args()
     print(args)
-    testPB()
-    # main(args)
+    # testPB()
+    main(args)
