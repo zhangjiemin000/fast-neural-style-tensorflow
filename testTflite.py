@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import cv2
+# import cv2
 from PIL import  Image
 from skimage import io
 
@@ -16,12 +16,14 @@ def test_tflite():
         input_details = interpreter.get_input_details()
         output_details = interpreter.get_output_details()
 
-        content_file = './img/timg.jpg'
+        content_file = './boy.jpg'
         model_path = './transfertransfer.pb'
         output_file = './pbImg.jpg'
         # image_bytes = tf.read_file(content_file)
 
         img = Image.open(content_file).resize((256, 256))
+        img.save('./pbImg_input.jpg')
+
         input_data = np.reshape(img,[256,256,3])
         input_data = input_data.astype('int32')
         # input_data = np.cast(input_data, np.int32)
@@ -51,7 +53,7 @@ def test_tflite():
         print(output_details)
 
 
-def quantize_tflite():
+def optimized_tflite():
     converter = tf.lite.TFLiteConverter.from_frozen_graph('./transfertransfer.pb',input_arrays=["input_image"],output_arrays=["output_image"],input_shapes={"input_image":[256,256,3]})
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
     converter.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
@@ -65,6 +67,6 @@ def quantize_tflite():
 
 
 if __name__=='__main__':
-    quantize_tflite()
-    # test_tflite()
+    # quantize_tflite()
+    test_tflite()
 
