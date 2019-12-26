@@ -54,7 +54,7 @@ def test_tflite():
 
 
 def optimized_tflite():
-    converter = tf.lite.TFLiteConverter.from_frozen_graph('./transfertransfer.pb',input_arrays=["input_image"],output_arrays=["output_image"],input_shapes={"input_image":[512,512,3]})
+    converter = tf.lite.TFLiteConverter.from_frozen_graph('./transfertransfer.pb',input_arrays=["input_image"],output_arrays=["output_image"],input_shapes={"input_image":[256,256,3]})
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
     converter.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
     converter.inference_input_type = tf.float32
