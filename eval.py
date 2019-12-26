@@ -54,10 +54,11 @@ def main(_):
             sess.run([tf.global_variables_initializer(), tf.local_variables_initializer()])
             # Use absolute path
             FLAGS.model_file = os.path.abspath(FLAGS.model_file)
-            saver.restore(sess, FLAGS.model_file)
 
+            saver.restore(sess, FLAGS.model_file)
+            generated_file = os.path.join('./generated',FLAGS.model_file.split("/")[-2]+'.jpg')
             # Make sure 'generated' directory exists.
-            generated_file = 'generated/res.jpg'
+            # generated_file = 'generated/res.jpg'
             if os.path.exists('generated') is False:
                 os.makedirs('generated')
 

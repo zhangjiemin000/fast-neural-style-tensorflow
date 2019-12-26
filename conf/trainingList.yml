@@ -1,6 +1,8 @@
 #training List
 trainning_list:
-  - "./conf/Claude31_400.yml"
-  - "./conf/Claude31_450.yml"
-  - "./conf/Claude31_500.yml"
-  - "./conf/Claude31_1000.yml"
+  - "./conf/Andy_Warhol_38_300.yml"
+  - "./conf/Andy_Warhol_38_400.yml"
+  - "./conf/Andy_Warhol_38_500.yml"
+  - "./conf/Andy_Warhol_38_1000.yml"
+  - "./conf/Andy_Warhol_38_2000.yml"
+  - "./conf/Claude31_2000.yml"
