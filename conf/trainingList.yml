@@ -1,9 +1,10 @@
 #training List
 trainning_list:
-  - "./conf/Raphael_5_200.yml"
-  - "./conf/Raphael_5_280.yml"
-  - "./conf/Raphael_5_300.yml"
-  - "./conf/Raphael_5_330.yml"
-  - "./conf/Raphael_5_350.yml"
-  - "./conf/Raphael_5_400.yml"
-  - "./conf/Raphael_5_500.yml"
+  - "./conf/paint_300.yml"
+  - "./conf/paint_400.yml"
+  - "./conf/paint_500.yml"
+  - "./conf/paint_600.yml"
+  - "./conf/paint_700.yml"
+  - "./conf/paint_800.yml"
+  - "./conf/paint_900.yml"
+  - "./conf/paint_1000.yml"
