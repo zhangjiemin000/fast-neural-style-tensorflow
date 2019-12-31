@@ -1,5 +1,3 @@
 #training List
 trainning_list:
-  - "./conf/paint_50.yml"
-  - "./conf/paint_100.yml"
-  - "./conf/paint_200.yml"
+  - "./conf/paint_25.yml"

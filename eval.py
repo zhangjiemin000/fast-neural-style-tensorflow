@@ -15,7 +15,7 @@ tf.app.flags.DEFINE_string("image_file", "a.jpg", "")
 
 FLAGS = tf.app.flags.FLAGS
 
-
+                                  
 def main(_):
 
     # Get image's height and width.
@@ -69,9 +69,7 @@ def main(_):
                 img.write(sess.run(tf.image.encode_jpeg(generated)))
                 end_time = time.time()
                 tf.logging.info('Elapsed time: %fs' % (end_time - start_time))
-
                 tf.logging.info('Done. Please check %s.' % generated_file)
-
 
 if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
