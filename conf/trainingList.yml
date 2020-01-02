@@ -1,4 +1,8 @@
 #training List
 trainning_list:
-  - "./conf/paint_25.yml"
-  - "./conf/paint_50.yml"
+  - "./conf/Andy_Warhol_61_50.yml"
+  - "./conf/Andy_Warhol_61_100.yml"
+  - "./conf/Andy_Warhol_61_200.yml"
+  - "./conf/Andy_Warhol_61_300.yml"
+  - "./conf/Andy_Warhol_61_400.yml"
+  - "./conf/Andy_Warhol_61_500.yml"
