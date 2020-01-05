@@ -1,0 +1,11 @@
+#training List
+trainning_list:
+  - "./conf/warm_50.yml"
+  - "./conf/warm_100.yml"
+  - "./conf/warm_150.yml"
+  - "./conf/warm_200.yml"
+  - "./conf/warm_250.yml"
+  - "./conf/warm_300.yml"
+  - "./conf/warm_350.yml"
+  - "./conf/warm_450.yml"
+  - "./conf/warm_550.yml"
