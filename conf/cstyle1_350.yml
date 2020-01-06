@@ -1,5 +1,5 @@
 ## Basic configuration
-style_image: img/cstyle1.jpg # targeted style image
+style_image: img/cstyle1.png # targeted style image
 naming: "cstyle1_350" # the name of this model. Determine the path to save checkpoint and events file.
 model_path: models  # root path to save checkpoint and events file. The final path would be <model_path>/<naming>
 
