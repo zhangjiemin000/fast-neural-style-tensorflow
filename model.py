@@ -97,7 +97,7 @@ def net(image, training):
     image = tf.pad(image, [[0, 0], [10, 10], [10, 10], [0, 0]], mode='REFLECT')
 
     with tf.variable_scope('conv1'):
-        conv1 = relu(instance_norm(conv2d(image, 3, 32, 9, 1)))
+        conv1 = relu(instance_norm(conv2d(image, 3, 32, 9, 1))) #conv2d = input,输入filter，输出filter，kernel，stride
     with tf.variable_scope('conv2'):
         conv2 = relu(instance_norm(conv2d(conv1, 32, 64, 3, 2)))
     with tf.variable_scope('conv3'):

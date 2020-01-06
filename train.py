@@ -47,11 +47,14 @@ def main(FLAGS):
                 num_classes=1,
                 is_training=False)
 
+            #获取图片的预处理和后处理程序
             image_preprocessing_fn, image_unprocessing_fn = preprocessing_factory.get_preprocessing(
                 FLAGS.loss_model,
                 is_training=False)
+            #处理输入的图片，经过image_preprocessing_fn函数指针
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
+            #获取Vgg_16的处理网络
             generated = model.net(processed_images, training=True)
             processed_generated = [image_preprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
                                    for image in tf.unstack(generated, axis=0, num=FLAGS.batch_size)
