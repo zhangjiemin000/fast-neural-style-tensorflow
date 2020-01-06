@@ -103,7 +103,7 @@ def net(image, training):
     with tf.variable_scope('conv3'):
         conv3 = relu(instance_norm(conv2d(conv2, 64, 128, 3, 2)))
     with tf.variable_scope('res1'):
-        res1 = residual(conv3, 128, 3, 1)
+        res1 = residual(conv3, 128, 3, 1)  #残差网络
     with tf.variable_scope('res2'):
         res2 = residual(res1, 128, 3, 1)
     with tf.variable_scope('res3'):
@@ -115,7 +115,7 @@ def net(image, training):
     # print(res5.get_shape())
     with tf.variable_scope('deconv1'):
         # deconv1 = relu(instance_norm(conv2d_transpose(res5, 128, 64, 3, 2)))
-        deconv1 = relu(instance_norm(resize_conv2d(res5, 128, 64, 3, 2, training)))
+        deconv1 = relu(instance_norm(resize_conv2d(res5, 128, 64, 3, 2, training)))  #重新resize大小的卷积网络
     with tf.variable_scope('deconv2'):
         # deconv2 = relu(instance_norm(conv2d_transpose(deconv1, 64, 32, 3, 2)))
         deconv2 = relu(instance_norm(resize_conv2d(deconv1, 64, 32, 3, 2, training)))
@@ -126,5 +126,5 @@ def net(image, training):
     # Remove border effect reducing padding.
     height = tf.shape(y)[1]
     width = tf.shape(y)[2]
-    y = tf.slice(y, [0, 10, 10, 0], tf.stack([-1, height - 20, width - 20, -1]))
+    y = tf.slice(y, [0, 10, 10, 0], tf.stack([-1, height - 20, width - 20, -1])) # 拼接数据，估计是把之前padding的数据去掉
     return y

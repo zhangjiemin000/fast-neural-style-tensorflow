@@ -59,8 +59,9 @@ def main(FLAGS):
             processed_generated = [image_preprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
                                    for image in tf.unstack(generated, axis=0, num=FLAGS.batch_size)
                                    ]
-            processed_generated = tf.stack(processed_generated)
-            _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False)
+
+            processed_generated = tf.stack(processed_generated)  #多加了一维processed_generated
+            _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network
             tf.logging.info('Loss network layers(You can define them in "content_layers" and "style_layers"):')
