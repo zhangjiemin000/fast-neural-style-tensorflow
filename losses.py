@@ -37,15 +37,16 @@ def get_style_features(FLAGS):
             is_training=False)
 
         # Get the style image data
-        size = FLAGS.image_size
-        img_bytes = tf.read_file(FLAGS.style_image)
+        size = FLAGS.image_size  # 获取StyleImage的Size
+        img_bytes = tf.read_file(FLAGS.style_image)  # Tensor
         if FLAGS.style_image.lower().endswith('png'):
-            image = tf.image.decode_png(img_bytes)
+            image = tf.image.decode_png(img_bytes)  #解析图片
         else:
-            image = tf.image.decode_jpeg(img_bytes)
+            image = tf.image.decode_jpeg(img_bytes)  #解析图片 Tensor
         # image = _aspect_preserving_resize(image, size)
 
         # Add the batch dimension
+        # 把style_image的处理成接近于flag中设置的Size大小，先等比例缩小到适当的大小，再居中裁剪掉超出的部分
         images = tf.expand_dims(image_preprocessing_fn(image, size, size), 0)
         # images = tf.stack([image_preprocessing_fn(image, size, size)])
 

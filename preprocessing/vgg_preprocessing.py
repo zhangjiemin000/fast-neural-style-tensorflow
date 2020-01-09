@@ -271,6 +271,8 @@ def _smallest_size_at_least(height, width, target_height, target_width):
     target_height = tf.to_float(target_height)
     target_width = tf.to_float(target_width)
 
+    # tf.greater return if (a>b) return true else return false
+    # tf.cond if true , use lambda1 , else use lambda2
     scale = tf.cond(tf.greater(target_height / height, target_width / width),
                     lambda: target_height / height,
                     lambda: target_width / width)
@@ -293,13 +295,16 @@ def _aspect_preserving_resize(image, target_height, target_width):
     target_height = tf.convert_to_tensor(target_height, dtype=tf.int32)
     target_width = tf.convert_to_tensor(target_width, dtype=tf.int32)
 
-    shape = tf.shape(image)
+    shape = tf.shape(image) #搞清楚，tf.shape(tensor) 和tensor.shape的区别, tf.shape(tensor)是抽象tensor的更高级的
     height = shape[0]
     width = shape[1]
+    #计算满足设置中，style size的 最小的大小(保持纵横比，尽量保证接近于设置中的Style_Size)
     new_height, new_width = _smallest_size_at_least(height, width, target_height, target_width)
     image = tf.expand_dims(image, 0)
+    #resize Image
     resized_image = tf.image.resize_bilinear(image, [new_height, new_width],
                                              align_corners=False)
+    #去掉所有1维的shape
     resized_image = tf.squeeze(resized_image)
     resized_image.set_shape([None, None, 3])
     return resized_image
@@ -337,7 +342,7 @@ def preprocess_for_train(image,
     image = tf.image.random_flip_left_right(image)
     return _mean_image_subtraction(image, [_R_MEAN, _G_MEAN, _B_MEAN])
 
-
+# 为了验证而处理图片
 def preprocess_for_eval(image, output_height, output_width, resize_side):
     """Preprocesses the given image for evaluation.
 
@@ -350,6 +355,7 @@ def preprocess_for_eval(image, output_height, output_width, resize_side):
       A preprocessed image.
     """
     image = _aspect_preserving_resize(image, output_height, output_width)
+    #再次裁剪
     image = _central_crop([image], output_height, output_width)[0]
     # image = tf.image.resize_image_with_crop_or_pad(image, output_height, output_width)
     image.set_shape([output_height, output_width, 3])

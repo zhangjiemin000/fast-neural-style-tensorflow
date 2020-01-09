@@ -110,7 +110,7 @@ def main(FLAGS):
                 if not(v.name.startswith(FLAGS.loss_model)):
                     variables_to_restore.append(v)
             saver = tf.train.Saver(variables_to_restore, write_version=tf.train.SaverDef.V1)
-
+            #图表已经搭建完成，现在开始训练
             sess.run([tf.global_variables_initializer(), tf.local_variables_initializer()])
 
             # Restore variables for loss network.

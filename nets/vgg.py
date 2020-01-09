@@ -110,7 +110,7 @@ def vgg_a(inputs,
       return net, end_points
 vgg_a.default_image_size = 224
 
-
+#VGG_16的网络处理，由代理传入
 def vgg_16(inputs,
            num_classes=1000,
            is_training=True,
@@ -159,6 +159,7 @@ def vgg_16(inputs,
                         normalizer_fn=None,
                         scope='fc8')
       # Convert end_points_collection into a end_point dict.
+      #将所有层的输出都转为字典，输出
       end_points = slim.utils.convert_collection_to_dict(end_points_collection)
       if spatial_squeeze:
         net = tf.squeeze(net, [1, 2], name='fc8/squeezed')
