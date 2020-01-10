@@ -1,0 +1,4 @@
+#training List
+trainning_list:
+  - "./conf/cstyle6_150.yml"
+  - "./conf/cstyle7_150.yml"

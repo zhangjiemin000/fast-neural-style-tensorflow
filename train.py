@@ -61,18 +61,23 @@ def main(FLAGS):
                                    ]
 
             processed_generated = tf.stack(processed_generated)  #多加了一维processed_generated
+            #获取对应的VGG模型每一层的输出节点
             _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network
             tf.logging.info('Loss network layers(You can define them in "content_layers" and "style_layers"):')
+            #打印每一层的网络
             for key in endpoints_dict:
                 tf.logging.info(key)
 
             """Build Losses"""
+            #计算content_loss
             content_loss = losses.content_loss(endpoints_dict, FLAGS.content_layers)
+            #计算Style_loss
             style_loss, style_loss_summary = losses.style_loss(endpoints_dict, style_features_t, FLAGS.style_layers)
+            #计算Total loss
             tv_loss = losses.total_variation_loss(generated)  # use the unprocessed image
-
+            #计算总的loss
             loss = FLAGS.style_weight * style_loss + FLAGS.content_weight * content_loss + FLAGS.tv_weight * tv_loss
 
             # Add Summary for visualization in tensorboard.
@@ -98,7 +103,7 @@ def main(FLAGS):
 
             """Prepare to Train"""
             global_step = tf.Variable(0, name="global_step", trainable=False)
-
+            
             variable_to_train = []
             for variable in tf.trainable_variables():
                 if not(variable.name.startswith(FLAGS.loss_model)):
@@ -124,11 +129,15 @@ def main(FLAGS):
                 saver.restore(sess, last_file)
 
             """Start Training"""
+            #新建线程管理器
             coord = tf.train.Coordinator()
+            #获取运行的线程
             threads = tf.train.start_queue_runners(coord=coord)
             start_time = time.time()
             try:
+                #线程管理还未终止
                 while not coord.should_stop():
+                    #计算---训练， 这一步之后，才会有对应的结果输出
                     _, loss_t, step = sess.run([train_op, loss, global_step])
                     elapsed_time = time.time() - start_time
                     start_time = time.time()
@@ -152,6 +161,7 @@ def main(FLAGS):
                 saver.save(sess, os.path.join(training_done_path, 'fast-style-model.ckpt-done'))
                 tf.logging.info('Done training -- epoch limit reached')
             finally:
+                #线程管理要求停止
                 coord.request_stop()
             coord.join(threads)
 
