@@ -11,6 +11,8 @@ import losses
 import utils
 import os
 import argparse
+from functools import reduce
+from operator import mul
 
 slim = tf.contrib.slim
 
@@ -134,6 +136,7 @@ def main(FLAGS):
             #获取运行的线程
             threads = tf.train.start_queue_runners(coord=coord)
             start_time = time.time()
+            print("训练的参数大小为 %d"%get_num_params())
             try:
                 #线程管理还未终止
                 while not coord.should_stop():
@@ -165,6 +168,13 @@ def main(FLAGS):
                 coord.request_stop()
             coord.join(threads)
 
+
+def get_num_params():
+    num_params = 0
+    for variable in tf.trainable_variables():
+        shape = variable.get_shape()
+        num_params += reduce(mul, [dim.value for dim in shape], 1)
+    return num_params
 
 if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
