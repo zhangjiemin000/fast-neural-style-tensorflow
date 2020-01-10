@@ -54,7 +54,7 @@ def main(FLAGS):
             #处理输入的图片，经过image_preprocessing_fn函数指针
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
-            #获取Vgg_16的处理网络
+            #获取transfer的模型
             generated = model.net(processed_images, training=True)
             processed_generated = [image_preprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
                                    for image in tf.unstack(generated, axis=0, num=FLAGS.batch_size)
