@@ -1,15 +1,15 @@
 ## Basic configuration
-style_image: img/cstyle7.jpg # targeted style image
-naming: "cstyle7_150" # the name of this model. Determine the path to save checkpoint and events file.
+style_image: img/cstyle6.jpg # targeted style image
+naming: "cstyle6_250" # the name of this model. Determine the path to save checkpoint and events file.
 model_path: models  # root path to save checkpoint and events file. The final path would be <model_path>/<naming>
 
 ## Weight of the loss
 content_weight: 1.0  # weight for content features loss
-style_weight: 150.0  # weight for style features loss
+style_weight: 250.0  # weight for style features loss
 tv_weight: 0.0  # weight for total variation loss
 
 ## The size, the iter number to run
-image_size: 256
+image_size: 512
 batch_size: 4
 epoch: 2
 
