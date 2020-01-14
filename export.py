@@ -29,21 +29,22 @@ def main(args):
             # image_data = tf.placeholder(tf.int32, name='input_image')
             # height = tf.placeholder(tf.int32, name='height')
             # width = tf.placeholder(tf.int32, name='width')
-            image_data = tf.placeholder(tf.int32, name='input_image')
-            height = tf.constant(512, tf.int32, name="height")
-            width = tf.constant(512, tf.int32, name='width')
-
-            # Reshape data
-            image = tf.reshape(image_data, [height, width, 3])
-
-            processed_image = utils.mean_image_subtraction(
-                image, [123.68, 116.779, 103.939])  # Preprocessing image
-            batched_image = tf.expand_dims(processed_image, 0)  # Add batch dimension
+            # image_data = tf.placeholder(tf.int32, name='input_image')
+            # height = tf.constant(512, tf.int32, name="height")
+            # width = tf.constant(512, tf.int32, name='width')
+            #
+            # # Reshape data
+            # image = tf.reshape(image_data, [height, width, 3])
+            # image = tf.reshape(image_data, [height, width, 3])
+            # processed_image = utils.mean_image_subtraction(
+            #     image, [123.68, 116.779, 103.939])  # Preprocessing image
+            size = 512
+            batched_image = tf.placeholder(tf.float32, shape=(1, size, size, 3), name='input_image')
             generated_image = model.net(batched_image, training=False)
             casted_image = tf.cast(generated_image, tf.int32)
             # Remove batch dimension
             squeezed_image = tf.squeeze(casted_image, [0])
-            cropped_image = tf.slice(squeezed_image, [0, 0, 0], [height, width, 3])
+            cropped_image = tf.slice(squeezed_image, [0, 0, 0], [size, size, 3])
             # stylized_image = tf.image.encode_jpeg(squeezed_image, name='output_image')
             stylized_image_data = tf.reshape(cropped_image, [-1], name='output_image')
             # Restore model variables.
@@ -62,10 +63,11 @@ def main(args):
                         tf.image.decode_jpeg(image_bytes, channels=3)])
 
                     start_time = time.time()
+                    image_data = tf.placeholder(tf.int32, name='input_image')
+
+                    image = tf.reshape(image_data, [512, 512, 3])
                     img.write(sess.run(tf.image.encode_jpeg(tf.cast(cropped_image, tf.uint8)), feed_dict={
-                        image_data: input_array,
-                        height: decoded_image.shape[0],
-                        width: decoded_image.shape[1]}))
+                        batched_image: image}))
                     end_time = time.time()
                     tf.logging.info('Elapsed time: %fs' % (end_time - start_time))
             else:

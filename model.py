@@ -128,4 +128,7 @@ def net(image, training):
     height = tf.shape(y)[1]
     width = tf.shape(y)[2]
     y = tf.slice(y, [0, 10, 10, 0], tf.stack([-1, height - 20, width - 20, -1])) # 拼接数据，估计是把之前padding的数据去掉
+    tf.trainable_variables
+
+
     return y
