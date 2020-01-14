@@ -96,4 +96,5 @@ models/
 tensorboard/
 result/
 pretrained/
+.*
 
