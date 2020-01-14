@@ -56,14 +56,14 @@ def main(FLAGS):
             #处理输入的图片，经过image_preprocessing_fn函数指针
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
-            #获取transfer的模型
+            #获取transfer的模型，先加入学习转移模型
             generated = model.net(processed_images, training=True)
             processed_generated = [image_preprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
                                    for image in tf.unstack(generated, axis=0, num=FLAGS.batch_size)
                                    ]
 
             processed_generated = tf.stack(processed_generated)  #多加了一维processed_generated
-            #获取对应的VGG模型每一层的输出节点
+            #获取对应的VGG模型每一层的输出节点, 再加入VGG16的部分网络
             _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network

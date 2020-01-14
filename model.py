@@ -93,7 +93,7 @@ def residual(x, filters, kernel, strides):
 
 
 def net(image, training):
-    alpha = 0.3
+    alpha = 1
     # Less border effects when padding a little before passing through ..
     image = tf.pad(image, [[0, 0], [10, 10], [10, 10], [0, 0]], mode='REFLECT')
 
