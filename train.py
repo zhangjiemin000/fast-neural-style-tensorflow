@@ -26,6 +26,12 @@ def parse_args():
 
 def main(FLAGS):
 
+    # f = open('test')
+    # # line = f.readline()
+    # text = f.read()
+    # text = text.replace('\n','')
+    # print(text)
+
     #done training path exists
     training_done_path = os.path.join('TrainingDone/{0}'.format(FLAGS.model_path), FLAGS.naming)
     if not (os.path.exists(training_done_path)):

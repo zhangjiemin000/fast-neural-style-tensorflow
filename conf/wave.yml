@@ -5,7 +5,7 @@ model_path: models  # root path to save checkpoint and events file. The final pa
 
 ## Weight of the loss
 content_weight: 1.0  # weight for content features loss
-style_weight: 220.0  # weight for style features loss
+style_weight: 50.0  # weight for style features loss
 tv_weight: 0.0  # weight for total variation loss
 
 ## The size, the iter number to run
