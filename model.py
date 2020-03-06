@@ -3,10 +3,13 @@ import tensorflow as tf
 
 def conv2d(x, input_filters, output_filters, kernel, strides, mode='REFLECT'):
     with tf.variable_scope('conv'):
-
+        #输入卷积的shape
         shape = [kernel, kernel, input_filters, output_filters]
+        # 随机的weight， 均方差为0.1，其实就是按照卷积核来配置一个随机的参数
         weight = tf.Variable(tf.truncated_normal(shape, stddev=0.1), name='weight')
+        # 对输入X，设置pandding，扩充维度
         x_padded = tf.pad(x, [[0, 0], [int(kernel / 2), int(kernel / 2)], [int(kernel / 2), int(kernel / 2)], [0, 0]], mode=mode)
+        # x_padded 为网络层的输入，weight就是卷积核权重
         return tf.nn.conv2d(x_padded, weight, strides=[1, strides, strides, 1], padding='VALID', name='conv')
 
 
@@ -93,11 +96,14 @@ def residual(x, filters, kernel, strides):
 
 
 def net(image, training):
-    alpha = 0.3
+
     # Less border effects when padding a little before passing through ..
+    #pad用来扩充边界， 上下左右各扩充10个元素， 如果是256，那现在就是 276
     image = tf.pad(image, [[0, 0], [10, 10], [10, 10], [0, 0]], mode='REFLECT')
 
     with tf.variable_scope('conv1'):
+        #image是输入，3是卷积核通道数，32是输出卷积核通道数，9是9*9的卷积核，1是步长为1
+        #instance_norm是归一化
         conv1 = relu(instance_norm(conv2d(image, 3, 32, 9, 1))) #conv2d = input,输入filter，输出filter，kernel，stride
     with tf.variable_scope('conv2'):
         conv2 = relu(instance_norm(conv2d(conv1, 32, 64, 3, 2)))
