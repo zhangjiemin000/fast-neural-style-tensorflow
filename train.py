@@ -33,10 +33,12 @@ def main(FLAGS):
     # print(text)
 
     #done training path exists
+    #训练完毕时的库路径
     training_done_path = os.path.join('TrainingDone/{0}'.format(FLAGS.model_path), FLAGS.naming)
     if not (os.path.exists(training_done_path)):
         os.makedirs(training_done_path)
 
+    #获取样式的特征tensor
     style_features_t = losses.get_style_features(FLAGS)
 
     # Make sure the training path exists.
@@ -56,6 +58,8 @@ def main(FLAGS):
                 is_training=False)
 
             #获取图片的预处理和后处理程序
+            #image_preprocessing_fn 会将输入的图片，进行裁剪，并且对每个通道都减去一个平均值(这个平均值是写死的，经验值)
+            #image_unpreprocessing_fn 会将输入的图片的每个通道，都加上这个平均值(这个平均值同上)
             image_preprocessing_fn, image_unprocessing_fn = preprocessing_factory.get_preprocessing(
                 FLAGS.loss_model,
                 is_training=False)
@@ -186,8 +190,8 @@ if __name__ == '__main__':
     tf.logging.set_verbosity(tf.logging.INFO)
     args = parse_args()
 
-    if args.list_config is not None:
-        config_list = utils.read_conf_file(args.list_config)
+    if args.list_config is not None:  #输入参数是否定义了list_config
+        config_list = utils.read_conf_file(args.list_config) #读取配置文件
         for config_file in config_list.trainning_list:
             FLAGS = utils.read_conf_file(config_file)
             main(FLAGS)

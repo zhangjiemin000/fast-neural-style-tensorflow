@@ -47,7 +47,7 @@ class Flag(object):
 
 def read_conf_file(conf_file):
     with open(conf_file) as f:
-        FLAGS = Flag(**yaml.load(f))
+        FLAGS = Flag(**yaml.load(f))  #从 yaml 中读取配置
     return FLAGS
 
 

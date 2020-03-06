@@ -32,13 +32,18 @@ def get_style_features(FLAGS):
             FLAGS.loss_model,
             num_classes=1,
             is_training=False)
+        #获取 image 预处理方法指针，和image 反处理方法指针
+        #如是vgg的模型，那就取 vggprocessing 类里面的 process 和 unprocessing 的方法
         image_preprocessing_fn, image_unprocessing_fn = preprocessing_factory.get_preprocessing(
             FLAGS.loss_model,
             is_training=False)
 
         # Get the style image data
+        #获取Style Image 的Size
         size = FLAGS.image_size  # 获取StyleImage的Size
+        #读取style image 的内容
         img_bytes = tf.read_file(FLAGS.style_image)  # Tensor
+        #解码，jpg和png
         if FLAGS.style_image.lower().endswith('png'):
             image = tf.image.decode_png(img_bytes)  #解析图片
         else:
@@ -47,6 +52,7 @@ def get_style_features(FLAGS):
 
         # Add the batch dimension
         # 把style_image的处理成接近于flag中设置的Size大小，先等比例缩小到适当的大小，再居中裁剪掉超出的部分
+        #shape=[1,]
         images = tf.expand_dims(image_preprocessing_fn(image, size, size), 0)
         # images = tf.stack([image_preprocessing_fn(image, size, size)])
 

@@ -228,9 +228,11 @@ def _mean_image_subtraction(image, means):
     if len(means) != num_channels:
         raise ValueError('len(means) must match the number of channels')
 
+    #split 按照轴， 进行瓜分 返回一个list，这里的2表示第三个轴
     channels = tf.split(image, num_channels, 2)  # 应该是将image 按照通道轴 分裂成 一个Tensor数组，分别为RGB维度
     for i in range(num_channels):
         channels[i] -= means[i]
+    # 在第三个轴上，进行拼接， 这里的操作就是将三个轴分别减掉平均值
     return tf.concat(channels, 2)  # 第二个维度拼接
 
 
