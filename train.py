@@ -57,6 +57,7 @@ def main(FLAGS):
                 FLAGS.loss_model,
                 is_training=False)
             #处理输入的图片，经过image_preprocessing_fn函数指针
+            #获取的图片，会拿到
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
             #获取transfer的模型
