@@ -97,3 +97,4 @@ tensorboard/
 result/
 pretrained/
 .*
+.idea/*
