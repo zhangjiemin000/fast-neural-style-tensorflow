@@ -59,7 +59,7 @@ def main(FLAGS):
                 FLAGS.loss_model,
                 is_training=False)
             #处理输入的图片，经过image_preprocessing_fn函数指针
-            #获取的图片，会拿到
+            #输入train2014文件夹里面所有的内容，按照打乱的方式，对每个图片进行预处理之后，输出
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
             #获取transfer的模型输出， 若干个卷积层级，包括残差，以及padding操作
@@ -75,6 +75,7 @@ def main(FLAGS):
             # 获取对应的VGG模型每一层的输出节点
             # tf.concat 在第0维的位置，拼接数据， processed_images 输入， processed_generated为经过风格转换网络之后的输出
             # network_fn 是一开始就通过factory加载的VGG网络
+            # 在第0维加入维度,包含预处理的输入图片和经过transfer模型输出的图片
             _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network
