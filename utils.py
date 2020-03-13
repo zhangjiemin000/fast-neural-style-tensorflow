@@ -27,13 +27,15 @@ def _get_init_fn(FLAGS):
     variables_to_restore = []
     for var in slim.get_model_variables():
         excluded = False
+        #这里屏蔽不需要的权重参数
         for exclusion in exclusions:
             if var.op.name.startswith(exclusion):
                 excluded = True
                 break
         if not excluded:
             variables_to_restore.append(var)
-
+    #这里是把模型中所有的权重参数都取出来了
+    #把对应的名称，进行还原，返回的是函数指针
     return slim.assign_from_checkpoint_fn(
         FLAGS.loss_model_file,
         variables_to_restore,

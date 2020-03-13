@@ -15,7 +15,8 @@ def gram(layer):
     width = shape[1]
     height = shape[2]
     num_filters = shape[3]
-    filters = tf.reshape(layer, tf.stack([num_images, -1, num_filters]))
+    filters = tf.reshape(layer, tf.stack([num_images, -1, num_filters])) #重组shape，tf.stack用于更改形状特征的，这里的Stack的意义是:[1,-1,256],组成这个
+    #求解格拉姆矩阵值
     grams = tf.matmul(filters, filters, transpose_a=True) / tf.to_float(width * height * num_filters)
 
     return grams
@@ -55,18 +56,21 @@ def get_style_features(FLAGS):
         #shape=[1,]
         images = tf.expand_dims(image_preprocessing_fn(image, size, size), 0)
         # images = tf.stack([image_preprocessing_fn(image, size, size)])
-
+        #将样式图片作为输入，进入到对应的VGG网络中
         _, endpoints_dict = network_fn(images, spatial_squeeze=False)
         features = []
+        #获取 Style_layers
         for layer in FLAGS.style_layers:
             feature = endpoints_dict[layer]
             feature = tf.squeeze(gram(feature), [0])  # remove the batch dimension
             features.append(feature)
 
+        #准备工作完成后，开始准备进入真正的训练阶段了
         with tf.Session() as sess:
             # Restore variables for loss network.
+            # 还原VGG的权重参数，从对应的Vgg checkpoint文件中
             init_func = utils._get_init_fn(FLAGS)
-            init_func(sess)
+            init_func(sess) #把session作为参数传入
 
             # Make sure the 'generated' directory is exists.
             if os.path.exists('generated') is False:
@@ -75,7 +79,8 @@ def get_style_features(FLAGS):
             save_file = 'generated/target_style_' + FLAGS.naming + '.jpg'
             # Write preprocessed style image to indicated path
             with open(save_file, 'wb') as f:
-                target_image = image_unprocessing_fn(images[0, :])
+                # 存储样式图片到本地
+                target_image = image_unprocessing_fn(images[0, :]) #把样式image进行后处理
                 value = tf.image.encode_jpeg(tf.cast(target_image, tf.uint8))
                 f.write(sess.run(value))
                 tf.logging.info('Target style pattern is saved to: %s.' % save_file)

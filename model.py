@@ -133,5 +133,7 @@ def net(image, training):
     # Remove border effect reducing padding.
     height = tf.shape(y)[1]
     width = tf.shape(y)[2]
+    #slice 是切片操作， 三个参数 (input,begin,size),input就是输入的tensor， begin代表对input中每个维度的切片的开始位置，size代表在这个维度中截取多少，
+    #slice中，在第一个轴上，起始位置是0，size是-1，表示要全部的维度，第二个维度取开始位置为10，取整个高度-20，相当于把之前padding的部分去掉了。
     y = tf.slice(y, [0, 10, 10, 0], tf.stack([-1, height - 20, width - 20, -1])) # 拼接数据，估计是把之前padding的数据去掉
     return y

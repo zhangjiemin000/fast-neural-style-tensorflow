@@ -33,6 +33,7 @@ def main(FLAGS):
         os.makedirs(training_done_path)
 
     #获取样式的特征tensor
+    #这里将需要学习的样式图片，和样式网络怼起来，输出的是VGG 部分网络的结果
     style_features_t = losses.get_style_features(FLAGS)
 
     # Make sure the training path exists.
@@ -45,6 +46,7 @@ def main(FLAGS):
     with tf.Graph().as_default():
         with tf.Session() as sess:
             """Build Network"""
+            #获取vgg Network，必须不用重新训练权重参数
             network_fn = nets_factory.get_network_fn(
                 FLAGS.loss_model,
                 num_classes=1,
@@ -60,14 +62,19 @@ def main(FLAGS):
             #获取的图片，会拿到
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
-            #获取transfer的模型
+            #获取transfer的模型输出， 若干个卷积层级，包括残差，以及padding操作
+            #图片的网络输出
             generated = model.net(processed_images, training=True)
+            #对每一张输出的图片进行预处理操作，tf.unstack就是对tensor进行拆解
             processed_generated = [image_preprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
                                    for image in tf.unstack(generated, axis=0, num=FLAGS.batch_size)
                                    ]
 
+            # 新增一维处理之后的图片
             processed_generated = tf.stack(processed_generated)  #多加了一维processed_generated
-            #获取对应的VGG模型每一层的输出节点
+            # 获取对应的VGG模型每一层的输出节点
+            # tf.concat 在第0维的位置，拼接数据， processed_images 输入， processed_generated为经过风格转换网络之后的输出
+            # network_fn 是一开始就通过factory加载的VGG网络
             _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network
