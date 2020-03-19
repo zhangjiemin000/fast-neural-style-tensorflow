@@ -60,22 +60,27 @@ def main(FLAGS):
                 is_training=False)
             #处理输入的图片，经过image_preprocessing_fn函数指针
             #输入train2014文件夹里面所有的内容，按照打乱的方式，对每个图片进行预处理之后，输出
+            #processed_images = [4,256,256,3]
             processed_images = reader.image(FLAGS.batch_size, FLAGS.image_size, FLAGS.image_size,
                                             'train2014/', image_preprocessing_fn, epochs=FLAGS.epoch)
             #获取transfer的模型输出， 若干个卷积层级，包括残差，以及padding操作
             #图片的网络输出
+            #generated = [4,256,256,3]
             generated = model.net(processed_images, training=True)
             #对每一张输出的图片进行预处理操作，tf.unstack就是对tensor进行拆解
+            #processed_generated =list([256,256,3])，维度为batch_size
             processed_generated = [image_preprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
                                    for image in tf.unstack(generated, axis=0, num=FLAGS.batch_size)
                                    ]
 
             # 新增一维处理之后的图片
+            #processed_generated = [4,256,256,3]
             processed_generated = tf.stack(processed_generated)  #多加了一维processed_generated
             # 获取对应的VGG模型每一层的输出节点
             # tf.concat 在第0维的位置，拼接数据， processed_images 输入， processed_generated为经过风格转换网络之后的输出
             # network_fn 是一开始就通过factory加载的VGG网络
             # 在第0维加入维度,包含预处理的输入图片和经过transfer模型输出的图片
+            #tf.concat([processed_generated, processed_images],0) = [8,256,256,3]
             _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network
@@ -85,9 +90,9 @@ def main(FLAGS):
                 tf.logging.info(key)
 
             """Build Losses"""
-            #计算content_loss
+            #计算content_loss , endpoints_dict 里面是tensor的合集，命名是以layer名称
             content_loss = losses.content_loss(endpoints_dict, FLAGS.content_layers)
-            #计算Style_loss
+            #计算Style_loss，style_features_t也是一个tensor，真实数据合集
             style_loss, style_loss_summary = losses.style_loss(endpoints_dict, style_features_t, FLAGS.style_layers)
             #计算Total loss
             tv_loss = losses.total_variation_loss(generated)  # use the unprocessed image
@@ -148,7 +153,7 @@ def main(FLAGS):
                 saver.restore(sess, last_file)  # 这里才开始真正的赋值
 
             """Start Training"""
-            #新建线程管理器，这个目的是为了让tf觉得合适，自己停止
+            #新建线程管理器
             coord = tf.train.Coordinator()
             #获取运行的线程
             threads = tf.train.start_queue_runners(coord=coord)
