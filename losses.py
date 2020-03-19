@@ -92,12 +92,14 @@ def get_style_features(FLAGS):
 def style_loss(endpoints_dict, style_features_t, style_layers):
     style_loss = 0
     style_loss_summary = {}
+    # zip用来将输入的参数打包成一个元祖进行遍历，第一个参数的一个元素和第二个参数的第一个元素组合
     for style_gram, layer in zip(style_features_t, style_layers):
+        # 找出第0轴，按照size=2来分割这个shape， style_gram和layer就是style_features_t 和 style_layers这两个里面的参数
         generated_images, _ = tf.split(endpoints_dict[layer], 2, 0)
         size = tf.size(generated_images)
         layer_style_loss = tf.nn.l2_loss(gram(generated_images) - style_gram) * 2 / tf.to_float(size)
         style_loss_summary[layer] = layer_style_loss
-        style_loss += layer_style_loss
+        style_loss += layer_style_loss  # 加上所有的style_loss
     return style_loss, style_loss_summary
 
 
@@ -114,6 +116,7 @@ def total_variation_loss(layer):
     shape = tf.shape(layer)
     height = shape[1]
     width = shape[2]
+    #这里将layer 挪一个位置 相减 获得x、y的值，然后再做计算得到loss
     y = tf.slice(layer, [0, 0, 0, 0], tf.stack([-1, height - 1, -1, -1])) - tf.slice(layer, [0, 1, 0, 0], [-1, -1, -1, -1])
     x = tf.slice(layer, [0, 0, 0, 0], tf.stack([-1, -1, width - 1, -1])) - tf.slice(layer, [0, 0, 1, 0], [-1, -1, -1, -1])
     loss = tf.nn.l2_loss(x) / tf.to_float(tf.size(x)) + tf.nn.l2_loss(y) / tf.to_float(tf.size(y))
