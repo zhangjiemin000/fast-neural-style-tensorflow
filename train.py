@@ -13,6 +13,8 @@ import os
 import argparse
 from functools import reduce
 from operator import mul
+from tensorflow.image import decode_jpeg, encode_jpeg, grayscale_to_rgb
+from tensorflow.io.gfile import GFile
 
 slim = tf.contrib.slim
 
@@ -81,6 +83,7 @@ def main(FLAGS):
             # network_fn 是一开始就通过factory加载的VGG网络
             # 在第0维加入维度,包含预处理的输入图片和经过transfer模型输出的图片
             #tf.concat([processed_generated, processed_images],0) = [8,256,256,3]
+            #这里模型训练完毕的
             _, endpoints_dict = network_fn(tf.concat([processed_generated, processed_images], 0), spatial_squeeze=False) #
 
             # Log the structure of loss network
@@ -92,6 +95,20 @@ def main(FLAGS):
             """Build Losses"""
             #计算content_loss , endpoints_dict 里面是tensor的合集，命名是以layer名称
             content_loss = losses.content_loss(endpoints_dict, FLAGS.content_layers)
+
+            # #保存contentLayer出数的图片样式
+            # generated_images, content_images = tf.split(endpoints_dict[FLAGS.content_layers[0]], 2, 0)
+            # restore_images =  [image_unprocessing_fn(image, FLAGS.image_size, FLAGS.image_size)
+            #  for image in tf.unstack(content_images, axis=0, num=FLAGS.batch_size)
+            #  ]
+            # for sub_image in restore_images:
+            #     index = 1
+            #     with GFile('../debugFiles/'+str(index)+'content.jpg', 'wb') as file:
+            #         file.write(sub_image.numpy())
+            #     index = index + 1
+
+
+
             #计算Style_loss，style_features_t也是一个tensor，真实数据合集
             style_loss, style_loss_summary = losses.style_loss(endpoints_dict, style_features_t, FLAGS.style_layers)
             #计算Total loss
