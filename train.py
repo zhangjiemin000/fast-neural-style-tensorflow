@@ -176,7 +176,7 @@ def main(FLAGS):
             threads = tf.train.start_queue_runners(coord=coord)
             start_time = time.time()
 
-            print("正在训练的参数量为 %d"%get_num_params())
+            # print("正在训练的参数量为 %d"%get_num_params())
 
             try:
                 #线程管理还未终止
