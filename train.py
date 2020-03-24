@@ -196,8 +196,8 @@ def main(FLAGS):
                         writer.add_summary(summary_str, step)
                         writer.flush()
                     """checkpoint"""
-                    if step % 1000 == 0:
-                        # 每一千步保存checkpoint
+                    if step % 10000 == 0:
+                        # 每一万步保存checkpoint
                         saver.save(sess, os.path.join(training_path, 'fast-style-model.ckpt'), global_step=step)
             except tf.errors.OutOfRangeError:
 
