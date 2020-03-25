@@ -190,7 +190,7 @@ def main(FLAGS):
                         print('config file:%s,step: %d,  total Loss %f, secs/step: %f' % (
                             FLAGS.naming, step, loss_t, elapsed_time))
                     """summary"""
-                    if step % 25 == 0:
+                    if step % 10000 == 0:
                         tf.logging.info('adding summary...')
                         summary_str = sess.run(summary)
                         writer.add_summary(summary_str, step)
