@@ -200,7 +200,6 @@ def main(FLAGS):
                         # 每一万步保存checkpoint
                         saver.save(sess, os.path.join(training_path, 'fast-style-model.ckpt'), global_step=step)
             except tf.errors.OutOfRangeError:
-
                 saver.save(sess, os.path.join(training_done_path, 'fast-style-model.ckpt-done'))
                 tf.logging.info('Done training -- epoch limit reached')
             finally:
