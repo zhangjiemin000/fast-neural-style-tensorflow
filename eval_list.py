@@ -13,7 +13,7 @@ tf.app.flags.DEFINE_string('loss_model', 'vgg_16', 'The name of the architecture
 tf.app.flags.DEFINE_integer('image_size', 256, 'Image size to train.')
 # tf.app.flags.DEFINE_string("config_file", "models.ckpt", "")
 # tf.app.flags.DEFINE_string("image_file", "./img/timg.jpg", "")
-tf.app.flags.DEFINE_string("config_file","conf/youhua.yml","")
+tf.app.flags.DEFINE_string("config_file","conf/youhua2.yml","")
 
 FLAGS = tf.app.flags.FLAGS
 
