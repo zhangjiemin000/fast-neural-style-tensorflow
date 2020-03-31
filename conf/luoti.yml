@@ -7,7 +7,7 @@ model_path: models  # root path to save checkpoint and events file. The final pa
 content_weight: 1.0  # weight for content features loss
 min_style_weight: 25  # weight for style features loss
 max_style_weight: 800
-style_weigth_step: 25
+style_weigth_step: 50
 style_weight: 10
 tv_weight: 0.0  # weight for total variation loss
 
