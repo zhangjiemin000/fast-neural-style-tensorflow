@@ -4,8 +4,8 @@ naming: "mohu2" # the name of this model. Determine the path to save checkpoint 
 model_path: models  # root path to save checkpoint and events file. The final path would be <model_path>/<naming>
 
 ## Weight of the loss
-content_weight: 5.0  # weight for content features loss
-min_style_weight: 25  # weight for style features loss
+content_weight: 3.5  # weight for content features loss
+min_style_weight: 50  # weight for style features loss
 max_style_weight: 800
 style_weigth_step: 50
 style_weight: 10
